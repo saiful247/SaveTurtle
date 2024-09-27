@@ -6,38 +6,38 @@ const router = express.Router();
 
 // Email sending endpoint
 router.post("/", async (req, res) => {
-  const { email, status } = req.body; // Get email and status from the request body
+    const { email, status } = req.body; // Get email and status from the request body
 
-  let subject, text;
-  if (status === "approved") {
-    subject = "SaveTurtle Event Booking Approved";
-    text = "Your SaveTurtle Event booking is approved!";
-  } else if (status === "disapproved") {
-    subject = "SaveTurtle Event Booking Disapproved";
-    text = "Your SaveTurtle Event booking is disapproved!";
-  }
+    let subject, text;
+    if (status === "approved") {
+        subject = "SaveTurtle Event Booking Approved";
+        text = "Your SaveTurtle Event booking is approved!";
+    } else if (status === "disapproved") {
+        subject = "SaveTurtle Event Booking Disapproved";
+        text = "Your SaveTurtle Event booking is disapproved!";
+    }
 
-  // Nodemailer transporter configuration
-  const transporter = nodemailer.createTransport({
-    service: "gmail", // or any email service provider like Outlook, Yahoo, etc.
-    auth: {
-      user: "saifulis.4965@gmail.com", // your email
-      pass: "dyumrcpcgkkqdsjp", // your email password or app-specific password
-    },
-  });
-
-  // Sending the email
-  try {
-    await transporter.sendMail({
-      from: "saifulis.4965@gmail.com",
-      to: email,
-      subject: subject,
-      text: text,
+    // Nodemailer transporter configuration
+    const transporter = nodemailer.createTransport({
+        service: "gmail", // or any email service provider like Outlook, Yahoo, etc.
+        auth: {
+            user: "saifulis.4965@gmail.com", // your email
+            pass: "dyumrcpcgkkqdsjp", // your email password or app-specific password
+        },
     });
-    res.status(200).send("Email sent successfully");
-  } catch (error) {
-    res.status(500).send("Error sending email: " + error.message);
-  }
+
+    // Sending the email
+    try {
+        await transporter.sendMail({
+            from: "saifulis.4965@gmail.com",
+            to: email,
+            subject: subject,
+            text: text,
+        });
+        res.status(200).send("Email sent successfully");
+    } catch (error) {
+        res.status(500).send("Error sending email: " + error.message);
+    }
 });
 
 // Export the router as default
