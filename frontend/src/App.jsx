@@ -1,5 +1,4 @@
 // src/App.jsx
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Header from './components/Header';
@@ -20,6 +19,10 @@ import AdminRegister from './pages/AdminRegister';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';  // Import the ProtectedRoute component
 
+import CreateSaveMe from './pages/CreateSaveMe';
+import ShowSaveMe from './pages/ShowSaveMe';
+import EditSaveMe from './pages/EditSaveMe';
+import DeleteSaveMe from './pages/DeleteSaveMe';
 
 const App = () => {
   return (
@@ -92,7 +95,12 @@ const App = () => {
         <Route path='/' element={<Home />} />
       </Routes>
       
-      
+      <Routes>
+        <Route path='/saveMes/create' element={<CreateSaveMe/>}/>
+        <Route path='/saveMes/details/:id' element={<ShowSaveMe/>}/>
+        <Route path='/saveMes/edit/:id' element={<EditSaveMe/>}/>
+        <Route path='/saveMes/delete/:id' element={<DeleteSaveMe/>}/>
+    </Routes>
       
     </>
   );
