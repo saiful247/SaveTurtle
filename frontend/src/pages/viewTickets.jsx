@@ -12,6 +12,7 @@ const ViewTickets = () => {
     const [showReplyOverlay, setShowReplyOverlay] = useState(false);
     const [currentTicket, setCurrentTicket] = useState(null);
     const [replyMessage, setReplyMessage] = useState("");
+    const [sortOrder, setSortOrder] = useState("desc"); // Default sort order is descending
 
     useEffect(() => {
         const fetchTickets = async () => {
@@ -73,6 +74,13 @@ const ViewTickets = () => {
             }
         }
     };
+    const sortedTickets = [...tickets].sort((a, b) => {
+        if (sortOrder === "asc") {
+            return new Date(a.createdAt) - new Date(b.createdAt); // Ascending
+        } else {
+            return new Date(b.createdAt) - new Date(a.createdAt); // Descending
+        }
+    });
 
     return (
         <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
@@ -81,6 +89,24 @@ const ViewTickets = () => {
                 <h1 className="text-2xl font-semibold text-gray-800">
                     View Tickets
                 </h1>
+            </div>
+            <div className="absolute top-4 right-4 flex space-x-4">
+                <button
+                    className={`px-4 py-2 bg-gray-300 rounded ${
+                        sortOrder === "asc" && "bg-blue-500 text-white"
+                    }`}
+                    onClick={() => setSortOrder("asc")}
+                >
+                    Sort Ascending
+                </button>
+                <button
+                    className={`px-4 py-2 bg-gray-300 rounded ${
+                        sortOrder === "desc" && "bg-blue-500 text-white"
+                    }`}
+                    onClick={() => setSortOrder("desc")}
+                >
+                    Sort Descending
+                </button>
             </div>
 
             {loading ? (
@@ -94,7 +120,7 @@ const ViewTickets = () => {
                             <thead>
                                 <tr className="bg-gray-100">
                                     <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                                        ID
+                                        Time Created
                                     </th>
                                     <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                                         Topic
@@ -114,16 +140,20 @@ const ViewTickets = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tickets.map((ticket) => (
+                                {sortedTickets.map((ticket) => (
                                     <tr key={ticket._id} className="border-b">
                                         <td className="px-6 py-4 text-sm text-gray-700">
-                                            {ticket._id}
+                                            {new Date(
+                                                ticket.createdAt
+                                            ).toLocaleString()}
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-700">
                                             {ticket.topic}
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-700">
-                                            {ticket.description}
+                                            <div className="max-h-16 overflow-hidden overflow-ellipsis">
+                                                {ticket.description}
+                                            </div>
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-700">
                                             {ticket.name}
@@ -133,29 +163,35 @@ const ViewTickets = () => {
                                                 ? "Solved"
                                                 : "Unsolved"}
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700 space-x-4">
-                                            <button
-                                                className="text-blue-500"
-                                                onClick={() => {
-                                                    setCurrentTicket(
-                                                        ticket._id
-                                                    );
-                                                    setShowReplyOverlay(true);
-                                                }}
-                                            >
-                                                Reply
-                                            </button>
-                                            <button
-                                                className="text-red-500"
-                                                onClick={() => {
-                                                    setTicketToDelete(
-                                                        ticket._id
-                                                    );
-                                                    setShowDeleteOverlay(true);
-                                                }}
-                                            >
-                                                Delete
-                                            </button>
+                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                            <div className="flex flex-col space-y-2">
+                                                <button
+                                                    className="text-blue-500"
+                                                    onClick={() => {
+                                                        setCurrentTicket(
+                                                            ticket._id
+                                                        );
+                                                        setShowReplyOverlay(
+                                                            true
+                                                        );
+                                                    }}
+                                                >
+                                                    Reply
+                                                </button>
+                                                <button
+                                                    className="text-red-500"
+                                                    onClick={() => {
+                                                        setTicketToDelete(
+                                                            ticket._id
+                                                        );
+                                                        setShowDeleteOverlay(
+                                                            true
+                                                        );
+                                                    }}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
