@@ -50,7 +50,7 @@ const CreateTickets = () => {
         <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
             <div className="absolute top-0 left-0 p-6 flex items-center space-x-4">
                 <BackButton />
-                <h1 className="text-4xl font-semibold text-gray-800">
+                <h1 className="text-2xl font-semibold text-gray-800">
                     Create Ticket
                 </h1>
             </div>
