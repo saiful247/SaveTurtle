@@ -77,9 +77,9 @@ const ViewTickets = () => {
     };
     const sortedTickets = [...tickets].sort((a, b) => {
         if (sortOrder === "asc") {
-            return new Date(a.createdAt) - new Date(b.createdAt); // Ascending
+            return new Date(a.createdAt) - new Date(b.createdAt);
         } else {
-            return new Date(b.createdAt) - new Date(a.createdAt); // Descending
+            return new Date(b.createdAt) - new Date(a.createdAt);
         }
     });
     const filteredTickets = sortedTickets.filter((ticket) =>
@@ -94,8 +94,6 @@ const ViewTickets = () => {
                     View Tickets
                 </h1>
             </div>
-
-            {/* Sorting and Search */}
             <div className="absolute top-4 right-4 flex space-x-4 items-center">
                 <button
                     className={`px-4 py-2 bg-gray-300 rounded ${
@@ -113,8 +111,6 @@ const ViewTickets = () => {
                 >
                     Sort Descending
                 </button>
-
-                {/* Search Input */}
                 <input
                     type="text"
                     value={searchQuery}
@@ -221,8 +217,6 @@ const ViewTickets = () => {
                     )}
                 </div>
             )}
-
-            {/* Delete Confirmation Overlay */}
             {showDeleteOverlay && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -244,8 +238,6 @@ const ViewTickets = () => {
                     </div>
                 </div>
             )}
-
-            {/* Reply Overlay */}
             {showReplyOverlay && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg">
