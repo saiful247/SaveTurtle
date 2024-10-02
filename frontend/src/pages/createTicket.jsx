@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import Spinner from "../components/Spinner";
 import axios from "axios";
+import jsPDF from "jspdf";
 
 const CreateTickets = () => {
     const [topic, setTopic] = useState("");
@@ -27,7 +28,7 @@ const CreateTickets = () => {
             .post("http://localhost:5555/tickets", data)
             .then(() => {
                 setLoading(false);
-                setIsSuccess(true);
+                setIsSuccess(true); // Show success overlay
             })
             .catch((error) => {
                 setLoading(false);
@@ -36,15 +37,27 @@ const CreateTickets = () => {
             });
     };
 
-    useEffect(() => {
-        if (isSuccess) {
-            const timer = setTimeout(() => {
-                setIsSuccess(false);
-            }, 3000); // Overlay will disappear after 3 seconds
+    const handleDownloadPDF = () => {
+        const doc = new jsPDF();
+        doc.text("Ticket Details", 20, 20);
+        doc.text(`Topic: ${topic}`, 20, 30);
+        doc.text(`Description: ${description}`, 20, 40);
+        doc.text(`Name: ${name}`, 20, 50);
+        doc.text(`Phone: ${phone}`, 20, 60);
+        doc.text(`Email: ${email}`, 20, 70);
+        doc.save("ticket-details.pdf");
 
-            return () => clearTimeout(timer); // Cleanup the timer
-        }
-    }, [isSuccess]);
+        resetForm();
+    };
+
+    const resetForm = () => {
+        setTopic("");
+        setDescription("");
+        setName("");
+        setPhone("");
+        setEmail("");
+        setIsSuccess(false); // Close the overlay
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
@@ -65,6 +78,7 @@ const CreateTickets = () => {
             </div>
 
             {loading ? <Spinner /> : null}
+
             <div className="bg-white shadow-lg rounded-xl border border-gray-200 w-full max-w-md p-6">
                 <div className="my-4">
                     <label className="text-lg font-medium text-gray-700">
@@ -141,10 +155,24 @@ const CreateTickets = () => {
                         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                             Ticket Created Successfully!
                         </h2>
-                        <p className="text-gray-600">
-                            Your ticket has been submitted and will be processed
-                            shortly.
+                        <p className="text-gray-600 mb-4">
+                            Your ticket has been submitted. Download the ticket
+                            details as PDF?
                         </p>
+                        <div className="flex space-x-4 justify-center">
+                            <button
+                                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200"
+                                onClick={handleDownloadPDF}
+                            >
+                                Download
+                            </button>
+                            <button
+                                className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
+                                onClick={resetForm}
+                            >
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
