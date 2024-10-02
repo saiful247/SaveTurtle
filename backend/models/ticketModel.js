@@ -17,6 +17,13 @@ const ticketSchema = mongoose.Schema(
         email: {
             type: String,
         },
+        status: { type: String, default: "unsolved" },
+        replies: [
+            {
+                message: String,
+                date: { type: Date, default: Date.now },
+            },
+        ],
     },
     {
         timestamps: true,
