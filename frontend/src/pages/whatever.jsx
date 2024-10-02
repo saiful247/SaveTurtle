@@ -6,12 +6,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import DarkModeToggle from "../components/DarkModeToggle"; // Ensure this component exists
 import * as XLSX from "xlsx";
-import { QRCodeCanvas } from "qrcode.react";
-
-// import { Pie } from 'react-chartjs-2';
-import { PieChart, Pie, Cell, Tooltip } from "recharts";
 
 // ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -27,7 +22,7 @@ const EventBookData = () => {
             setLoading(true);
             try {
                 const response = await axios.get(
-                    "http://localhost:5555/eventBookingList"
+                    "http://localhost:5555/tickets"
                 ); // Replace with your backend URL
                 setParticipants(response.data.data);
             } catch (error) {

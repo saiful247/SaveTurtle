@@ -1,5 +1,4 @@
 // src/App.jsx
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./components/Header";
@@ -8,6 +7,10 @@ import CreateEvents from "./pages/CreateEvents";
 import ShowEvent from "./pages/ShowEvent";
 import EditEvent from "./pages/EditEvent";
 import DeleteEvent from "./pages/DeleteEvent";
+
+//import showFAQ from "./pages/ShowFAQ";
+import CreateTickets from "./pages/createTicket";
+import ViewTickets from "./pages/viewTickets";
 
 import EventView from "./pages/EventView";
 import AddEventParticipents from "./pages/AddEventParticipents";
@@ -78,6 +81,21 @@ const App = () => {
                         </ProtectedRoute>
                     }
                 />
+            </Routes>
+
+            <Routes>
+                <Route path="/createtickets" element={<CreateTickets />} />
+                <Route
+                    path="/tickets"
+                    element={
+                        <ProtectedRoute>
+                            <ViewTickets />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
+            <Routes>
+                <Route path="/faq" element={<showFAQ />} />
             </Routes>
 
             <Routes>

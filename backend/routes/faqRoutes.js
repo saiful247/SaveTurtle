@@ -1,29 +1,20 @@
 import express from "express";
-import { Ticket } from "../models/ticketModel.js";
+import { faQuestions } from "../models/faqModel.js";
 
-const ticketRouter = express.Router();
+const faqRouter = express.Router();
 
-ticketRouter.post("/", async (request, response) => {
+faqRouter.post("/", async (request, response) => {
     try {
-        if (
-            !request.body.topic ||
-            !request.body.description ||
-            !request.body.name ||
-            !request.body.phone ||
-            !request.body.email
-        ) {
+        if (!request.body.topic || !request.body.description) {
             return response.status(400).send({
                 message: "Send all required fields",
             });
         }
-        const newTicket = {
+        const newFA = {
             topic: request.body.topic,
             description: request.body.description,
-            name: request.body.name,
-            phone: request.body.phone,
-            email: request.body.email,
         };
-        const ticket = await Ticket.create(newTicket);
+        const fa = await faQuestions.create(newFA);
         return response.status(201).send(ticket);
     } catch (error) {
         console.log(error.message);
@@ -31,12 +22,12 @@ ticketRouter.post("/", async (request, response) => {
     }
 });
 
-ticketRouter.get("/", async (request, response) => {
+faqRouter.get("/", async (request, response) => {
     try {
-        const tickets = await Ticket.find({});
+        const fa = await faQuestions.find({});
         return response.status(200).json({
-            count: tickets.length,
-            data: tickets,
+            count: fa.length,
+            data: fa,
         });
     } catch (error) {
         console.log(error.message);
@@ -44,59 +35,54 @@ ticketRouter.get("/", async (request, response) => {
     }
 });
 
-ticketRouter.get("/:id", async (request, response) => {
+faqRouter.get("/:id", async (request, response) => {
     try {
         const { id } = request.params;
-        const ticket = await Ticket.findById(id);
-        return response.status(200).json(ticket);
+        const question = await faQuestions.findById(id);
+        return response.status(200).json(question);
     } catch (error) {
         console.log(error.message);
         response.status(500).send({ message: error.message });
     }
 });
 
-ticketRouter.put("/:id", async (request, response) => {
+faqRouter.put("/:id", async (request, response) => {
     try {
-        if (
-            !request.body.topic ||
-            !request.body.description ||
-            !request.body.email
-        ) {
+        if (!request.body.topic || !request.body.description) {
             return response.status(400).send({
                 message: "Send all required fields",
             });
         }
         const { id } = request.params;
-        const result = await Ticket.findByIdAndUpdate(id, request.body);
+        const result = await faQuestions.findByIdAndUpdate(id, request.body);
 
         if (!result) {
-            return response.status(400).json({ message: "Ticket not found" });
+            return response.status(400).json({ message: "Question not found" });
         }
         return response
             .status(200)
-            .send({ message: "Ticket updated successfully" });
+            .send({ message: "Question and Answer updated successfully" });
     } catch (error) {
         console.log(error.message);
         response.status(500).send({ message: error.message });
     }
 });
 
-ticketRouter.delete("/:id", async (request, response) => {
+faqRouter.delete("/:id", async (request, response) => {
     try {
         const { id } = request.params;
-        const result = await Ticket.findByIdAndDelete(id);
+        const result = await faQuestions.findByIdAndDelete(id);
 
         if (!result) {
             return response.status(400).json({ message: "Ticket not found" });
         }
-
         return response
             .status(200)
-            .send({ message: "Ticket deleted successfully" });
+            .send({ message: "FAQ Deleted Successfully" });
     } catch (error) {
         console.log(error.message);
         response.status(500).send({ message: error.message });
     }
 });
 
-export default ticketRouter;
+export default faqRouter;

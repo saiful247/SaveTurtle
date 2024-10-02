@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
@@ -7,7 +6,8 @@ const AdminDashboard = () => {
     const buttons = [
         { label: "Events", path: "/events" },
         { label: "Products", path: "/products" },
-        { label: "Users", path: "/users" },
+        { label: "Tickets", path: "/tickets" },
+        { label: "FAQ", path: "/faq" },
         { label: "Orders", path: "/orders" },
         { label: "Reports", path: "/reports" },
         { label: "Settings", path: "/settings" },

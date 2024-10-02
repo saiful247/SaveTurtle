@@ -1,5 +1,4 @@
 // src/components/Header.jsx
-import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -16,7 +15,7 @@ const Header = () => {
                     <Link to="/eventViews" className="hover:text-gray-300">
                         Events
                     </Link>
-                    <Link to="/helpdesk" className="hover:text-gray-300">
+                    <Link to="/createtickets" className="hover:text-gray-300">
                         HelpDesk
                     </Link>
                     <Link to="/donation" className="hover:text-gray-300">
