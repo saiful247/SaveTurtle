@@ -12,7 +12,8 @@ const ViewTickets = () => {
     const [showReplyOverlay, setShowReplyOverlay] = useState(false);
     const [currentTicket, setCurrentTicket] = useState(null);
     const [replyMessage, setReplyMessage] = useState("");
-    const [sortOrder, setSortOrder] = useState("desc"); // Default sort order is descending
+    const [sortOrder, setSortOrder] = useState("desc");
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         const fetchTickets = async () => {
@@ -81,6 +82,9 @@ const ViewTickets = () => {
             return new Date(b.createdAt) - new Date(a.createdAt); // Descending
         }
     });
+    const filteredTickets = sortedTickets.filter((ticket) =>
+        ticket.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
@@ -90,7 +94,9 @@ const ViewTickets = () => {
                     View Tickets
                 </h1>
             </div>
-            <div className="absolute top-4 right-4 flex space-x-4">
+
+            {/* Sorting and Search */}
+            <div className="absolute top-4 right-4 flex space-x-4 items-center">
                 <button
                     className={`px-4 py-2 bg-gray-300 rounded ${
                         sortOrder === "asc" && "bg-blue-500 text-white"
@@ -107,6 +113,15 @@ const ViewTickets = () => {
                 >
                     Sort Descending
                 </button>
+
+                {/* Search Input */}
+                <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search by name"
+                    className="px-4 py-2 border border-gray-300 rounded"
+                />
             </div>
 
             {loading ? (
@@ -115,7 +130,7 @@ const ViewTickets = () => {
                 <p className="text-red-500">{error}</p>
             ) : (
                 <div className="w-full max-w-4xl mt-12">
-                    {tickets.length > 0 ? (
+                    {filteredTickets.length > 0 ? (
                         <table className="table-auto w-full bg-white shadow-lg rounded-xl border border-gray-200">
                             <thead>
                                 <tr className="bg-gray-100">
@@ -140,7 +155,7 @@ const ViewTickets = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {sortedTickets.map((ticket) => (
+                                {filteredTickets.map((ticket) => (
                                     <tr key={ticket._id} className="border-b">
                                         <td className="px-6 py-4 text-sm text-gray-700">
                                             {new Date(
@@ -236,17 +251,17 @@ const ViewTickets = () => {
                     <div className="bg-white p-6 rounded-lg shadow-lg">
                         <h3>Reply to Ticket</h3>
                         <textarea
+                            className="w-full border border-gray-300 rounded p-2 mt-4"
                             value={replyMessage}
                             onChange={(e) => setReplyMessage(e.target.value)}
-                            rows={4}
-                            className="w-full p-2 border border-gray-300 rounded"
-                        />
+                            placeholder="Type your reply here..."
+                        ></textarea>
                         <div className="flex space-x-4 mt-4">
                             <button
-                                className="bg-green-500 text-white px-4 py-2 rounded"
+                                className="bg-blue-500 text-white px-4 py-2 rounded"
                                 onClick={handleReplySubmit}
                             >
-                                Send Reply
+                                Submit Reply
                             </button>
                             <button
                                 className="bg-gray-300 text-black px-4 py-2 rounded"
