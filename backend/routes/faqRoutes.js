@@ -5,17 +5,17 @@ const faqRouter = express.Router();
 
 faqRouter.post("/", async (request, response) => {
     try {
-        if (!request.body.topic || !request.body.description) {
+        if (!request.body.question || !request.body.answer) {
             return response.status(400).send({
                 message: "Send all required fields",
             });
         }
         const newFA = {
-            topic: request.body.topic,
-            description: request.body.description,
+            question: request.body.question,
+            answer: request.body.answer,
         };
         const fa = await faQuestions.create(newFA);
-        return response.status(201).send(ticket);
+        return response.status(201).send(fa);
     } catch (error) {
         console.log(error.message);
         response.status(500).send({ message: error.message });
@@ -48,7 +48,7 @@ faqRouter.get("/:id", async (request, response) => {
 
 faqRouter.put("/:id", async (request, response) => {
     try {
-        if (!request.body.topic || !request.body.description) {
+        if (!request.body.question || !request.body.answer) {
             return response.status(400).send({
                 message: "Send all required fields",
             });
@@ -74,7 +74,7 @@ faqRouter.delete("/:id", async (request, response) => {
         const result = await faQuestions.findByIdAndDelete(id);
 
         if (!result) {
-            return response.status(400).json({ message: "Ticket not found" });
+            return response.status(400).json({ message: "Question not found" });
         }
         return response
             .status(200)

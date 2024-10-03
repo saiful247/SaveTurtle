@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import BackButton from "../components/BackButton";
-import Spinner from "../components/Spinner";
+import Spinner from "../../components/Spinner";
 import axios from "axios";
 
 const ViewTickets = () => {
@@ -89,7 +88,6 @@ const ViewTickets = () => {
     return (
         <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
             <div className="absolute top-0 left-0 p-6 flex items-center space-x-4">
-                <BackButton />
                 <h1 className="text-2xl font-semibold text-gray-800">
                     View Tickets
                 </h1>
@@ -209,7 +207,7 @@ const ViewTickets = () => {
                             </tbody>
                         </table>
                     ) : (
-                        <div className="flex items-center">
+                        <div className="flex items-center justify-center min-h-[50vh]">
                             <p className="text-gray-600">
                                 No tickets available.
                             </p>

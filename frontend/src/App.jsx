@@ -8,9 +8,10 @@ import ShowEvent from "./pages/ShowEvent";
 import EditEvent from "./pages/EditEvent";
 import DeleteEvent from "./pages/DeleteEvent";
 
-//import showFAQ from "./pages/ShowFAQ";
-import CreateTickets from "./pages/createTicket";
-import ViewTickets from "./pages/viewTickets";
+import ShowFAQ from "./pages/Help Desk and FAQ/ShowFAQ";
+import CreateTickets from "./pages/Help Desk and FAQ/createTicket";
+import ViewTickets from "./pages/Help Desk and FAQ/viewTickets";
+import FaqDashboard from "./pages/Help Desk and FAQ/faqDashboard";
 
 import EventView from "./pages/EventView";
 import AddEventParticipents from "./pages/AddEventParticipents";
@@ -95,7 +96,15 @@ const App = () => {
                 />
             </Routes>
             <Routes>
-                <Route path="/faq" element={<showFAQ />} />
+                <Route path="/faq" element={<ShowFAQ />} />
+                <Route
+                    path="/faqdashboard"
+                    element={
+                        <ProtectedRoute>
+                            <FaqDashboard />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
 
             <Routes>

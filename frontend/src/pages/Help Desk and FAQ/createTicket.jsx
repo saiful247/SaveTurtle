@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import BackButton from "../components/BackButton";
-import Spinner from "../components/Spinner";
+import BackButton from "../../components/BackButton";
+import Spinner from "../../components/Spinner";
 import axios from "axios";
 import jsPDF from "jspdf";
 

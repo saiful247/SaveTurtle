@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 const faqSchema = mongoose.Schema(
     {
-        topic: {
+        question: {
             type: String,
         },
-        description: {
+        answer: {
             type: String,
         },
     },
