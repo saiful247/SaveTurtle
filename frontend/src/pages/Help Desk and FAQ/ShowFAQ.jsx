@@ -51,7 +51,7 @@ const ShowFAQ = () => {
                     }`}
                     onClick={() => setSortOrder("asc")}
                 >
-                    Sort Ascending
+                    Oldest
                 </button>
                 <button
                     className={`px-4 py-2 bg-gray-300 rounded ${
@@ -59,7 +59,7 @@ const ShowFAQ = () => {
                     }`}
                     onClick={() => setSortOrder("desc")}
                 >
-                    Sort Descending
+                    Latest
                 </button>
                 <input
                     type="text"

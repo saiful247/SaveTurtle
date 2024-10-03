@@ -89,7 +89,7 @@ const ViewTickets = () => {
         <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
             <div className="absolute top-0 left-0 p-6 flex items-center space-x-4">
                 <h1 className="text-2xl font-semibold text-gray-800">
-                    View Tickets
+                    Manage Tickets
                 </h1>
             </div>
             <div className="absolute top-4 right-4 flex space-x-4 items-center">
@@ -99,7 +99,7 @@ const ViewTickets = () => {
                     }`}
                     onClick={() => setSortOrder("asc")}
                 >
-                    Sort Ascending
+                    Oldest
                 </button>
                 <button
                     className={`px-4 py-2 bg-gray-300 rounded ${
@@ -107,7 +107,7 @@ const ViewTickets = () => {
                     }`}
                     onClick={() => setSortOrder("desc")}
                 >
-                    Sort Descending
+                    Latest
                 </button>
                 <input
                     type="text"
@@ -141,6 +141,12 @@ const ViewTickets = () => {
                                         Name
                                     </th>
                                     <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                                        Email
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                                        Phone
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                                         Status
                                     </th>
                                     <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
@@ -166,6 +172,12 @@ const ViewTickets = () => {
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-700">
                                             {ticket.name}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                            {ticket.email}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                            {ticket.phone}
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-700">
                                             {ticket.status === "solved"

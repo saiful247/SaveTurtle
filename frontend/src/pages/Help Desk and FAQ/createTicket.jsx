@@ -56,7 +56,7 @@ const CreateTickets = () => {
         setName("");
         setPhone("");
         setEmail("");
-        setIsSuccess(false); // Close the overlay
+        setIsSuccess(false);
     };
 
     return (
@@ -123,11 +123,22 @@ const CreateTickets = () => {
                     <input
                         type="text"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={(e) => {
+                            const phoneInput = e.target.value;
+                            if (/^\d{0,10}$/.test(phoneInput)) {
+                                setPhone(phoneInput);
+                            }
+                        }}
                         className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                         placeholder="Enter phone number"
                     />
+                    {phone.length < 10 && (
+                        <p className="text-red-700 text-sm mt-.5">
+                            Phone number must be 10 digits long.
+                        </p>
+                    )}
                 </div>
+
                 <div className="my-4">
                     <label className="text-lg font-medium text-gray-700">
                         Email
@@ -139,16 +150,21 @@ const CreateTickets = () => {
                         className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                         placeholder="Enter email address"
                     />
+                    {!email.includes("@") && (
+                        <p className="text-red-700 text-sm mt-.5">
+                            Email must contain &apos; @ &apos;
+                        </p>
+                    )}
                 </div>
+
                 <button
                     className="w-full py-3 mt-6 text-white bg-sky-500 rounded-lg hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2 transition duration-200"
                     onClick={handleTicketSubmission}
                 >
-                    {loading ? "Saving..." : "Save"}
+                    {loading ? "Saving..." : "Create"}
                 </button>
             </div>
 
-            {/* Success Overlay */}
             {isSuccess && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
                     <div className="bg-white text-center p-6 rounded-lg shadow-lg">
@@ -167,10 +183,10 @@ const CreateTickets = () => {
                                 Download
                             </button>
                             <button
-                                className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
+                                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-200"
                                 onClick={resetForm}
                             >
-                                Cancel
+                                Proceed without downloading
                             </button>
                         </div>
                     </div>
