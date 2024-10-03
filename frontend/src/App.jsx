@@ -1,19 +1,18 @@
 // src/App.jsx
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Header from './components/Header';
-import EventProgramPage from './pages/Event';
-import CreateEvents from './pages/CreateEvents';
-import ShowEvent from './pages/ShowEvent';
-import EditEvent from './pages/EditEvent';
-import DeleteEvent from './pages/DeleteEvent';
+import EventProgramPage from './pages/Events/Event';
+import CreateEvents from './pages/Events/CreateEvents';
+import ShowEvent from './pages/Events/ShowEvent';
+import EditEvent from './pages/Events/EditEvent';
+import DeleteEvent from './pages/Events/DeleteEvent';
 
-import EventView from './pages/EventView';
-import AddEventParticipents from './pages/AddEventParticipents'
-import EventBookingList from './pages/EventBookingList'
-import EditEventBooking from './pages/EditEventBooking'
-import DeleteEventBooking from './pages/DeleteEventBooking'
+import EventView from './pages/Events/EventView';
+import AddEventParticipents from './pages/Events/AddEventParticipents'
+import EventBookingList from './pages/Events/EventBookingList'
+import EditEventBooking from './pages/Events/EditEventBooking'
+import DeleteEventBooking from './pages/Events/DeleteEventBooking'
 
 import AdminLogin from './pages/AdminLogin';
 import AdminRegister from './pages/AdminRegister';

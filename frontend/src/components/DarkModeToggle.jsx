@@ -1,5 +1,5 @@
 // src/components/DarkModeToggle.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 const DarkModeToggle = () => {
