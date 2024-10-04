@@ -10,6 +10,8 @@ import bookingEmail from "./routes/bookingEmail.js";
 import adminRoute from "./routes/AdminRoute.js";
 import faqRouter from "./routes/faqRoutes.js";
 import ticketRouter from "./routes/ticketRoutes.js";
+import membershipsRoute from "./routes/membershipsRoute.js";
+import subscriptionRoute from "./routes/subscriptionRoute.js";
 
 const app = express();
 
@@ -25,13 +27,13 @@ const __dirname = path.dirname(__filename);
 
 // Serve static files
 app.use(
-  "/uploads/eventPayment",
-  express.static(path.join(__dirname, "uploads/eventPayment"))
+    "/uploads/eventPayment",
+    express.static(path.join(__dirname, "uploads/eventPayment"))
 );
 
 app.get("/", (request, response) => {
-  console.log(request);
-  return response.status(234).send("MERN Testing");
+    console.log(request);
+    return response.status(234).send("MERN Testing");
 });
 
 // Routes
@@ -42,19 +44,21 @@ app.use("/eventBookingList", eventParticipantRoute);
 app.use("/sendEmail", bookingEmail);
 app.use("/faq", faqRouter);
 app.use("/tickets", ticketRouter);
+app.use("/memberships", membershipsRoute);
+app.use("/subscriptions", subscriptionRoute);
 
 //login
 app.use("/admin", adminRoute);
 app.use("/admin/register", adminRoute);
 
 mongoose
-  .connect(mongoDBURL)
-  .then(() => {
-    console.log("App connected to the Database");
-    app.listen(PORT, () => {
-      console.log(`App is listening to port: ${PORT}`);
+    .connect(mongoDBURL)
+    .then(() => {
+        console.log("App connected to the Database");
+        app.listen(PORT, () => {
+            console.log(`App is listening to port: ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.log(error);
     });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
