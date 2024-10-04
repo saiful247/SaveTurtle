@@ -8,6 +8,8 @@ import { fileURLToPath } from "url";
 import path from "path";
 import bookingEmail from "./routes/bookingEmail.js";
 import adminRoute from "./routes/AdminRoute.js";
+import faqRouter from "./routes/faqRoutes.js";
+import ticketRouter from "./routes/ticketRoutes.js";
 
 const app = express();
 
@@ -38,6 +40,8 @@ app.use("/eventViews", eventRoute);
 app.use("/eventViews/eventParticipants", eventParticipantRoute);
 app.use("/eventBookingList", eventParticipantRoute);
 app.use("/sendEmail", bookingEmail);
+app.use("/faq", faqRouter);
+app.use("/tickets", ticketRouter);
 
 //login
 app.use("/admin", adminRoute);

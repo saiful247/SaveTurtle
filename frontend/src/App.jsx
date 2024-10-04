@@ -19,6 +19,10 @@ import AdminRegister from './pages/AdminRegister';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';  // Import the ProtectedRoute component
 
+import ShowFAQ from "./pages/Help Desk and FAQ/ShowFAQ";
+import CreateTickets from "./pages/Help Desk and FAQ/createTicket";
+import ViewTickets from "./pages/Help Desk and FAQ/viewTickets";
+import FaqDashboard from "./pages/Help Desk and FAQ/faqDashboard";
 
 const App = () => {
   return (
@@ -91,6 +95,28 @@ const App = () => {
         <Route path='/' element={<Home />} />
       </Routes>
       
+      <Routes>
+                <Route path="/createtickets" element={<CreateTickets />} />
+                <Route
+                    path="/tickets"
+                    element={
+                        <ProtectedRoute>
+                            <ViewTickets />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
+            <Routes>
+                <Route path="/faq" element={<ShowFAQ />} />
+                <Route
+                    path="/faqdashboard"
+                    element={
+                        <ProtectedRoute>
+                            <FaqDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
       
       
     </>
