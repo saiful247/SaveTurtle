@@ -15,6 +15,21 @@ import EventBookingList from './pages/EventBookingList'
 import EditEventBooking from './pages/EditEventBooking'
 import DeleteEventBooking from './pages/DeleteEventBooking'
 
+// import RefundPage from './pages/RefundPage'
+// import CreateRefund from './pages/CreateRefund'
+// import EditRefund from './pages/EditRefund'
+// import DeleteRefund from './pages/DeleteRefund'
+// import ShowRefund from './pages/ShowRefund'
+// import UserRefunds from './pages/RefundUserPage'
+
+import RefundPage from './pages/Refund/RefundPage'
+import CreateRefund from './pages/Refund/CreateRefund'
+import EditRefund from './pages/Refund/EditRefund'
+import DeleteRefund from './pages/Refund/DeleteRefund'
+import ShowRefund from './pages/Refund/ShowRefund'
+import UserRefunds from './pages/Refund/RefundUserPage'
+
+
 import AdminLogin from './pages/AdminLogin';
 import AdminRegister from './pages/AdminRegister';
 import AdminDashboard from './pages/AdminDashboard';
@@ -91,9 +106,36 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
       </Routes>
-      
-      
-      
+      <Routes>
+        <Route path='/userRefunds' element={<UserRefunds/>}></Route>
+      </Routes>
+      <Routes>
+        <Route path='/refunds'element={
+          <ProtectedRoute>
+            <RefundPage/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/refunds/create'element={
+          <ProtectedRoute>
+            <CreateRefund/>
+          </ProtectedRoute>
+        }/>
+         <Route path='/refunds/details/:id'element={
+          <ProtectedRoute>
+            <ShowRefund/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/refunds/edit/:id'element={
+          <ProtectedRoute>
+            <EditRefund/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/refunds/delete/:id'element={
+          <ProtectedRoute>
+            <DeleteRefund/>
+          </ProtectedRoute>
+        }/>
+      </Routes>    
     </>
   );
 };

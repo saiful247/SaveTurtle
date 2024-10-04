@@ -8,7 +8,7 @@ const AdminDashboard = () => {
     { label: 'Events', path: '/events' },
     { label: 'Products', path: '/products' },
     { label: 'Users', path: '/users' },
-    { label: 'Orders', path: '/orders' },
+    { label: 'Refunds', path: '/refunds' },
     { label: 'Reports', path: '/reports' },
     { label: 'Settings', path: '/settings' },
     { label: 'Analytics', path: '/analytics' },
