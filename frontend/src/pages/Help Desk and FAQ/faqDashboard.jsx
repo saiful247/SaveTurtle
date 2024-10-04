@@ -19,34 +19,34 @@ const FaqDashboard = () => {
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
-        const fetchFaqs = async () => {
-            setLoading(true);
-            try {
-                const response = await axios.get("http://localhost:5555/faq");
-                setFaqs(response.data.data);
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-                setError(
-                    "Failed to fetch FAQs. Please check console for more details."
-                );
-                setLoading(false);
-            }
-        };
-
         fetchFaqs();
     }, []);
+
+    const fetchFaqs = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get("http://localhost:5555/faq");
+            setFaqs(response.data.data);
+            setLoading(false);
+        } catch (error) {
+            console.log(error);
+            setError(
+                "Failed to fetch FAQs. Please check console for more details."
+            );
+            setLoading(false);
+        }
+    };
 
     const handleDelete = async () => {
         if (faqToDelete) {
             try {
                 await axios.delete(`http://localhost:5555/faq/${faqToDelete}`);
-                setFaqs((prev) =>
-                    prev.filter((faq) => faq._id !== faqToDelete)
-                );
+                await fetchFaqs(); // Refresh the FAQ list
                 setShowDeleteOverlay(false);
+                setFaqToDelete(null);
             } catch (error) {
                 console.log(error);
+                setError("Failed to delete FAQ. Please try again.");
             }
         }
     };
@@ -54,17 +54,20 @@ const FaqDashboard = () => {
     const handleNewFaqSubmit = async () => {
         if (newQuestion.trim() && newAnswer.trim()) {
             try {
-                const response = await axios.post("http://localhost:5555/faq", {
+                await axios.post("http://localhost:5555/faq", {
                     question: newQuestion,
                     answer: newAnswer,
                 });
-                setFaqs((prevFaqs) => [...prevFaqs, response.data.data]); // Update faqs state immediately
-                setNewQuestion(""); // Clear the input fields
+                await fetchFaqs(); // Refresh the FAQ list
+                setNewQuestion("");
                 setNewAnswer("");
-                setShowNewFaqOverlay(false); // Close the overlay
+                setShowNewFaqOverlay(false);
             } catch (error) {
-                console.log(error);
+                console.log("Error creating FAQ:", error);
+                setError("Failed to create FAQ. Please try again.");
             }
+        } else {
+            setError("Question and Answer fields cannot be empty.");
         }
     };
 
@@ -78,23 +81,19 @@ const FaqDashboard = () => {
     const handleEditSubmit = async () => {
         if (editQuestion.trim() && editAnswer.trim()) {
             try {
-                const response = await axios.put(
-                    `http://localhost:5555/faq/${faqToEdit}`,
-                    {
-                        question: editQuestion,
-                        answer: editAnswer,
-                    }
-                );
-                setFaqs((prevFaqs) =>
-                    prevFaqs.map((faq) =>
-                        faq._id === faqToEdit ? response.data.data : faq
-                    )
-                ); // Update faqs state immediately
-                setShowEditOverlay(false); // Close the overlay
-                setFaqToEdit(null); // Reset faqToEdit
+                await axios.put(`http://localhost:5555/faq/${faqToEdit}`, {
+                    question: editQuestion,
+                    answer: editAnswer,
+                });
+                await fetchFaqs(); // Refresh the FAQ list
+                setShowEditOverlay(false);
+                setFaqToEdit(null);
             } catch (error) {
-                console.log(error);
+                console.log("Error editing FAQ:", error);
+                setError("Failed to edit FAQ. Please try again.");
             }
+        } else {
+            setError("Question and Answer fields cannot be empty.");
         }
     };
 
