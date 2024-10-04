@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import BackButton from "../../components/BackButton";
 import Spinner from "../../components/Spinner";
 import axios from "axios";
 import jsPDF from "jspdf";
@@ -62,7 +61,6 @@ const CreateTickets = () => {
     return (
         <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
             <div className="absolute top-0 left-0 p-6 flex items-center space-x-4">
-                <BackButton />
                 <h1 className="text-2xl font-semibold text-gray-800">
                     Create Ticket
                 </h1>
