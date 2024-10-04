@@ -10,10 +10,8 @@ import DarkModeToggle from '../../components/DarkModeToggle'; // Ensure this com
 import * as XLSX from 'xlsx';
 import { QRCodeCanvas } from 'qrcode.react';
 
-// import { Pie } from 'react-chartjs-2';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 
-// ChartJS.register(ArcElement, Tooltip, Legend);
 
 const EventBookData = () => {
   const [participants, setParticipants] = useState([]);
@@ -212,7 +210,7 @@ const handleAnalyzeData = () => {
       <div className='flex justify-between items-center mb-4'>
         <input
           type='text'
-          placeholder='Search by participant name...'
+          placeholder='Search by participant name, Event name, Email, Phone...'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className='border border-gray-500 px-4 py-2 w-full max-w-xs'
@@ -293,6 +291,9 @@ const handleAnalyzeData = () => {
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   #
                 </th>
+                {/* <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  ID
+                </th> */}
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Participant Name
                 </th>
@@ -335,6 +336,9 @@ const handleAnalyzeData = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {index + 1}
                     </td>
+                    {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {participant._id}
+                    </td> */}
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {participant.participantName}
                     </td>
@@ -373,7 +377,7 @@ const handleAnalyzeData = () => {
                     <div className="mt-4 flex flex-col items-center">
                                     <QRCodeCanvas
                                         id={`qr-canvas-${participant._id}`}
-                                        value={`Event Name: ${participant.eventName},Participant Name: ${participant.participantName}, Gender: ${participant.gender}, Phone: ${participant.phone}, ID: ${participant._id},Email: ${participant.email},Event Date: ${participant.eventDate},Ticket Price: ${participant.ticketPrice}`}
+                                        value={`Event Name: ${participant.eventName},Booking iD: ${participant._id},Participant Name: ${participant.participantName}, Gender: ${participant.gender}, Phone: ${participant.phone}, ID: ${participant._id},Email: ${participant.email},Event Date: ${participant.eventDate},Ticket Price: ${participant.ticketPrice}`}
                                         size={128}
                                         bgColor={"#ffffff"}
                                         fgColor={"#000000"}
