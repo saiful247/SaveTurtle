@@ -9,12 +9,6 @@ const Header = () => {
                     <Link to="/" className="hover:text-gray-300">
                         Home
                     </Link>
-                    <Link
-                        to="/ViewAvailablePacks/viewpacks"
-                        className="hover:text-gray-300"
-                    >
-                        Premium Membership
-                    </Link>
                     <Link to="/eventViews" className="hover:text-gray-300">
                         Events
                     </Link>
@@ -33,6 +27,12 @@ const Header = () => {
                     </Link>
                     <Link to="/returns/create" className="hover:text-gray-300">
                         Return
+                    </Link>
+                    <Link
+                        to="/ViewAvailablePacks/viewpacks"
+                        className="hover:text-gray-300"
+                    >
+                        Premium Membership
                     </Link>
                     <Link to="/createtickets" className="hover:text-gray-300">
                         HelpDesk

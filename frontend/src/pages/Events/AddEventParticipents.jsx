@@ -64,7 +64,6 @@ const CreateEventsParticipant = () => {
       return;
     }
 
-
     const formData = new FormData();
     formData.append('participantName', participantName);
     formData.append('gender', gender);

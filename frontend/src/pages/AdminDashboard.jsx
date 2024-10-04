@@ -9,11 +9,10 @@ const AdminDashboard = () => {
         { label: "Donations", path: "/donations" },
         { label: "Membership", path: "/membership/view" },
         { label: "Refunds", path: "/refunds" },
-        { label: "Orders", path: "/orders" },
         { label: "Returns", path: "/returns" },
         { label: "Tickets", path: "/tickets" },
         { label: "FAQ", path: "/faqdashboard" },
-        { label: "Analytics", path: "/analytics" },
+        { label: "Rescue", path: "/analytics" },
     ];
 
     const handleButtonClick = (path) => {

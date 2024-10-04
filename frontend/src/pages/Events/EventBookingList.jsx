@@ -360,7 +360,7 @@ const handleAnalyzeData = () => {
                       {participant.paymentImageUrl ? (
                         <a href={`http://localhost:5555${participant.paymentImageUrl}`} target="_blank" rel="noopener noreferrer">
                           <img
-                            src={`http://localhost:5555${participant.paymentImageUrl}`} // Adjust if necessary
+                            src={`http://localhost:5555${participant.paymentImageUrl}`} 
                             alt="Payment"
                             className="h-16 w-16 object-cover rounded-md"
                           />

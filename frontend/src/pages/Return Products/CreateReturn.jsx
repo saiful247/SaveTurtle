@@ -30,17 +30,17 @@ const CreateReturns = () => {
 
   const handleSaveReturn = () => {
     const isConfirmed = window.confirm('Are you sure you want to submit this return request?');
-
+  
     if (!isConfirmed) {
       return;
     }
-
+  
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
-
+  
     const data = {
       productId,
       orderId,
@@ -49,15 +49,24 @@ const CreateReturns = () => {
       returnDate,
       email,
     };
-
+  
     setLoading(true);
-
+  
     axios
       .post('http://localhost:5555/returns', data)
       .then(() => {
         setLoading(false);
         generatePDF(); // Generate PDF and prompt for download
-        navigate('/return'); // Navigate to returns after PDF has been generated
+        navigate('/returns/create'); // Navigate to returns after PDF has been generated
+  
+        // Reset the form by clearing the state values
+        setProductId('');
+        setOrderId('');
+        setReason('');
+        setRefundAmount('');
+        setReturnDate('');
+        setEmail('');
+        setErrors({}); // Clear any existing errors
       })
       .catch((error) => {
         setLoading(false);
@@ -65,6 +74,7 @@ const CreateReturns = () => {
         console.log(error);
       });
   };
+  
 
   const generatePDF = () => {
     const doc = new jsPDF();

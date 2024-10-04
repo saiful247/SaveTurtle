@@ -102,7 +102,7 @@ const EventProgramPage = () => {
         </div>
       </div>
   
-      <div className={`bg-[#F9F6F0] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+      <div className={`bg-[#DDFFE7] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className='flex justify-between items-center mb-4'>
           <input
             type='text'
@@ -137,7 +137,7 @@ const EventProgramPage = () => {
         {loading ? (
           <Spinner />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 bg-[#F9F6F0]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ">
             {filteredEvents.map((eventP) => (
               <div
                 key={eventP._id}
