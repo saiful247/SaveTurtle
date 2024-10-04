@@ -34,29 +34,34 @@ import ViewAvailablePacks from "./pages/Memberships/ViewAvailablePacks";
 import ViewSubscription from "./pages/Memberships/ViewSubscription";
 import ViewSubscriptions from "./pages/Memberships/ViewAllSubscriptions";
 
-import Product from './pages/Products/Product'
-import CreateProducts from './pages/Products/CreateProducts'
-import DeleteProduct from './pages/Products/DeleteProduct' 
-import EditProduct from './pages/Products/EditProduct'
-import ShowProduct from './pages/Products/ShowProduct'
+import Product from "./pages/Products/Product";
+import CreateProducts from "./pages/Products/CreateProducts";
+import DeleteProduct from "./pages/Products/DeleteProduct";
+import EditProduct from "./pages/Products/EditProduct";
+import ShowProduct from "./pages/Products/ShowProduct";
 
-import ProductView from './pages/Products/ProductUser'
-import ProductDetails from './pages/Products/PurchaseForm';
+import ProductView from "./pages/Products/ProductUser";
+import ProductDetails from "./pages/Products/PurchaseForm";
 
-import RefundPage from './pages/Refund/RefundPage'
-import CreateRefund from './pages/Refund/CreateRefund'
-import EditRefund from './pages/Refund/EditRefund'
-import DeleteRefund from './pages/Refund/DeleteRefund'
-import ShowRefund from './pages/Refund/ShowRefund'
-import UserRefunds from './pages/Refund/RefundUserPage'
+import RefundPage from "./pages/Refund/RefundPage";
+import CreateRefund from "./pages/Refund/CreateRefund";
+import EditRefund from "./pages/Refund/EditRefund";
+import DeleteRefund from "./pages/Refund/DeleteRefund";
+import ShowRefund from "./pages/Refund/ShowRefund";
+import UserRefunds from "./pages/Refund/RefundUserPage";
 
-import HomeDonation from './pages/Donation/HomeDonation'
-import CreateDonations from './pages/Donation/CreateDonations'
-import ShowDonation from './pages/Donation/ShowDonation'
-import EditDonation from './pages/Donation/EditDonation'
-import DeleteDonation from './pages/Donation/DeleteDonation'
-import HeroSection from './pages/Donation/HeroSection'
+import HomeDonation from "./pages/Donation/HomeDonation";
+import CreateDonations from "./pages/Donation/CreateDonations";
+import ShowDonation from "./pages/Donation/ShowDonation";
+import EditDonation from "./pages/Donation/EditDonation";
+import DeleteDonation from "./pages/Donation/DeleteDonation";
+import HeroSection from "./pages/Donation/HeroSection";
 
+import CreateReturns from "./pages/Return Products/CreateReturn";
+import DeleteReturn from "./pages/Return Products/DeleteReturn";
+import EditReturn from "./pages/Return Products/EditReturn";
+import ReturnProduct from "./pages/Return Products/ReturnProduct";
+import ShowReturn from "./pages/Return Products/ShowReturn";
 
 const App = () => {
     return (
@@ -247,101 +252,183 @@ const App = () => {
 
             {/* Farthas */}
             <Routes>
-      <Route path='/products' element={
-        <ProtectedRoute>
-          <Product />
-        </ProtectedRoute>
-        }/>
-        <Route path='/products/create' element={
-          <ProtectedRoute>
-          <CreateProducts />
-        </ProtectedRoute>
-          }/>
-        <Route path='/products/details/:id' element={
-          <ProtectedRoute>
-          <ShowProduct />
-        </ProtectedRoute>
-          }/>
-        <Route path='/products/edit/:id' element={
-          <ProtectedRoute>
-          <EditProduct />
-        </ProtectedRoute>
-          }/>
-        <Route path='/products/delete/:id' element={
-          <ProtectedRoute>
-          <DeleteProduct />
-        </ProtectedRoute>
-          }/>
-      </Routes>
+                <Route
+                    path="/products"
+                    element={
+                        <ProtectedRoute>
+                            <Product />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/products/create"
+                    element={
+                        <ProtectedRoute>
+                            <CreateProducts />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/products/details/:id"
+                    element={
+                        <ProtectedRoute>
+                            <ShowProduct />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/products/edit/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EditProduct />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/products/delete/:id"
+                    element={
+                        <ProtectedRoute>
+                            <DeleteProduct />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
 
-      <Routes>
-      <Route path='/productViews' element={<ProductView />}/>
-      <Route path='/productViews/purchaseForm' element={<ProductDetails />}/>
-      </Routes>
+            <Routes>
+                <Route path="/productViews" element={<ProductView />} />
+                <Route
+                    path="/productViews/purchaseForm"
+                    element={<ProductDetails />}
+                />
+            </Routes>
 
-      {/* Azmath */}
-      <Routes>
-        <Route path='/userRefunds' element={<UserRefunds/>}></Route>
-      </Routes>
-      <Routes>
-        <Route path='/refunds'element={
-          <ProtectedRoute>
-            <RefundPage/>
-          </ProtectedRoute>
-        }/>
-        <Route path='/refunds/create'element={
-          <ProtectedRoute>
-            <CreateRefund/>
-          </ProtectedRoute>
-        }/>
-         <Route path='/refunds/details/:id'element={
-          <ProtectedRoute>
-            <ShowRefund/>
-          </ProtectedRoute>
-        }/>
-        <Route path='/refunds/edit/:id'element={
-          <ProtectedRoute>
-            <EditRefund/>
-          </ProtectedRoute>
-        }/>
-        <Route path='/refunds/delete/:id'element={
-          <ProtectedRoute>
-            <DeleteRefund/>
-          </ProtectedRoute>
-        }/>
-      </Routes> 
+            {/* Azmath */}
+            <Routes>
+                <Route path="/userRefunds" element={<UserRefunds />}></Route>
+            </Routes>
+            <Routes>
+                <Route
+                    path="/refunds"
+                    element={
+                        <ProtectedRoute>
+                            <RefundPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/refunds/create"
+                    element={
+                        <ProtectedRoute>
+                            <CreateRefund />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/refunds/details/:id"
+                    element={
+                        <ProtectedRoute>
+                            <ShowRefund />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/refunds/edit/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EditRefund />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/refunds/delete/:id"
+                    element={
+                        <ProtectedRoute>
+                            <DeleteRefund />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
 
-      {/* Donation */}
-      
-      <Routes>
-      <Route path='/donations' element={
-        <ProtectedRoute>
-          <HomeDonation />
-        </ProtectedRoute>
-        }/>
-        <Route path='/donations/details/:id' element={
-          <ProtectedRoute>
-          <ShowDonation />
-        </ProtectedRoute>
-          }/>
-        <Route path='/donations/edit/:id' element={
-          <ProtectedRoute>
-          <EditDonation />
-        </ProtectedRoute>
-          }/>
-        <Route path='/donations/delete/:id' element={
-          <ProtectedRoute>
-          <DeleteDonation />
-        </ProtectedRoute>
-          }/>
-      </Routes>
+            {/* Donation */}
 
-      <Routes>
-      <Route path='/donations/herosection' element={<HeroSection/>}/>
-      <Route path='/donations/create' element={<CreateDonations/>}/>
-      </Routes>
+            <Routes>
+                <Route
+                    path="/donations"
+                    element={
+                        <ProtectedRoute>
+                            <HomeDonation />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/donations/details/:id"
+                    element={
+                        <ProtectedRoute>
+                            <ShowDonation />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/donations/edit/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EditDonation />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/donations/delete/:id"
+                    element={
+                        <ProtectedRoute>
+                            <DeleteDonation />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
 
-      
+            <Routes>
+                <Route
+                    path="/donations/herosection"
+                    element={<HeroSection />}
+                />
+                <Route path="/donations/create" element={<CreateDonations />} />
+            </Routes>
+
+            <Routes>
+                <Route
+                    path="/returns"
+                    element={
+                        <ProtectedRoute>
+                            <ReturnProduct />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route path="/returns/create" element={<CreateReturns />} />
+                <Route
+                    path="/returns/details/:id"
+                    element={
+                        <ProtectedRoute>
+                            <ShowReturn />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/returns/edit/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EditReturn />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/returns/delete/:id"
+                    element={
+                        <ProtectedRoute>
+                            <DeleteReturn />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
         </>
     );
 };

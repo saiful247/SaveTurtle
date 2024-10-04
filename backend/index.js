@@ -15,6 +15,7 @@ import subscriptionRoute from "./routes/subscriptionRoute.js";
 import productRoute from "./routes/productRoute.js";
 import purchaseRoute from "./routes/purchaseRoute.js";
 import refundRoute from "./routes/refundRoutes.js";
+import ReturnRouter from "./routes/ReturnsRoute.js";
 
 import donationsRoute from "./routes/donationsRoute.js";
 
@@ -32,28 +33,28 @@ const __dirname = path.dirname(__filename);
 
 // Serve static files
 app.use(
-  "/uploads/eventPayment",
-  express.static(path.join(__dirname, "uploads/eventPayment"))
+    "/uploads/eventPayment",
+    express.static(path.join(__dirname, "uploads/eventPayment"))
 );
 
 app.use(
-  "/uploads/productImage",
-  express.static(path.join(__dirname, "uploads/productImage"))
+    "/uploads/productImage",
+    express.static(path.join(__dirname, "uploads/productImage"))
 );
 
 app.use(
-  "/uploads/purchasePayment",
-  express.static(path.join(__dirname, "uploads/purchasePayment"))
+    "/uploads/purchasePayment",
+    express.static(path.join(__dirname, "uploads/purchasePayment"))
 );
 
 app.use(
-  "/uploads/receipts",
-  express.static(path.join(__dirname, "uploads/receipts"))
+    "/uploads/receipts",
+    express.static(path.join(__dirname, "uploads/receipts"))
 );
 
 app.get("/", (request, response) => {
-  console.log(request);
-  return response.status(234).send("MERN Testing");
+    console.log(request);
+    return response.status(234).send("MERN Testing");
 });
 
 // Routes
@@ -66,6 +67,7 @@ app.use("/faq", faqRouter);
 app.use("/tickets", ticketRouter);
 app.use("/memberships", membershipsRoute);
 app.use("/subscriptions", subscriptionRoute);
+app.use("/returns", ReturnRouter);
 
 // Product Routes
 app.use("/products", productRoute);
@@ -84,13 +86,13 @@ app.use("/admin", adminRoute);
 app.use("/admin/register", adminRoute);
 
 mongoose
-  .connect(mongoDBURL)
-  .then(() => {
-    console.log("App connected to the Database");
-    app.listen(PORT, () => {
-      console.log(`App is listening to port: ${PORT}`);
+    .connect(mongoDBURL)
+    .then(() => {
+        console.log("App connected to the Database");
+        app.listen(PORT, () => {
+            console.log(`App is listening to port: ${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.log(error);
     });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
