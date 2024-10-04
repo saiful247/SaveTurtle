@@ -9,6 +9,9 @@ import path from "path";
 import bookingEmail from "./routes/bookingEmail.js";
 import adminRoute from "./routes/AdminRoute.js";
 
+import productRoute from "./routes/productRoute.js";
+import purchaseRoute from "./routes/purchaseRoute.js";
+
 const app = express();
 
 // Middleware for parsing request body
@@ -27,12 +30,22 @@ app.use(
   express.static(path.join(__dirname, "uploads/eventPayment"))
 );
 
+app.use(
+  "/uploads/productImage",
+  express.static(path.join(__dirname, "uploads/productImage"))
+);
+
+app.use(
+  "/uploads/purchasePayment",
+  express.static(path.join(__dirname, "uploads/purchasePayment"))
+);
+
 app.get("/", (request, response) => {
   console.log(request);
   return response.status(234).send("MERN Testing");
 });
 
-// Routes
+// Event Routes
 app.use("/events", eventRoute);
 app.use("/eventViews", eventRoute);
 app.use("/eventViews/eventParticipants", eventParticipantRoute);
@@ -42,6 +55,11 @@ app.use("/sendEmail", bookingEmail);
 //login
 app.use("/admin", adminRoute);
 app.use("/admin/register", adminRoute);
+
+// Product Routes
+app.use("/products", productRoute);
+app.use("/productViews", productRoute);
+app.use("/productViews/purchaseForm", purchaseRoute);
 
 mongoose
   .connect(mongoDBURL)
