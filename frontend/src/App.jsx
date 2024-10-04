@@ -8,11 +8,6 @@ import ShowEvent from "./pages/ShowEvent";
 import EditEvent from "./pages/EditEvent";
 import DeleteEvent from "./pages/DeleteEvent";
 
-import ShowFAQ from "./pages/Help Desk and FAQ/ShowFAQ";
-import CreateTickets from "./pages/Help Desk and FAQ/createTicket";
-import ViewTickets from "./pages/Help Desk and FAQ/viewTickets";
-import FaqDashboard from "./pages/Help Desk and FAQ/faqDashboard";
-
 import EventView from "./pages/EventView";
 import AddEventParticipents from "./pages/AddEventParticipents";
 import EventBookingList from "./pages/EventBookingList";
@@ -22,7 +17,12 @@ import DeleteEventBooking from "./pages/DeleteEventBooking";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRegister from "./pages/AdminRegister";
 import AdminDashboard from "./pages/AdminDashboard";
-import ProtectedRoute from "./components/ProtectedRoute"; // Import the ProtectedRoute component
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import ShowFAQ from "./pages/Help Desk and FAQ/ShowFAQ";
+import CreateTickets from "./pages/Help Desk and FAQ/createTicket";
+import ViewTickets from "./pages/Help Desk and FAQ/viewTickets";
+import FaqDashboard from "./pages/Help Desk and FAQ/faqDashboard"; // Import the ProtectedRoute component
 
 const App = () => {
     return (
@@ -85,29 +85,6 @@ const App = () => {
             </Routes>
 
             <Routes>
-                <Route path="/createtickets" element={<CreateTickets />} />
-                <Route
-                    path="/tickets"
-                    element={
-                        <ProtectedRoute>
-                            <ViewTickets />
-                        </ProtectedRoute>
-                    }
-                />
-            </Routes>
-            <Routes>
-                <Route path="/faq" element={<ShowFAQ />} />
-                <Route
-                    path="/faqdashboard"
-                    element={
-                        <ProtectedRoute>
-                            <FaqDashboard />
-                        </ProtectedRoute>
-                    }
-                />
-            </Routes>
-
-            <Routes>
                 <Route path="/eventViews" element={<EventView />} />
                 <Route
                     path="/eventViews/eventParticipants"
@@ -149,6 +126,29 @@ const App = () => {
 
             <Routes>
                 <Route path="/" element={<Home />} />
+            </Routes>
+
+            <Routes>
+                <Route path="/createtickets" element={<CreateTickets />} />
+                <Route
+                    path="/tickets"
+                    element={
+                        <ProtectedRoute>
+                            <ViewTickets />
+                        </ProtectedRoute>
+                    }
+                />
+            </Routes>
+            <Routes>
+                <Route path="/faq" element={<ShowFAQ />} />
+                <Route
+                    path="/faqdashboard"
+                    element={
+                        <ProtectedRoute>
+                            <FaqDashboard />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </>
     );
