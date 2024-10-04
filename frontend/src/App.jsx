@@ -34,6 +34,17 @@ import ViewAvailablePacks from "./pages/Memberships/ViewAvailablePacks";
 import ViewSubscription from "./pages/Memberships/ViewSubscription";
 import ViewSubscriptions from "./pages/Memberships/ViewAllSubscriptions";
 
+import Product from './pages/Products/Product'
+import CreateProducts from './pages/Products/CreateProducts'
+import DeleteProduct from './pages/Products/DeleteProduct' 
+import EditProduct from './pages/Products/EditProduct'
+import ShowProduct from './pages/Products/ShowProduct'
+
+import ProductView from './pages/Products/ProductUser'
+import ProductDetails from './pages/Products/PurchaseForm';
+
+
+
 const App = () => {
     return (
         <>
@@ -220,6 +231,40 @@ const App = () => {
                     element={<ViewSubscription />}
                 />
             </Routes>
+
+            {/* Farthas */}
+            <Routes>
+      <Route path='/products' element={
+        <ProtectedRoute>
+          <Product />
+        </ProtectedRoute>
+        }/>
+        <Route path='/products/create' element={
+          <ProtectedRoute>
+          <CreateProducts />
+        </ProtectedRoute>
+          }/>
+        <Route path='/products/details/:id' element={
+          <ProtectedRoute>
+          <ShowProduct />
+        </ProtectedRoute>
+          }/>
+        <Route path='/products/edit/:id' element={
+          <ProtectedRoute>
+          <EditProduct />
+        </ProtectedRoute>
+          }/>
+        <Route path='/products/delete/:id' element={
+          <ProtectedRoute>
+          <DeleteProduct />
+        </ProtectedRoute>
+          }/>
+      </Routes>
+
+      <Routes>
+      <Route path='/productViews' element={<ProductView />}/>
+      <Route path='/productViews/purchaseForm' element={<ProductDetails />}/>
+      </Routes>
         </>
     );
 };

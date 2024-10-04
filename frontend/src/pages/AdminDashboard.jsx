@@ -5,7 +5,7 @@ const AdminDashboard = () => {
 
     const buttons = [
         { label: "Events", path: "/events" },
-        { label: "Products", path: "/products" },
+        { label: 'Products', path: '/products' },
         { label: "Membership", path: "/membership/view" },
         { label: "Tickets", path: "/tickets" },
         { label: "FAQ", path: "/faqdashboard" },
