@@ -14,6 +14,7 @@ import membershipsRoute from "./routes/membershipsRoute.js";
 import subscriptionRoute from "./routes/subscriptionRoute.js";
 import productRoute from "./routes/productRoute.js";
 import purchaseRoute from "./routes/purchaseRoute.js";
+import refundRoute from "./routes/refundRoutes.js";
 
 const app = express();
 
@@ -63,6 +64,10 @@ app.use("/subscriptions", subscriptionRoute);
 app.use("/products", productRoute);
 app.use("/productViews", productRoute);
 app.use("/productViews/purchaseForm", purchaseRoute);
+
+// Refund Routes
+app.use("/refunds", refundRoute);
+app.use("/userRefunds", refundRoute);
 
 //login
 app.use("/admin", adminRoute);

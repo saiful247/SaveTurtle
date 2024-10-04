@@ -6,10 +6,12 @@ const AdminDashboard = () => {
     const buttons = [
         { label: "Events", path: "/events" },
         { label: 'Products', path: '/products' },
+        { label: 'Donations', path: '/reports' },
+        { label: 'Refunds', path: '/refunds' },
+        { label: "Orders", path: "/orders" },
         { label: "Membership", path: "/membership/view" },
         { label: "Tickets", path: "/tickets" },
         { label: "FAQ", path: "/faqdashboard" },
-        { label: "Orders", path: "/orders" },
         { label: "Reports", path: "/reports" },
         { label: "Settings", path: "/settings" },
         { label: "Analytics", path: "/analytics" },
