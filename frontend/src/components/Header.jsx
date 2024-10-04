@@ -37,6 +37,9 @@ const Header = () => {
                     <Link to="/createtickets" className="hover:text-gray-300">
                         HelpDesk
                     </Link>
+                    <Link to="/" className="hover:text-gray-300">
+                        RescueTurtle
+                    </Link>
                 </div>
             </nav>
         </header>

@@ -102,7 +102,7 @@ const EventProgramPage = () => {
         </div>
       </div>
   
-      <div className={`bg-[#DDFFE7] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+      <div className={`bg-[#B9E9C9] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className='flex justify-between items-center mb-4'>
           <input
             type='text'
@@ -114,7 +114,7 @@ const EventProgramPage = () => {
           {/* New Filter with reduced gap */}
           <div className="flex items-center gap-2 ml-4">
             <div>
-              <label className="mr-1">From:</label>
+              <label className="mr-1 text-black">From:</label>
               <input
                 type="date"
                 value={startDate}
@@ -123,7 +123,7 @@ const EventProgramPage = () => {
               />
             </div>
             <div>
-              <label className="mr-1">To:</label>
+              <label className="mr-1 text-black">To:</label>
               <input
                 type="date"
                 value={endDate}
