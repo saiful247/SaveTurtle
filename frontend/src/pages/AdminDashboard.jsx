@@ -6,15 +6,13 @@ const AdminDashboard = () => {
     const buttons = [
         { label: "Events", path: "/events" },
         { label: 'Products', path: '/products' },
-        { label: 'Donations', path: '/reports' },
+        { label: 'Donations', path: '/donations' },
         { label: 'Refunds', path: '/refunds' },
-        { label: "Orders", path: "/orders" },
+        { label: "Return", path: "/orders" },
         { label: "Membership", path: "/membership/view" },
         { label: "Tickets", path: "/tickets" },
         { label: "FAQ", path: "/faqdashboard" },
-        { label: "Reports", path: "/reports" },
-        { label: "Settings", path: "/settings" },
-        { label: "Analytics", path: "/analytics" },
+        { label: "Rescue", path: "/analytics" },
     ];
 
     const handleButtonClick = (path) => {

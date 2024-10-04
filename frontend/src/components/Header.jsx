@@ -13,15 +13,13 @@ const Header = () => {
                     <Link to="/eventViews" className="hover:text-gray-300">
                         Events
                     </Link>
-                    <Link to="/createtickets" className="hover:text-gray-300">
-                        HelpDesk
-                    </Link>
-                    <Link to="/donation" className="hover:text-gray-300">
-                        Donation
-                    </Link>
+                    <Link to="/donations/herosection" className="hover:text-gray-300">Donation</Link>
                     <Link to="/userRefunds" className="hover:text-gray-300">Refund</Link>
                     <Link to="/return" className="hover:text-gray-300">
                         Return
+                    </Link>
+                    <Link to="/createtickets" className="hover:text-gray-300">
+                        HelpDesk
                     </Link>
                     <Link
                         to="/ViewAvailablePacks/viewpacks"

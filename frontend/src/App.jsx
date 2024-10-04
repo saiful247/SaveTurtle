@@ -50,6 +50,12 @@ import DeleteRefund from './pages/Refund/DeleteRefund'
 import ShowRefund from './pages/Refund/ShowRefund'
 import UserRefunds from './pages/Refund/RefundUserPage'
 
+import HomeDonation from './pages/Donation/HomeDonation'
+import CreateDonations from './pages/Donation/CreateDonations'
+import ShowDonation from './pages/Donation/ShowDonation'
+import EditDonation from './pages/Donation/EditDonation'
+import DeleteDonation from './pages/Donation/DeleteDonation'
+import HeroSection from './pages/Donation/HeroSection'
 
 
 const App = () => {
@@ -303,7 +309,39 @@ const App = () => {
             <DeleteRefund/>
           </ProtectedRoute>
         }/>
-      </Routes>    
+      </Routes> 
+
+      {/* Donation */}
+      
+      <Routes>
+      <Route path='/donations' element={
+        <ProtectedRoute>
+          <HomeDonation />
+        </ProtectedRoute>
+        }/>
+        <Route path='/donations/details/:id' element={
+          <ProtectedRoute>
+          <ShowDonation />
+        </ProtectedRoute>
+          }/>
+        <Route path='/donations/edit/:id' element={
+          <ProtectedRoute>
+          <EditDonation />
+        </ProtectedRoute>
+          }/>
+        <Route path='/donations/delete/:id' element={
+          <ProtectedRoute>
+          <DeleteDonation />
+        </ProtectedRoute>
+          }/>
+      </Routes>
+
+      <Routes>
+      <Route path='/donations/herosection' element={<HeroSection/>}/>
+      <Route path='/donations/create' element={<CreateDonations/>}/>
+      </Routes>
+
+      
         </>
     );
 };

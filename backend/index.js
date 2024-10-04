@@ -16,6 +16,8 @@ import productRoute from "./routes/productRoute.js";
 import purchaseRoute from "./routes/purchaseRoute.js";
 import refundRoute from "./routes/refundRoutes.js";
 
+import donationsRoute from "./routes/donationsRoute.js";
+
 const app = express();
 
 // Middleware for parsing request body
@@ -44,6 +46,11 @@ app.use(
   express.static(path.join(__dirname, "uploads/purchasePayment"))
 );
 
+app.use(
+  "/uploads/receipts",
+  express.static(path.join(__dirname, "uploads/receipts"))
+);
+
 app.get("/", (request, response) => {
   console.log(request);
   return response.status(234).send("MERN Testing");
@@ -68,6 +75,9 @@ app.use("/productViews/purchaseForm", purchaseRoute);
 // Refund Routes
 app.use("/refunds", refundRoute);
 app.use("/userRefunds", refundRoute);
+
+// donations Route
+app.use("/donations", donationsRoute);
 
 //login
 app.use("/admin", adminRoute);
