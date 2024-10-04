@@ -5,14 +5,14 @@ const AdminDashboard = () => {
 
     const buttons = [
         { label: "Events", path: "/events" },
-        { label: 'Products', path: '/products' },
-        { label: 'Donations', path: '/donations' },
-        { label: 'Refunds', path: '/refunds' },
-        { label: "Return", path: "/orders" },
+        { label: "Products", path: "/products" },
+        { label: "Donations", path: "/donations" },
+        { label: "Refunds", path: "/refunds" },
+        { label: "Orders", path: "/orders" },
         { label: "Membership", path: "/membership/view" },
         { label: "Tickets", path: "/tickets" },
         { label: "FAQ", path: "/faqdashboard" },
-        { label: "Rescue", path: "/analytics" },
+        { label: "Analytics", path: "/analytics" },
     ];
 
     const handleButtonClick = (path) => {
@@ -25,25 +25,33 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="p-10">
-            <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-            <div className="flex flex-wrap gap-4">
-                {buttons.map((button, index) => (
+        <div className="min-h-screen bg-gray-100 flex flex-col">
+            <header className="bg-blue-600 text-white shadow-md">
+                <div className="container mx-auto flex justify-between items-center py-4 px-6">
+                    <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
                     <button
-                        key={index}
-                        onClick={() => handleButtonClick(button.path)}
-                        className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md transform hover:scale-110 hover:bg-blue-600 transition duration-300"
+                        onClick={handleLogout}
+                        className="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
                     >
-                        {button.label}
+                        Logout
                     </button>
-                ))}
-                <button
-                    onClick={handleLogout}
-                    className="bg-red-300 text-white px-6 py-3 rounded-lg shadow-md transform hover:scale-110 hover:bg-red-400 transition duration-300"
-                >
-                    Logout
-                </button>
-            </div>
+                </div>
+            </header>
+            <main className="flex-grow container mx-auto px-6 py-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {buttons.map((button, index) => (
+                        <div
+                            key={index}
+                            onClick={() => handleButtonClick(button.path)}
+                            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer flex flex-col items-center justify-center text-center hover:bg-sky-500 hover:text-white"
+                        >
+                            <span className="text-xl font-semibold text-gray-700 hover:text-white">
+                                {button.label}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </main>
         </div>
     );
 };
