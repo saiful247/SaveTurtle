@@ -203,7 +203,7 @@ const handleAnalyzeData = () => {
       </div>
 
       {/* Total Bookings Count */}
-      <div className="my-4">
+      <div className="my-4 ">
         <h3 className="text-lg text-gray-600">Total Bookings: {totalBookings}</h3>
         <h3 className="text-lg text-gray-600">Total Amount: LKR {totalAmount.toFixed(2)}</h3> {/* Display Total Amount */}
       </div>

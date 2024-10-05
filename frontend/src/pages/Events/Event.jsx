@@ -133,7 +133,7 @@ const EventProgramPage = () => {
       <div className='flex justify-between items-center mb-4'>
         <input
           type='text'
-          placeholder='Search by event name...'
+          placeholder='Search by event name, vanue...'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className='border border-gray-500 px-4 py-2 w-full max-w-xs'

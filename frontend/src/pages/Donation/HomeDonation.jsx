@@ -151,7 +151,7 @@ const HomeDonation = () => {
       <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-end">
         <button
           onClick={downloadCSV}
-          className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-200 mr-2 mb-2 md:mb-0"
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-200 mr-2 mb-2 md:mb-0"
         >
           Download All Donations (CSV)
         </button>

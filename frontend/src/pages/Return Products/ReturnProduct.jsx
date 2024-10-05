@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import Spinner from '../../components/Spinner';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
-import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
+import {MdOutlineDelete } from 'react-icons/md';
 
 const ReturnProduct = () => {
   const [returns, setReturns] = useState([]);
@@ -13,7 +13,7 @@ const ReturnProduct = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const navigate = useNavigate();
+ 
 
   useEffect(() => {
     setLoading(true);

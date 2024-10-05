@@ -12,8 +12,27 @@ const CreateTickets = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errors, setErrors] = useState({}); // State for storing validation errors
+
+  const validateFields = () => {
+    const newErrors = {};
+    if (!topic) newErrors.topic = "Topic is required.";
+    if (!description) newErrors.description = "Description is required.";
+    if (!name) newErrors.name = "Name is required.";
+    if (!phone || phone.length < 10) newErrors.phone = "Phone number must be 10 digits long.";
+    if (!email || !email.includes("@")) newErrors.email = "Valid email is required.";
+
+    return newErrors;
+  };
 
   const handleTicketSubmission = () => {
+    const validationErrors = validateFields();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return; // Stop the function if validation fails
+    }
+
     const data = {
       topic,
       description,
@@ -55,6 +74,7 @@ const CreateTickets = () => {
     setName("");
     setPhone("");
     setEmail("");
+    setErrors({});
     setIsSuccess(false);
   };
 
@@ -62,10 +82,7 @@ const CreateTickets = () => {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center relative">
       {/* Header with Create Ticket Title and FAQ Button */}
       <header className="w-full flex justify-between items-center p-6 absolute top-0">
-        {/* Create Ticket Title in top-left */}
         <h1 className="text-2xl font-semibold text-gray-800">Create Ticket</h1>
-
-        {/* FAQ Button in top-right */}
         <Link
           to="/faq"
           className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-600 transition duration-200"
@@ -80,47 +97,59 @@ const CreateTickets = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Ticket Information Section */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Ticket Information
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Ticket Information</h2>
             <div className="my-4">
               <label className="text-lg font-medium text-gray-700">Topic</label>
               <input
                 type="text"
                 value={topic}
-                onChange={(e) => setTopic(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                onChange={(e) => {
+                  setTopic(e.target.value);
+                  setErrors({ ...errors, topic: "" }); // Clear error on change
+                }}
+                className={`mt-1 block w-full px-4 py-2 border ${
+                  errors.topic ? "border-red-500" : "border-gray-300"
+                } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter topic"
               />
+              {errors.topic && <p className="text-red-700 text-sm mt-1">{errors.topic}</p>}
             </div>
             <div className="my-4">
-              <label className="text-lg font-medium text-gray-700">
-                Description
-              </label>
+              <label className="text-lg font-medium text-gray-700">Description</label>
               <textarea
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                  setErrors({ ...errors, description: "" });
+                }}
+                className={`mt-1 block w-full px-4 py-2 border ${
+                  errors.description ? "border-red-500" : "border-gray-300"
+                } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter description"
                 rows="6"
               />
+              {errors.description && <p className="text-red-700 text-sm mt-1">{errors.description}</p>}
             </div>
           </div>
 
           {/* Personal Information Section */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Personal Information
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Personal Information</h2>
             <div className="my-4">
               <label className="text-lg font-medium text-gray-700">Name</label>
               <input
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setErrors({ ...errors, name: "" });
+                }}
+                className={`mt-1 block w-full px-4 py-2 border ${
+                  errors.name ? "border-red-500" : "border-gray-300"
+                } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter your name"
               />
+              {errors.name && <p className="text-red-700 text-sm mt-1">{errors.name}</p>}
             </div>
             <div className="my-4">
               <label className="text-lg font-medium text-gray-700">Phone</label>
@@ -131,32 +160,31 @@ const CreateTickets = () => {
                   const phoneInput = e.target.value;
                   if (/^\d{0,10}$/.test(phoneInput)) {
                     setPhone(phoneInput);
+                    setErrors({ ...errors, phone: "" });
                   }
                 }}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                className={`mt-1 block w-full px-4 py-2 border ${
+                  errors.phone ? "border-red-500" : "border-gray-300"
+                } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter phone number"
               />
-              {phone.length < 10 && (
-                <p className="text-red-700 text-sm mt-.5">
-                  Phone number must be 10 digits long.
-                </p>
-              )}
+              {errors.phone && <p className="text-red-700 text-sm mt-1">{errors.phone}</p>}
             </div>
-
             <div className="my-4">
               <label className="text-lg font-medium text-gray-700">Email</label>
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setErrors({ ...errors, email: "" });
+                }}
+                className={`mt-1 block w-full px-4 py-2 border ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter email address"
               />
-              {!email.includes("@") && (
-                <p className="text-red-700 text-sm mt-.5">
-                  Email must contain &apos; @ &apos;
-                </p>
-              )}
+              {errors.email && <p className="text-red-700 text-sm mt-1">{errors.email}</p>}
             </div>
           </div>
         </div>

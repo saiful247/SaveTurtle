@@ -104,7 +104,7 @@ const RefundPage = () => {
       {/* Report Generation Buttons */}
       <div className='flex gap-4 mb-4'>
         {/* PDF Report Button */}
-        <button onClick={generatePDF} className="bg-blue-500 text-white p-2 rounded-md">
+        <button onClick={generatePDF} className="bg-red-500 text-white p-2 rounded-md">
           Generate PDF Report
         </button>
 

@@ -33,28 +33,28 @@ const __dirname = path.dirname(__filename);
 
 // Serve static files
 app.use(
-    "/uploads/eventPayment",
-    express.static(path.join(__dirname, "uploads/eventPayment"))
+  "/uploads/eventPayment",
+  express.static(path.join(__dirname, "uploads/eventPayment"))
 );
 
 app.use(
-    "/uploads/productImage",
-    express.static(path.join(__dirname, "uploads/productImage"))
+  "/uploads/productImage",
+  express.static(path.join(__dirname, "uploads/productImage"))
 );
 
 app.use(
-    "/uploads/purchasePayment",
-    express.static(path.join(__dirname, "uploads/purchasePayment"))
+  "/uploads/purchasePayment",
+  express.static(path.join(__dirname, "uploads/purchasePayment"))
 );
 
 app.use(
-    "/uploads/receipts",
-    express.static(path.join(__dirname, "uploads/receipts"))
+  "/uploads/receipts",
+  express.static(path.join(__dirname, "uploads/receipts"))
 );
 
 app.get("/", (request, response) => {
-    console.log(request);
-    return response.status(234).send("MERN Testing");
+  console.log(request);
+  return response.status(234).send("MERN Testing");
 });
 
 // Routes
@@ -73,6 +73,7 @@ app.use("/returns", ReturnRouter);
 app.use("/products", productRoute);
 app.use("/productViews", productRoute);
 app.use("/productViews/purchaseForm", purchaseRoute);
+app.use("/purchaseList", purchaseRoute);
 
 // Refund Routes
 app.use("/refunds", refundRoute);
@@ -86,13 +87,13 @@ app.use("/admin", adminRoute);
 app.use("/admin/register", adminRoute);
 
 mongoose
-    .connect(mongoDBURL)
-    .then(() => {
-        console.log("App connected to the Database");
-        app.listen(PORT, () => {
-            console.log(`App is listening to port: ${PORT}`);
-        });
-    })
-    .catch((error) => {
-        console.log(error);
+  .connect(mongoDBURL)
+  .then(() => {
+    console.log("App connected to the Database");
+    app.listen(PORT, () => {
+      console.log(`App is listening to port: ${PORT}`);
     });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
