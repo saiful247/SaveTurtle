@@ -109,7 +109,7 @@ const EventProgramPage = () => {
           </Link>
           <Link to='/eventBookingList'>
           <button
-            className='bg-gray-500 text-white px-4 py-2 rounded-md'
+            className='bg-[#FF5D22] text-white px-4 py-2 rounded-md'
           >
             Booking Management
           </button>
@@ -133,7 +133,7 @@ const EventProgramPage = () => {
       <div className='flex justify-between items-center mb-4'>
         <input
           type='text'
-          placeholder='Search by event name...'
+          placeholder='Search by event name, vanue...'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className='border border-gray-500 px-4 py-2 w-full max-w-xs'

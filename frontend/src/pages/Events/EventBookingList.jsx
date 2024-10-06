@@ -184,7 +184,7 @@ const handleAnalyzeData = () => {
           </Link>
           <Link to='/events'>
           <button
-            className='bg-gray-500 text-white px-4 py-2 rounded-md'
+            className='bg-[#FF5D22] text-white px-4 py-2 rounded-md'
           >
             Event Management
           </button>
@@ -201,7 +201,7 @@ const handleAnalyzeData = () => {
       </div>
 
       {/* Total Bookings Count */}
-      <div className="my-4">
+      <div className="my-4 ">
         <h3 className="text-lg text-gray-600">Total Bookings: {totalBookings}</h3>
         <h3 className="text-lg text-gray-600">Total Amount: LKR {totalAmount.toFixed(2)}</h3> {/* Display Total Amount */}
       </div>
@@ -364,7 +364,7 @@ const handleAnalyzeData = () => {
                       {participant.paymentImageUrl ? (
                         <a href={`http://localhost:5555${participant.paymentImageUrl}`} target="_blank" rel="noopener noreferrer">
                           <img
-                            src={`http://localhost:5555${participant.paymentImageUrl}`} // Adjust if necessary
+                            src={`http://localhost:5555${participant.paymentImageUrl}`} 
                             alt="Payment"
                             className="h-16 w-16 object-cover rounded-md"
                           />
