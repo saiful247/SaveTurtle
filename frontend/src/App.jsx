@@ -81,11 +81,7 @@ const App = () => {
                     }
                 />
             </Routes>
-            
-            <Routes>
-            <Route path="/eventlanding" element={<EventLanding />} />
-            </Routes>
-            
+
             <Routes>
                 <Route
                     path="/events"
@@ -435,7 +431,10 @@ const App = () => {
                     }
                 />
             </Routes>
-
+            
+            <Routes>
+            <Route path="/eventlanding" element={<EventLanding />} />
+            </Routes>
             
         </>
     );
