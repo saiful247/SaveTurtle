@@ -33,7 +33,7 @@ const UnderConstruction = () => {
       </div>
 
       {/* Content Section */}
-      <div className="bg-white text-gray-900 p-8 md:p-16">
+      <div className="bg bg-customGreen text-white p-8 md:p-16">
         <h2 className="text-4xl font-semibold mb-4">
           Why Protect Turtles in Sri Lanka?
         </h2>
