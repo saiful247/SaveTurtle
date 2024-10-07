@@ -63,6 +63,8 @@ import EditReturn from "./pages/Return Products/EditReturn";
 import ReturnProduct from "./pages/Return Products/ReturnProduct";
 import ShowReturn from "./pages/Return Products/ShowReturn";
 
+import EventLanding from "./pages/Events/EventLanding";
+
 const App = () => {
     return (
         <>
@@ -79,7 +81,11 @@ const App = () => {
                     }
                 />
             </Routes>
-
+            
+            <Routes>
+            <Route path="/eventlanding" element={<EventLanding />} />
+            </Routes>
+            
             <Routes>
                 <Route
                     path="/events"
@@ -429,6 +435,8 @@ const App = () => {
                     }
                 />
             </Routes>
+
+            
         </>
     );
 };
