@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         primary: "rgb(7, 41, 46)",
+        primary_light: "rgb(15, 70, 88)",
       },
     },
   },
