@@ -19,8 +19,10 @@ const CreateTickets = () => {
     if (!topic) newErrors.topic = "Topic is required.";
     if (!description) newErrors.description = "Description is required.";
     if (!name) newErrors.name = "Name is required.";
-    if (!phone || phone.length < 10) newErrors.phone = "Phone number must be 10 digits long.";
-    if (!email || !email.includes("@")) newErrors.email = "Valid email is required.";
+    if (!phone || phone.length < 10)
+      newErrors.phone = "Phone number must be 10 digits long.";
+    if (!email || !email.includes("@"))
+      newErrors.email = "Valid email is required.";
 
     return newErrors;
   };
@@ -97,7 +99,9 @@ const CreateTickets = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Ticket Information Section */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Ticket Information</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Ticket Information
+            </h2>
             <div className="my-4">
               <label className="text-lg font-medium text-gray-700">Topic</label>
               <input
@@ -112,10 +116,14 @@ const CreateTickets = () => {
                 } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter topic"
               />
-              {errors.topic && <p className="text-red-700 text-sm mt-1">{errors.topic}</p>}
+              {errors.topic && (
+                <p className="text-red-700 text-sm mt-1">{errors.topic}</p>
+              )}
             </div>
             <div className="my-4">
-              <label className="text-lg font-medium text-gray-700">Description</label>
+              <label className="text-lg font-medium text-gray-700">
+                Description
+              </label>
               <textarea
                 value={description}
                 onChange={(e) => {
@@ -128,13 +136,19 @@ const CreateTickets = () => {
                 placeholder="Enter description"
                 rows="6"
               />
-              {errors.description && <p className="text-red-700 text-sm mt-1">{errors.description}</p>}
+              {errors.description && (
+                <p className="text-red-700 text-sm mt-1">
+                  {errors.description}
+                </p>
+              )}
             </div>
           </div>
 
           {/* Personal Information Section */}
           <div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Personal Information</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Personal Information
+            </h2>
             <div className="my-4">
               <label className="text-lg font-medium text-gray-700">Name</label>
               <input
@@ -149,7 +163,9 @@ const CreateTickets = () => {
                 } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter your name"
               />
-              {errors.name && <p className="text-red-700 text-sm mt-1">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-red-700 text-sm mt-1">{errors.name}</p>
+              )}
             </div>
             <div className="my-4">
               <label className="text-lg font-medium text-gray-700">Phone</label>
@@ -168,7 +184,9 @@ const CreateTickets = () => {
                 } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter phone number"
               />
-              {errors.phone && <p className="text-red-700 text-sm mt-1">{errors.phone}</p>}
+              {errors.phone && (
+                <p className="text-red-700 text-sm mt-1">{errors.phone}</p>
+              )}
             </div>
             <div className="my-4">
               <label className="text-lg font-medium text-gray-700">Email</label>
@@ -184,7 +202,9 @@ const CreateTickets = () => {
                 } rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent`}
                 placeholder="Enter email address"
               />
-              {errors.email && <p className="text-red-700 text-sm mt-1">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-700 text-sm mt-1">{errors.email}</p>
+              )}
             </div>
           </div>
         </div>
