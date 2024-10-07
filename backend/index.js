@@ -60,6 +60,8 @@ app.use("/admin/register", adminRoute);
 app.use("/products", productRoute);
 app.use("/productViews", productRoute);
 app.use("/productViews/purchaseForm", purchaseRoute);
+app.use("/purchaseList", purchaseRoute);
+
 
 mongoose
   .connect(mongoDBURL)

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import BackButton from '../components/BackButton';
-import Spinner from '../components/Spinner';
-import { Product } from '../../../backend/models/productModel';
+import BackButton from '../../components/BackButton';
+import Spinner from '../../components/Spinner';
+import { Product } from '../../../../backend/models/productModel';
 
 
 const ShowProduct = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Spinner from '../components/Spinner';
+import Spinner from '../../components/Spinner';
 import { Link } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
@@ -105,10 +105,27 @@ const Product = () => {
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-4xl font-bold text-gray-800">Products</h1>
-        <Link to="/products/create" className="bg-sky-600 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded transition duration-300">
-          Add New Product
-        </Link>
+
+        {/* Button Group */}
+        <div className="space-x-4">  {/* Spacing between buttons */}
+          <Link to="/admin/dashboard">
+            <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+              Admin Dashboard
+            </button>
+          </Link>
+          <Link to="/purchaseList">
+            <button className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+              Purchase Management
+            </button>
+          </Link>
+          <Link to="/products/create">
+            <button className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+              Add New Product
+            </button>
+          </Link>
+        </div>
       </div>
+
 
       {/* Search and Category Filter */}
       <div className="flex space-x-4 mb-6">
@@ -137,8 +154,7 @@ const Product = () => {
       <div className="flex justify-end mb-4">
         <button
           onClick={generatePdfReport}
-          className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded transition duration-300"
-        >
+          className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded transition duration-300">
           Generate PDF Report
         </button>
       </div>
@@ -210,7 +226,7 @@ const Product = () => {
           {filteredProducts.length > 0 && (
             <div className="mt-6 bg-white shadow-lg rounded-lg p-6">
               <h2 className="text-2xl font-bold mb-4">Summary</h2>
-              
+
               {/* Category Quantities */}
               <div className="mb-4">
                 <h3 className="text-lg font-semibold mb-2">Product Quantity by Category</h3>

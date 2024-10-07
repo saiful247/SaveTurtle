@@ -8,7 +8,8 @@ const Header = () => {
       <nav className="container mx-auto flex justify-between">
         <div className="flex space-x-4">
           <Link to="/" className="hover:text-gray-300">Home</Link>
-          <Link to="/productViews" className="hover:text-gray-300">Products</Link>
+          <Link to="/shop" className="hover:text-gray-300">Products</Link>
+          {/* <Link to="/productViews" className="hover:text-gray-300">Products</Link> */}
           <Link to="/eventViews" className="hover:text-gray-300">Events</Link>
           <Link to="/helpdesk" className="hover:text-gray-300">HelpDesk</Link>
           <Link to="/donation" className="hover:text-gray-300">Donation</Link>

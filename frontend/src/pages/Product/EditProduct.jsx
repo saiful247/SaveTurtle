@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
-import BackButton from '../components/BackButton';
-import Spinner from '../components/Spinner';
+import React, { useState, useEffect } from 'react';
+import BackButton from '../../components/BackButton';
+import Spinner from '../../components/Spinner';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const CreateProducts = () => {
+const EditProduct = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [stockQuantity, setStockQuantity] = useState('');
   const [category, setCategory] = useState('');
   const [size, setSize] = useState('');
-  const [image, setImage] = useState(null); // Add state for image file
+  const [image, setImage] = useState(null); // State for image file
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const predefinedCategories = ['T-shirts', 'Hoodies', 'Caps & Hats', 'Accessories'];
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`http://localhost:5555/products/${id}`)
+      .then((response) => {
+        const { name, description, price, stockQuantity, category, size } = response.data;
+        setName(name);
+        setDescription(description);
+        setPrice(price);
+        setStockQuantity(stockQuantity);
+        setCategory(category);
+        setSize(size);
+        setLoading(false);
+      }).catch((error) => {
+        setLoading(false);
+        alert('An error happened. Please check console');
+        console.log(error);
+      });
+  }, [id]);
 
   const validateForm = () => {
     let formErrors = {};
@@ -33,9 +53,9 @@ const CreateProducts = () => {
       formErrors.price = 'Price must be a positive number';
     }
     if (!stockQuantity) {
-      formErrors.price = 'stock quantity is required';
+      formErrors.stockQuantity = 'Stock quantity is required';
     } else if (stockQuantity <= 0) {
-      formErrors.stockQuantity = 'stock quantity must be a positive number';
+      formErrors.stockQuantity = 'Stock quantity must be a positive number';
     }
     if (!category) {
       formErrors.category = 'Category is required';
@@ -53,10 +73,10 @@ const CreateProducts = () => {
     setImage(e.target.files[0]);
   };
 
-  const handleSaveProduct = () => {
+  const handleEditProduct = () => {
     if (!validateForm()) return;
 
-    const formData = new FormData(); // Create FormData to include the image
+    const formData = new FormData();
     formData.append('name', name);
     formData.append('description', description);
     formData.append('price', price);
@@ -65,16 +85,15 @@ const CreateProducts = () => {
     formData.append('size', size);
 
     if (image) {
-      formData.append('image', image); // Add the image file if it's selected
+      formData.append('image', image);
     }
 
     setLoading(true);
-    axios
-      .post('http://localhost:5555/products', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data', // Ensure multipart/form-data for file uploads
-        },
-      })
+    axios.put(`http://localhost:5555/products/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
       .then(() => {
         setLoading(false);
         navigate('/products');
@@ -90,7 +109,7 @@ const CreateProducts = () => {
     <div className="min-h-screen bg-blue-100 p-8">
       <BackButton />
       <div className="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-4xl font-bold mb-6 text-center text-sky-500">New Product</h1>
+        <h1 className="text-4xl font-bold mb-6 text-center text-sky-500">Edit Product</h1>
         {loading && <Spinner />}
         <div className="space-y-6">
           <div>
@@ -173,7 +192,7 @@ const CreateProducts = () => {
             />
           </div>
           <button
-            onClick={handleSaveProduct}
+            onClick={handleEditProduct}
             className="w-full py-3 bg-sky-500 text-white font-bold rounded-md hover:bg-sky-600 transition duration-300"
           >
             Save Product
@@ -184,4 +203,4 @@ const CreateProducts = () => {
   );
 };
 
-export default CreateProducts;
+export default EditProduct;

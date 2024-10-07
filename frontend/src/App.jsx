@@ -21,14 +21,18 @@ import AdminRegister from './pages/AdminRegister';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';  // Import the ProtectedRoute component
 
-import Product from './pages/Product'
-import CreateProducts from './pages/CreateProducts'
-import DeleteProduct from './pages/DeleteProduct' 
-import EditProduct from './pages/EditProduct'
-import ShowProduct from './pages/ShowProduct'
+import Product from './pages/Product/Product'
+import CreateProducts from './pages/Product/CreateProducts'
+import DeleteProduct from './pages/Product/DeleteProduct' 
+import EditProduct from './pages/Product/EditProduct'
+import ShowProduct from './pages/Product/ShowProduct'
 
-import ProductView from './pages/ProductUser'
-import ProductDetails from './pages/PurchaseForm';
+import LandingPage from './pages/Product/LandingPage';
+import ProductView from './pages/Product/ProductUser'
+import ProductDetails from './pages/Product/PurchaseForm'
+import PurchaseList from './pages/Product/PurchaseList'
+import EditPurchase from './pages/Product/EditPurchase'
+import DeletePurchase from './pages/Product/DeletePurchase';
 
 const App = () => {
   return (
@@ -130,8 +134,29 @@ const App = () => {
       </Routes>
 
       <Routes>
+      <Route path='/shop' element={<LandingPage />} />
       <Route path='/productViews' element={<ProductView />}/>
       <Route path='/productViews/purchaseForm' element={<ProductDetails />}/>
+      <Route path='/purchaseList' element={
+          <ProtectedRoute>
+          <PurchaseList />
+        </ProtectedRoute>
+          }/>
+          <Route path='/sendEmail' element={
+          <ProtectedRoute>
+          <PurchaseList />
+        </ProtectedRoute>
+          }/>
+        <Route path='/purchaseList/edit/:id' element={
+          <ProtectedRoute>
+          <EditPurchase />
+        </ProtectedRoute>
+          }/>
+        <Route path='/purchaseList/delete/:id' element={
+          <ProtectedRoute>
+          <DeletePurchase />
+        </ProtectedRoute>
+          }/>
       </Routes>
       
     </>

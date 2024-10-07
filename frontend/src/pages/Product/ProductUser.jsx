@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import Spinner from '../components/Spinner';
+import Spinner from '../../components/Spinner';
 
 const ProductUser = () => {
   const [products, setProducts] = useState([]);

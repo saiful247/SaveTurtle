@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const CreatePurchase = () => {
+const EditPurchase = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const { id } = useParams();
   const [customerName, setCustomerName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -13,14 +13,39 @@ const CreatePurchase = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentImage, setPaymentImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [currentImageUrl, setCurrentImageUrl] = useState('');
 
-  // Pre-fill product data from state
-  const productName = state?.productName || '';
-  const productSize = state?.productSize || '';
-  const productPrice = state?.productPrice || 0;
-  const productImage = state?.productImage || '';
+  // These states will be populated from the existing purchase data
+  const [productName, setProductName] = useState('');
+  const [productSize, setProductSize] = useState('');
+  const [productPrice, setProductPrice] = useState(0);
 
-  // Calculate total price when quantity changes
+  useEffect(() => {
+    const fetchPurchase = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(`http://localhost:5555/purchaseList/${id}`);
+        const purchase = response.data;
+        setCustomerName(purchase.customerName);
+        setEmail(purchase.email);
+        setPhone(purchase.phone);
+        setAddress(purchase.address);
+        setQuantity(purchase.quantity);
+        setProductName(purchase.productName);
+        setProductSize(purchase.productSize);
+        setProductPrice(purchase.productPrice);
+        setTotalPrice(purchase.totalPrice);
+        setCurrentImageUrl(purchase.paymentSlipUrl);
+      } catch (error) {
+        console.error('Error fetching purchase:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPurchase();
+  }, [id]);
+
   useEffect(() => {
     setTotalPrice(productPrice * quantity);
   }, [quantity, productPrice]);
@@ -29,7 +54,8 @@ const CreatePurchase = () => {
     setPaymentImage(e.target.files[0]);
   };
 
-  const handleSavePurchase = () => {
+  const handleUpdatePurchase = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append('customerName', customerName);
     formData.append('email', email);
@@ -42,57 +68,53 @@ const CreatePurchase = () => {
     formData.append('totalPrice', totalPrice);
 
     if (paymentImage) {
-      formData.append('image', paymentImage);
+      formData.append('paymentImage', paymentImage);
     }
 
     setLoading(true);
-    axios
-      .post('http://localhost:5555/productViews/purchaseForm', formData, {
+    try {
+      await axios.put(`http://localhost:5555/purchaseList/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      })
-      .then(() => {
-        setLoading(false);
-        navigate('/productViews');
-      })
-      .catch((error) => {
-        setLoading(false);
-        alert('An error happened. Please check the console');
-        console.log(error);
       });
+      setLoading(false);
+      navigate('/purchaseList');
+    } catch (error) {
+      setLoading(false);
+      console.error('Error updating purchase:', error);
+    }
   };
 
   if (loading) return <div>Loading...</div>;
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">Purchase Product</h1>
+      <h1 className="text-4xl font-bold text-gray-800 mb-6">Edit Purchase</h1>
 
       <div className="flex space-x-6">
         <div className="w-1/3">
-          {productImage ? (
+          {currentImageUrl ? (
             <img
-              src={`http://localhost:5555${productImage}`}
-              alt={productName}
-              className="w-full object-cover rounded-md"
+              src={`http://localhost:5555${currentImageUrl}`}
+              alt="Current Payment Slip"
+              className="w-full object-cover rounded-md mb-4"
             />
           ) : (
-            <div className="w-full h-60 bg-gray-200 rounded-md flex items-center justify-center">
+            <div className="w-full h-60 bg-gray-200 rounded-md flex items-center justify-center mb-4">
               No Image
             </div>
           )}
 
-          {/* Product Details Below the Image */}
           <div className="mt-4">
             <p className="text-gray-600 text-lg">Product: {productName}</p>
             <p className="text-gray-500 text-lg">Size: {productSize}</p>
-            <p className="text-gray-500 text-lg">Quantity Price: LKR {productPrice}</p>
+            <p className="text-gray-500 text-lg">Unit Price: LKR {productPrice}</p>
           </div>
         </div>
 
         <div className="w-2/3">
-          <form onSubmit={handleSavePurchase}>
+          <form onSubmit={handleUpdatePurchase}>
             <div className="mb-4">
               <label className="block text-lg font-semibold text-gray-600">Your Name</label>
               <input
@@ -141,7 +163,6 @@ const CreatePurchase = () => {
               />
             </div>
 
-            {/* Quantity Field */}
             <div className="mb-4">
               <label className="block text-lg font-semibold text-gray-600">Quantity</label>
               <input
@@ -154,7 +175,6 @@ const CreatePurchase = () => {
               />
             </div>
 
-            {/* Total Price Field (Disabled) */}
             <div className="mb-4">
               <label className="block text-lg font-semibold text-gray-600">Total Price</label>
               <input
@@ -166,12 +186,11 @@ const CreatePurchase = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-lg font-semibold text-gray-600">Upload Payment Slip</label>
+              <label className="block text-lg font-semibold text-gray-600">Update Payment Slip</label>
               <input
                 type="file"
                 onChange={handleImageChange}
                 className="w-full text-gray-700 mt-2"
-                required
               />
             </div>
 
@@ -180,7 +199,7 @@ const CreatePurchase = () => {
                 type="submit"
                 className="bg-blue-500 text-white py-2 px-4 rounded-md w-1/3 hover:bg-blue-600"
               >
-                Confirm Purchase
+                Update Purchase
               </button>
             </div>
           </form>
@@ -190,4 +209,4 @@ const CreatePurchase = () => {
   );
 };
 
-export default CreatePurchase;
+export default EditPurchase;
