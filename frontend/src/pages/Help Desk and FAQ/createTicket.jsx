@@ -221,7 +221,7 @@ const CreateTickets = () => {
       </div>
 
       {isSuccess && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
           <div className="bg-white text-center p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold text-primary_light mb-4">
               Ticket Created Successfully!
