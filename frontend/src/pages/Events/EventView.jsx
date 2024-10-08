@@ -6,6 +6,8 @@ import DarkModeToggle from '../../components/DarkModeToggle';
 
 import TypingAnimation from '../../components/TypingAnimation';
 
+import GridPattern from '../../components/GridPatternBG';
+
 import b1 from '../../images/b1.jpg';
 import b2 from '../../images/b2.jpg';
 import b3 from '../../images/b3.jpg';
@@ -92,6 +94,20 @@ const EventProgramPage = () => {
   };
   
   return (
+    <div className='relative min-h-screen p-4 font-mono overflow-hidden'>
+      <GridPattern
+        width={40}
+        height={40}
+        x={-1}
+        y={-1}
+        strokeDasharray={2}
+        className="absolute inset-0 z-0"
+        maxOpacity={0.5}
+        duration={4}
+        repeatDelay={0.5}
+        fillColor={darkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)'}
+        strokeColor={darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}
+      />
     <div className='p-4 font-mono'>
       <div className="my-4">
         <img src={images[currentImage]} alt={`Slide ${currentImage + 1}`} className="w-full h-80 object-cover rounded-md shadow-md" />
@@ -168,6 +184,7 @@ const EventProgramPage = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
   
