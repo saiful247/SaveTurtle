@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
 import axios from 'axios';
+import GridPattern from '../../components/GridPatternBG';
 
 const CreateEventsParticipant = () => {
   const navigate = useNavigate();
@@ -96,9 +97,21 @@ const CreateEventsParticipant = () => {
   };
 
   return (
-    <div className="min-h-screen bg-blue-100 flex justify-center items-center py-10">
-      
-      <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg my-10">
+    <div className="relative min-h-screen flex justify-center items-center py-10">
+      <GridPattern
+        width={40}
+        height={40}
+        x={-1}
+        y={-1}
+        strokeDasharray={2}
+        className="absolute inset-0 z-0"
+        maxOpacity={0.5}
+        duration={4}
+        repeatDelay={0.5}
+        fillColor={'rgba(0, 0, 0, 0.05)'}
+        strokeColor={'rgba(0, 0, 0, 0.1)'}
+      />
+      <div className="relative z-10 bg-[#D4F1F4] shadow-xl rounded-lg p-8 w-full max-w-lg my-10">
         <h1 className="text-2xl font-bold mb-6 text-center">Event Participant Details</h1>
         {loading && <Spinner />}
 
