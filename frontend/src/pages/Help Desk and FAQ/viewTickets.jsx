@@ -117,94 +117,96 @@ const ViewTickets = () => {
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : (
-        <div className="w-full max-w-4xl mt-12">
-          {filteredTickets.length > 0 ? (
-            <table className="table-auto w-full bg-white shadow-lg rounded-xl border border-gray-200">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                    Time Created
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                    Topic
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                    Description
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                    Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                    Phone
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredTickets.map((ticket) => (
-                  <tr key={ticket._id} className="border-b">
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      {new Date(ticket.createdAt).toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      {ticket.topic}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      <div className="max-h-16 overflow-hidden overflow-ellipsis">
-                        {ticket.description}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      {ticket.name}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      {ticket.email}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      {ticket.phone}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      {ticket.status === "solved" ? "Solved" : "Unsolved"}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-700">
-                      <div className="flex flex-col space-y-2">
-                        <button
-                          className="text-blue-500"
-                          onClick={() => {
-                            setCurrentTicket(ticket._id);
-                            setShowReplyOverlay(true);
-                          }}
-                        >
-                          Reply
-                        </button>
-                        <button
-                          className="text-red-500"
-                          onClick={() => {
-                            setTicketToDelete(ticket._id);
-                            setShowDeleteOverlay(true);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
+        <div className="w-full max-w-6xl mt-12 flex justify-center">
+          <div className="overflow-x-auto w-full">
+            {filteredTickets.length > 0 ? (
+              <table className="table-auto w-full bg-white shadow-lg rounded-xl border border-gray-200">
+                <thead>
+                  <tr className="bg-gray-100">
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Time Created
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Topic
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Phone
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <div className="flex items-center justify-center min-h-[50vh]">
-              <p className="text-gray-600">No tickets available.</p>
-            </div>
-          )}
+                </thead>
+                <tbody>
+                  {filteredTickets.map((ticket) => (
+                    <tr key={ticket._id} className="border-b">
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {new Date(ticket.createdAt).toLocaleString()}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {ticket.topic}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        <div className="max-h-16 overflow-hidden overflow-ellipsis">
+                          {ticket.description}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {ticket.name}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {ticket.email}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {ticket.phone}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        {ticket.status === "solved" ? "Solved" : "Unsolved"}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-700">
+                        <div className="flex flex-col space-y-2">
+                          <button
+                            className="text-blue-500"
+                            onClick={() => {
+                              setCurrentTicket(ticket._id);
+                              setShowReplyOverlay(true);
+                            }}
+                          >
+                            Reply
+                          </button>
+                          <button
+                            className="text-red-500"
+                            onClick={() => {
+                              setTicketToDelete(ticket._id);
+                              setShowDeleteOverlay(true);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div className="flex items-center justify-center min-h-[50vh]">
+                <p className="text-gray-600">No tickets available.</p>
+              </div>
+            )}
+          </div>
         </div>
       )}
       {showDeleteOverlay && (
@@ -233,17 +235,16 @@ const ViewTickets = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h3>Reply to Ticket</h3>
             <textarea
-              className="w-full border border-gray-300 rounded p-2 mt-4"
+              className="w-full h-32 mt-2 p-2 border border-gray-300 rounded"
               value={replyMessage}
               onChange={(e) => setReplyMessage(e.target.value)}
-              placeholder="Type your reply here..."
-            ></textarea>
+            />
             <div className="flex space-x-4 mt-4">
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded"
                 onClick={handleReplySubmit}
               >
-                Submit Reply
+                Send Reply
               </button>
               <button
                 className="bg-gray-300 text-black px-4 py-2 rounded"
