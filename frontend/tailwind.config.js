@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        customGreen: "rgb(6, 40, 47)",
-        greenHover: "rgb(50, 120, 130)",
+        primary: "rgb(7, 41, 46)",
+        primary_light: "rgb(15, 70, 88)",
       },
       animation: {
         ripple: "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",

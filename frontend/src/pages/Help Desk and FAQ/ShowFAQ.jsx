@@ -40,14 +40,14 @@ const ShowFAQ = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
       <div className="absolute top-0 left-0 p-6 flex items-center space-x-4">
-        <h1 className="text-2xl font-semibold text-gray-800">
+        <h1 className="text-2xl font-semibold text-primary">
           Frequently Asked Questions
         </h1>
       </div>
       <div className="absolute top-4 right-4 flex space-x-4 items-center">
         <button
           className={`px-4 py-2 bg-gray-300 rounded ${
-            sortOrder === "asc" && "bg-blue-500 text-white"
+            sortOrder === "asc" && "bg-primary text-white"
           }`}
           onClick={() => setSortOrder("asc")}
         >
@@ -55,7 +55,7 @@ const ShowFAQ = () => {
         </button>
         <button
           className={`px-4 py-2 bg-gray-300 rounded ${
-            sortOrder === "desc" && "bg-blue-500 text-white"
+            sortOrder === "desc" && "bg-primary text-white"
           }`}
           onClick={() => setSortOrder("desc")}
         >
@@ -66,7 +66,7 @@ const ShowFAQ = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search by question"
-          className="px-4 py-2 border border-gray-300 rounded"
+          className="px-4 py-2 border border-primary_light rounded"
         />
       </div>
 
@@ -83,16 +83,16 @@ const ShowFAQ = () => {
                   key={faq._id}
                   className="bg-white shadow-lg rounded-lg p-4 border border-gray-200"
                 >
-                  <h3 className="text-lg font-semibold text-gray-800">
+                  <h3 className="text-lg font-semibold text-primary_light">
                     {faq.question}
                   </h3>
-                  <p className="mt-2 text-gray-600">{faq.answer}</p>
+                  <p className="mt-2 text-primary_light">{faq.answer}</p>
                 </div>
               ))}
             </div>
           ) : (
             <div className="flex items-center justify-center min-h-[50vh]">
-              <p className="text-gray-600">No FAQs available.</p>
+              <p className="text-primary">No FAQs available.</p>
             </div>
           )}
         </div>
