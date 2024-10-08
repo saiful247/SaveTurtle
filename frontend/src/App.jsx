@@ -68,6 +68,7 @@ import ReturnProduct from "./pages/Return Products/ReturnProduct";
 import ShowReturn from "./pages/Return Products/ShowReturn";
 
 import EventLanding from "./pages/Events/EventLanding";
+import Footer from "./components/Footer";
 
 const App = () => {
     return (
@@ -457,6 +458,7 @@ const App = () => {
             <Routes>
             <Route path="/eventlanding" element={<EventLanding />} />
             </Routes>
+            <Footer/>
             
         </>
     );
