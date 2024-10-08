@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Spinner from "../../components/Spinner";
 import axios from "axios";
+import GridPatternBG from "../../components/GridPatternBG";
 const ShowFAQ = () => {
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,12 +40,13 @@ const ShowFAQ = () => {
   );
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex flex-col items-center relative">
-      <div className="absolute top-0 left-0 p-6 flex items-center space-x-4">
+      <GridPatternBG className="z-0" strokeColor="rgba(128, 128, 128, 0.2)" />
+      <div className="absolute top-0 left-0 p-6 flex items-center space-x-4 z-10">
         <h1 className="text-2xl font-semibold text-primary">
           Frequently Asked Questions
         </h1>
       </div>
-      <div className="absolute top-4 right-4 flex space-x-4 items-center">
+      <div className="absolute top-4 right-4 flex space-x-4 items-center z-10">
         <button
           className={`px-4 py-2 bg-gray-300 rounded ${
             sortOrder === "asc" && "bg-primary text-white"
@@ -75,7 +77,7 @@ const ShowFAQ = () => {
       ) : error ? (
         <p className="text-red-500">{error}</p>
       ) : (
-        <div className="w-full max-w-4xl mt-12">
+        <div className="w-full max-w-4xl mt-12 z-10">
           {filteredFaqs.length > 0 ? (
             <div className="grid grid-cols-1 gap-6">
               {filteredFaqs.map((faq) => (
