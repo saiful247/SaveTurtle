@@ -22,6 +22,7 @@ const CreateEventsParticipant = () => {
 
   const handleImageChange = (e) => {
     setPaymentImage(e.target.files[0]);
+    setErrors((prevErrors) => ({ ...prevErrors, paymentImage: '' })); // Clear error for paymentImage
   };
 
   const validateForm = () => {
@@ -121,7 +122,10 @@ const CreateEventsParticipant = () => {
             <input
               type="text"
               value={participantName}
-              onChange={(e) => setParticipantName(e.target.value)}
+              onChange={(e) => {
+                setParticipantName(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, participantName: '' })); // Clear error for participantName
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.participantName ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -135,7 +139,10 @@ const CreateEventsParticipant = () => {
             <label className="block text-gray-700">Gender</label>
             <select
               value={gender}
-              onChange={(e) => setGender(e.target.value)}
+              onChange={(e) => {
+                setGender(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, gender: '' })); // Clear error for gender
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.gender ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -153,7 +160,10 @@ const CreateEventsParticipant = () => {
             <input
               type="text"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => {
+                setPhone(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, phone: '' })); // Clear error for phone
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.phone ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -166,7 +176,10 @@ const CreateEventsParticipant = () => {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, email: '' })); // Clear error for email
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.email ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
