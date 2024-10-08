@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import axios from "axios";
 import jsPDF from "jspdf";
-
+import GridPatternBG from "../../components/GridPatternBG";
 const CreateTickets = () => {
   const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
@@ -83,6 +83,7 @@ const CreateTickets = () => {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center relative">
       {/* Header with Create Ticket Title and FAQ Button */}
+      <GridPatternBG className="z-0" strokeColor="rgba(128, 128, 128, 0.2)" />
       <header className="w-full flex justify-between items-center py-4 px-16 absolute top-0">
         <h1 className="text-2xl font-semibold text-primary">Create Ticket</h1>
         <Link
@@ -95,7 +96,7 @@ const CreateTickets = () => {
 
       {loading ? <Spinner /> : null}
 
-      <div className="bg-white shadow-lg rounded-xl border border-gray-200 w-full max-w-5xl p-8 top-0 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="bg-white shadow-lg rounded-xl border border-gray-200 w-full max-w-5xl p-8 top-0 grid grid-cols-1 md:grid-cols-2 gap-6 z-10">
         <div>
           <h2 className="text-xl font-semibold text-primary mb-4">
             Ticket Information
