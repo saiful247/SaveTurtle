@@ -49,8 +49,7 @@ const ProductUser = () => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">Products</h1>
-
+      <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center mx-auto">COLLECTIONS</h1>
       {/* Search and Category Filter */}
       <div className="flex space-x-4 mb-6">
         <input
@@ -81,8 +80,8 @@ const ProductUser = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
-            <div 
-              key={product._id} 
+            <div
+              key={product._id}
               onClick={() => handleClick(product)} // Use handleClick to navigate
               className="cursor-pointer"
             >

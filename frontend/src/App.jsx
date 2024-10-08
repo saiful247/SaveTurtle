@@ -40,8 +40,12 @@ import DeleteProduct from "./pages/Products/DeleteProduct";
 import EditProduct from "./pages/Products/EditProduct";
 import ShowProduct from "./pages/Products/ShowProduct";
 
-import ProductView from "./pages/Products/ProductUser";
-import ProductDetails from "./pages/Products/PurchaseForm";
+import LandingPage from './pages/Products/LandingPage';
+import ProductView from './pages/Products/ProductUser'
+import ProductDetails from './pages/Products/PurchaseForm'
+import PurchaseList from './pages/Products/PurchaseList'
+import EditPurchase from './pages/Products/EditPurchase'
+import DeletePurchase from './pages/Products/DeletePurchase';
 
 import RefundPage from "./pages/Refund/RefundPage";
 import CreateRefund from "./pages/Refund/CreateRefund";
@@ -297,11 +301,29 @@ const App = () => {
             </Routes>
 
             <Routes>
-                <Route path="/productViews" element={<ProductView />} />
-                <Route
-                    path="/productViews/purchaseForm"
-                    element={<ProductDetails />}
-                />
+                <Route path='/shop' element={<LandingPage />} />
+                <Route path='/productViews' element={<ProductView />} />
+                <Route path='/productViews/purchaseForm' element={<ProductDetails />} />
+                <Route path='/purchaseList' element={
+                    <ProtectedRoute>
+                        <PurchaseList />
+                    </ProtectedRoute>
+                } />
+                <Route path='/sendEmail' element={
+                    <ProtectedRoute>
+                        <PurchaseList />
+                    </ProtectedRoute>
+                } />
+                <Route path='/purchaseList/edit/:id' element={
+                    <ProtectedRoute>
+                        <EditPurchase />
+                    </ProtectedRoute>
+                } />
+                <Route path='/purchaseList/delete/:id' element={
+                    <ProtectedRoute>
+                        <DeletePurchase />
+                    </ProtectedRoute>
+                } />
             </Routes>
 
             {/* Azmath */}
