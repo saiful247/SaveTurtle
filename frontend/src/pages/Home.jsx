@@ -1,6 +1,18 @@
 import hero from "../images/hero.jpg";
+import { useEffect, useState } from "react";
 
 const UnderConstruction = () => {
+  const [textVisible, setTextVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger text reveal after a short delay
+    const timer = setTimeout(() => {
+      setTextVisible(true);
+    }, 500); // Delay to enhance the reveal effect
+
+    return () => clearTimeout(timer); // Cleanup timer on unmount
+  }, []);
+
   return (
     <div>
       {/* Hero Section */}
@@ -28,7 +40,15 @@ const UnderConstruction = () => {
 
         {/* Hero Content */}
         <div className="relative z-10">
-          <h1 className="text-6xl font-bold mb-6">SaveTurtles.lk</h1>
+          <h1
+            className={`text-6xl font-bold mb-6 transition-all duration-1000 ease-in-out ${
+              textVisible
+                ? "opacity-100 transform translate-y-0"
+                : "opacity-0 translate-y-10"
+            }`}
+          >
+            SaveTurtles.lk
+          </h1>
         </div>
       </div>
 
