@@ -23,8 +23,8 @@ const Header = () => {
         >
           Membership
         </Link>
-        <Link to="/productViews" className="hover:text-gray-300">
-          Products
+        <Link to="/shop" className="hover:text-gray-300">
+          Shop
         </Link>
         <Link to="/donations/herosection" className="hover:text-gray-300">
           Donation
