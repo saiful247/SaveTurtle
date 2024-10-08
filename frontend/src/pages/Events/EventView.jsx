@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Spinner from '../../components/Spinner';
 import DarkModeToggle from '../../components/DarkModeToggle';
 
-import b1 from '../../images/t1.webp';
-import b2 from '../../images/t2.jpg';
-import b3 from '../../images/t3.png';
+import TypingAnimation from '../../components/TypingAnimation';
+
+import b1 from '../../images/b1.jpg';
+import b2 from '../../images/b2.jpg';
+import b3 from '../../images/b3.jpg';
 
 const EventProgramPage = () => {
   const [eventsPrograms, setEvents] = useState([]);
@@ -88,13 +90,17 @@ const EventProgramPage = () => {
       } 
     });
   };
-
+  
   return (
-    <div className='p-4'>
+    <div className='p-4 font-mono'>
       <div className="my-4">
         <img src={images[currentImage]} alt={`Slide ${currentImage + 1}`} className="w-full h-80 object-cover rounded-md shadow-md" />
       </div>
-  
+      <TypingAnimation 
+        text="In Saving The Sea Turtles, We Save The Ocean, And In Saving The Ocean, We Save Ourselves."
+        duration={25}
+        className={`text-2xl font-bold mb-8 ${darkMode ? 'text-white' : 'text-[#5046e6]'}`}
+      />
       <div className="flex justify-between items-center mb-8">
         <h1 className={`text-3xl my-8 ${darkMode ? 'text-white' : 'text-black'}`}>Event List</h1>
         <div className="flex items-center gap-4">
@@ -102,7 +108,7 @@ const EventProgramPage = () => {
         </div>
       </div>
   
-      <div className={`bg-[#B1D8B7] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+      <div className={`bg-[#A3EBB1] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className='flex justify-between items-center mb-4'>
           <input
             type='text'
