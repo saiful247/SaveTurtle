@@ -123,7 +123,7 @@ const EventProgramPage = () => {
         </div>
       </div>
   
-      <div className={`bg-[#FBEDE0] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+      <div className={`bg-[#FBEDEA] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className='flex justify-between items-center mb-4'>
           <input
             type='text'
