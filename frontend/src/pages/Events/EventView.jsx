@@ -5,7 +5,6 @@ import Spinner from '../../components/Spinner';
 import DarkModeToggle from '../../components/DarkModeToggle';
 
 import TypingAnimation from '../../components/TypingAnimation';
-
 import GridPattern from '../../components/GridPatternBG';
 
 import b1 from '../../images/b1.jpg';
@@ -124,7 +123,7 @@ const EventProgramPage = () => {
         </div>
       </div>
   
-      <div className={`bg-[#A3EBB1] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+      <div className={`bg-[#FBEDE0] p-4 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className='flex justify-between items-center mb-4'>
           <input
             type='text'
