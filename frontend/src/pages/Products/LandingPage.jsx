@@ -39,7 +39,7 @@ const LandingPage = () => {
           <p className="text-3xl text-white mb-8 shadow-text">DIVE INTO OUR COLLECTION</p>
           <button
             onClick={handleShopNow}
-            className="bg-green-500 text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-green-600 transition duration-300 shadow-lg"
+            className="bg-buttons text-white px-8 py-4 rounded-full text-xl font-semibold hover:bg-green-600 transition duration-300 shadow-lg"
           >
             SHOP NOW
           </button>

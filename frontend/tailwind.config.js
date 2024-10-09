@@ -6,6 +6,7 @@ export default {
       colors: {
         primary: "rgb(7, 41, 46)",
         primary_light: "rgb(15, 70, 88)",
+        buttons: "rgb(7, 120, 126)",
       },
       animation: {
         ripple: "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",

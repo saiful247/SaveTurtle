@@ -13,33 +13,34 @@ const CreateEvents = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
-
   const validateForm = () => {
     const newErrors = {};
 
-    // Validate participant name
+    // Validate event name
     if (!eventName) {
-      newErrors.participantName = 'Event name is required';
+      newErrors.eventName = 'Event name is required';
     }
 
-    // Validate gender
+    // Validate venue
     if (!vanue) {
-      newErrors.gender = 'Vanue is required';
+      newErrors.vanue = 'Venue is required';
     }
 
+    // Validate date
     if (!date) {
       newErrors.date = 'Date is required';
     }
 
+    // Validate time
     if (!time) {
       newErrors.time = 'Time is required';
     }
 
     // Validate ticket price (cannot be negative)
     if (!price) {
-      newErrors.price = "Ticket price is required";
+      newErrors.price = 'Ticket price is required';
     } else if (price < 0) {
-      newErrors.price = "Ticket price cannot be negative";
+      newErrors.price = 'Ticket price cannot be negative';
     }
 
     setErrors(newErrors);
@@ -47,7 +48,6 @@ const CreateEvents = () => {
   };
 
   const handleSaveEvent = () => {
-
     if (!validateForm()) {
       alert('Please fix the errors before submitting');
       return;
@@ -80,7 +80,6 @@ const CreateEvents = () => {
 
   return (
     <div className="min-h-screen bg-blue-100 flex justify-center items-center py-10">
-      
       <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg my-10">
         <h1 className="text-2xl font-bold mb-6 text-center">Create Event</h1>
         {loading ? <Spinner /> : ''}
@@ -91,7 +90,10 @@ const CreateEvents = () => {
             <input
               type="text"
               value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
+              onChange={(e) => {
+                setEventName(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, eventName: '' })); // Clear error for eventName
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.eventName ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -104,7 +106,10 @@ const CreateEvents = () => {
             <input
               type="text"
               value={vanue}
-              onChange={(e) => setVanue(e.target.value)}
+              onChange={(e) => {
+                setVanue(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, vanue: '' })); // Clear error for venue
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.vanue ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -117,7 +122,10 @@ const CreateEvents = () => {
             <input
               type="date"
               value={date}
-              onChange={(e) => setEventDate(e.target.value)}
+              onChange={(e) => {
+                setEventDate(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, date: '' })); // Clear error for date
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.date ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -130,7 +138,10 @@ const CreateEvents = () => {
             <input
               type="time"
               value={time}
-              onChange={(e) => setEventTime(e.target.value)}
+              onChange={(e) => {
+                setEventTime(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, time: '' })); // Clear error for time
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.time ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -143,7 +154,10 @@ const CreateEvents = () => {
             <input
               type="number"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => {
+                setPrice(e.target.value);
+                setErrors((prevErrors) => ({ ...prevErrors, price: '' })); // Clear error for price
+              }}
               className={`w-full mt-1 p-2 border ${
                 errors.price ? 'border-red-500' : 'border-gray-300'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
@@ -162,9 +176,7 @@ const CreateEvents = () => {
         </div>
       </div>
     </div>
-);
-
-
+  );
 };
 
 export default CreateEvents;

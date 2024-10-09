@@ -39,13 +39,7 @@ const EventBookData = () => {
     fetchParticipants();
   }, []);
 
-  // Filter participants based on search query
-  // const filteredParticipants = participants.filter((participant) =>
-  //   participant.participantName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //   String(participant.phone).toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //   participant.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //   participant.eventName.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+  
   // Filter participants based on search query and date range
   const filteredParticipants = participants.filter((participant) => {
     const matchesSearchQuery = 
