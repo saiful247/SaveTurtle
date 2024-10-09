@@ -8,9 +8,16 @@ import { fileURLToPath } from "url";
 import path from "path";
 import bookingEmail from "./routes/bookingEmail.js";
 import adminRoute from "./routes/AdminRoute.js";
-
+import faqRouter from "./routes/faqRoutes.js";
+import ticketRouter from "./routes/ticketRoutes.js";
+import membershipsRoute from "./routes/membershipsRoute.js";
+import subscriptionRoute from "./routes/subscriptionRoute.js";
 import productRoute from "./routes/productRoute.js";
 import purchaseRoute from "./routes/purchaseRoute.js";
+import refundRoute from "./routes/refundRoutes.js";
+import ReturnRouter from "./routes/ReturnsRoute.js";
+
+import donationsRoute from "./routes/donationsRoute.js";
 
 const app = express();
 
@@ -40,6 +47,11 @@ app.use(
   express.static(path.join(__dirname, "uploads/purchasePayment"))
 );
 
+app.use(
+  "/uploads/receipts",
+  express.static(path.join(__dirname, "uploads/receipts"))
+);
+
 app.get("/", (request, response) => {
   console.log(request);
   return response.status(234).send("MERN Testing");
@@ -51,6 +63,24 @@ app.use("/eventViews", eventRoute);
 app.use("/eventViews/eventParticipants", eventParticipantRoute);
 app.use("/eventBookingList", eventParticipantRoute);
 app.use("/sendEmail", bookingEmail);
+app.use("/faq", faqRouter);
+app.use("/tickets", ticketRouter);
+app.use("/memberships", membershipsRoute);
+app.use("/subscriptions", subscriptionRoute);
+app.use("/returns", ReturnRouter);
+
+// Product Routes
+app.use("/products", productRoute);
+app.use("/productViews", productRoute);
+app.use("/productViews/purchaseForm", purchaseRoute);
+app.use("/purchaseList", purchaseRoute);
+
+// Refund Routes
+app.use("/refunds", refundRoute);
+app.use("/userRefunds", refundRoute);
+
+// donations Route
+app.use("/donations", donationsRoute);
 
 //login
 app.use("/admin", adminRoute);

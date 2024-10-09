@@ -21,15 +21,15 @@ router.post("/", async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: "gmail", // or any email service provider like Outlook, Yahoo, etc.
     auth: {
-      user: "saifulis.4965@gmail.com", // your email
-      pass: "dyumrcpcgkkqdsjp", // your email password or app-specific password
+      user: "saveturtlescaresl@gmail.com", // your email
+      pass: "vsglcgmwxxtlmlbj", // your email password or app-specific password
     },
   });
 
   // Sending the email
   try {
     await transporter.sendMail({
-      from: "saifulis.4965@gmail.com",
+      from: "saveturtlescaresl@gmail.com",
       to: email,
       subject: subject,
       text: text,
