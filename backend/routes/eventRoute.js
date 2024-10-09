@@ -11,6 +11,7 @@ router.post("/", async (request, response) => {
       !request.body.vanue ||
       !request.body.date ||
       !request.body.time ||
+      !request.body.allocatedPersonCount ||
       !request.body.price
     ) {
       return response.status(400).send({
@@ -22,6 +23,7 @@ router.post("/", async (request, response) => {
       vanue: request.body.vanue,
       date: request.body.date,
       time: request.body.time,
+      allocatedPersonCount: request.body.allocatedPersonCount,
       price: request.body.price,
     };
     const eventProgram = await EventProgram.create(newEvent);
@@ -66,6 +68,7 @@ router.put("/:id", async (request, response) => {
       !request.body.vanue ||
       !request.body.date ||
       !request.body.time ||
+      !request.body.allocatedPersonCount ||
       !request.body.price
     ) {
       return response.status(400).send({
