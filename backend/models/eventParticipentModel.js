@@ -18,6 +18,10 @@ const eventParticipantSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    noOfPerson: {
+      type: Number,
+      required: true,
+    },
     eventName: {
       type: String,
       required: true,

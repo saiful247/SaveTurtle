@@ -31,6 +31,7 @@ router.post("/", upload.single("paymentImage"), async (request, response) => {
       !request.body.gender ||
       !request.body.phone ||
       !request.body.email ||
+      !request.body.noOfPerson ||
       !request.body.eventName ||
       !request.body.eventDate ||
       !request.body.ticketPrice
@@ -50,6 +51,7 @@ router.post("/", upload.single("paymentImage"), async (request, response) => {
       gender: request.body.gender,
       phone: request.body.phone,
       email: request.body.email,
+      noOfPerson: request.body.noOfPerson,
       eventName: request.body.eventName,
       eventDate: request.body.eventDate,
       ticketPrice: request.body.ticketPrice,
@@ -98,6 +100,7 @@ router.put("/:id", upload.single("paymentImage"), async (request, response) => {
       !request.body.gender ||
       !request.body.phone ||
       !request.body.email ||
+      !request.body.noOfPerson ||
       !request.body.eventName ||
       !request.body.eventDate ||
       !request.body.ticketPrice

@@ -22,6 +22,10 @@ const eventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    allocatedPersonCount: {
+      type: Number,
+      required: true,
+    },
     price: {
       type: Number,
       required: true,

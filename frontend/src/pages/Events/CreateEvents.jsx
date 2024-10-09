@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import Spinner from '../../components/Spinner';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import Spinner from "../../components/Spinner";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CreateEvents = () => {
-  const [eventName, setEventName] = useState('');
-  const [vanue, setVanue] = useState('');
-  const [date, setEventDate] = useState('');
-  const [time, setEventTime] = useState('');
-  const [price, setPrice] = useState('');
+  const [eventName, setEventName] = useState("");
+  const [vanue, setVanue] = useState("");
+  const [date, setEventDate] = useState("");
+  const [time, setEventTime] = useState("");
+  const [allocatedPersonCount, setPersonCount] = useState("");
+  const [price, setPrice] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -18,29 +19,36 @@ const CreateEvents = () => {
 
     // Validate event name
     if (!eventName) {
-      newErrors.eventName = 'Event name is required';
+      newErrors.eventName = "Event name is required";
     }
 
     // Validate venue
     if (!vanue) {
-      newErrors.vanue = 'Venue is required';
+      newErrors.vanue = "Venue is required";
     }
 
     // Validate date
     if (!date) {
-      newErrors.date = 'Date is required';
+      newErrors.date = "Date is required";
     }
 
     // Validate time
     if (!time) {
-      newErrors.time = 'Time is required';
+      newErrors.time = "Time is required";
+    }
+
+    // Validate ticket price (cannot be negative)
+    if (!allocatedPersonCount) {
+      newErrors.allocatedPersonCount = "Person count is required";
+    } else if (allocatedPersonCount < 0) {
+      newErrors.price = "Person count cannot be negative";
     }
 
     // Validate ticket price (cannot be negative)
     if (!price) {
-      newErrors.price = 'Ticket price is required';
+      newErrors.price = "Ticket price is required";
     } else if (price < 0) {
-      newErrors.price = 'Ticket price cannot be negative';
+      newErrors.price = "Ticket price cannot be negative";
     }
 
     setErrors(newErrors);
@@ -49,7 +57,7 @@ const CreateEvents = () => {
 
   const handleSaveEvent = () => {
     if (!validateForm()) {
-      alert('Please fix the errors before submitting');
+      alert("Please fix the errors before submitting");
       return;
     }
 
@@ -61,19 +69,20 @@ const CreateEvents = () => {
       vanue,
       date: formattedDate,
       time,
+      allocatedPersonCount,
       price,
     };
 
     setLoading(true);
     axios
-      .post('http://localhost:5555/events', data)
+      .post("http://localhost:5555/events", data)
       .then(() => {
         setLoading(false);
-        navigate('/events');
+        navigate("/events");
       })
       .catch((error) => {
         setLoading(false);
-        alert('An error happened. Please check console');
+        alert("An error happened. Please check console");
         console.log(error);
       });
   };
@@ -82,7 +91,7 @@ const CreateEvents = () => {
     <div className="min-h-screen bg-blue-100 flex justify-center items-center py-10">
       <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg my-10">
         <h1 className="text-2xl font-bold mb-6 text-center">Create Event</h1>
-        {loading ? <Spinner /> : ''}
+        {loading ? <Spinner /> : ""}
 
         <div className="space-y-4">
           <div>
@@ -92,13 +101,15 @@ const CreateEvents = () => {
               value={eventName}
               onChange={(e) => {
                 setEventName(e.target.value);
-                setErrors((prevErrors) => ({ ...prevErrors, eventName: '' })); // Clear error for eventName
+                setErrors((prevErrors) => ({ ...prevErrors, eventName: "" })); // Clear error for eventName
               }}
               className={`w-full mt-1 p-2 border ${
-                errors.eventName ? 'border-red-500' : 'border-gray-300'
+                errors.eventName ? "border-red-500" : "border-gray-300"
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
-            {errors.eventName && <p className="text-red-500">{errors.eventName}</p>}
+            {errors.eventName && (
+              <p className="text-red-500">{errors.eventName}</p>
+            )}
           </div>
 
           <div>
@@ -108,10 +119,10 @@ const CreateEvents = () => {
               value={vanue}
               onChange={(e) => {
                 setVanue(e.target.value);
-                setErrors((prevErrors) => ({ ...prevErrors, vanue: '' })); // Clear error for venue
+                setErrors((prevErrors) => ({ ...prevErrors, vanue: "" })); // Clear error for venue
               }}
               className={`w-full mt-1 p-2 border ${
-                errors.vanue ? 'border-red-500' : 'border-gray-300'
+                errors.vanue ? "border-red-500" : "border-gray-300"
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
             {errors.vanue && <p className="text-red-500">{errors.vanue}</p>}
@@ -124,10 +135,10 @@ const CreateEvents = () => {
               value={date}
               onChange={(e) => {
                 setEventDate(e.target.value);
-                setErrors((prevErrors) => ({ ...prevErrors, date: '' })); // Clear error for date
+                setErrors((prevErrors) => ({ ...prevErrors, date: "" })); // Clear error for date
               }}
               className={`w-full mt-1 p-2 border ${
-                errors.date ? 'border-red-500' : 'border-gray-300'
+                errors.date ? "border-red-500" : "border-gray-300"
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
             {errors.date && <p className="text-red-500">{errors.date}</p>}
@@ -140,13 +151,38 @@ const CreateEvents = () => {
               value={time}
               onChange={(e) => {
                 setEventTime(e.target.value);
-                setErrors((prevErrors) => ({ ...prevErrors, time: '' })); // Clear error for time
+                setErrors((prevErrors) => ({ ...prevErrors, time: "" })); // Clear error for time
               }}
               className={`w-full mt-1 p-2 border ${
-                errors.time ? 'border-red-500' : 'border-gray-300'
+                errors.time ? "border-red-500" : "border-gray-300"
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
             {errors.time && <p className="text-red-500">{errors.time}</p>}
+          </div>
+
+          <div>
+            <label className="block text-gray-700">
+              Total Allocated Persons
+            </label>
+            <input
+              type="number"
+              value={allocatedPersonCount}
+              onChange={(e) => {
+                setPersonCount(e.target.value);
+                setErrors((prevErrors) => ({
+                  ...prevErrors,
+                  allocatedPersonCount: "",
+                })); // Clear error for price
+              }}
+              className={`w-full mt-1 p-2 border ${
+                errors.allocatedPersonCount
+                  ? "border-red-500"
+                  : "border-gray-300"
+              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            />
+            {errors.allocatedPersonCount && (
+              <p className="text-red-500">{errors.allocatedPersonCount}</p>
+            )}
           </div>
 
           <div>
@@ -156,10 +192,10 @@ const CreateEvents = () => {
               value={price}
               onChange={(e) => {
                 setPrice(e.target.value);
-                setErrors((prevErrors) => ({ ...prevErrors, price: '' })); // Clear error for price
+                setErrors((prevErrors) => ({ ...prevErrors, price: "" })); // Clear error for price
               }}
               className={`w-full mt-1 p-2 border ${
-                errors.price ? 'border-red-500' : 'border-gray-300'
+                errors.price ? "border-red-500" : "border-gray-300"
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
             {errors.price && <p className="text-red-500">{errors.price}</p>}
