@@ -47,6 +47,11 @@ const purchaseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    approvalStatus: {
+      type: String,
+      enum: ['confirm', 'decline', null],
+      default: null,
+    },
   },
   {
     timestamps: true,

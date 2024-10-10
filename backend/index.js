@@ -19,6 +19,8 @@ import ReturnRouter from "./routes/ReturnsRoute.js";
 
 import donationsRoute from "./routes/donationsRoute.js";
 
+import purchaseEmail from "./routes/purchaseEmail.js"
+
 const app = express();
 
 // Middleware for parsing request body
@@ -57,7 +59,7 @@ app.get("/", (request, response) => {
   return response.status(234).send("MERN Testing");
 });
 
-// Routes
+// Event Routes
 app.use("/events", eventRoute);
 app.use("/eventViews", eventRoute);
 app.use("/eventViews/eventParticipants", eventParticipantRoute);
@@ -74,6 +76,7 @@ app.use("/products", productRoute);
 app.use("/productViews", productRoute);
 app.use("/productViews/purchaseForm", purchaseRoute);
 app.use("/purchaseList", purchaseRoute);
+app.use("/sendPurchaseEmail", purchaseEmail);
 
 // Refund Routes
 app.use("/refunds", refundRoute);
@@ -85,6 +88,13 @@ app.use("/donations", donationsRoute);
 //login
 app.use("/admin", adminRoute);
 app.use("/admin/register", adminRoute);
+
+// Product Routes
+app.use("/products", productRoute);
+app.use("/productViews", productRoute);
+app.use("/productViews/purchaseForm", purchaseRoute);
+app.use("/purchaseList", purchaseRoute);
+
 
 mongoose
   .connect(mongoDBURL)

@@ -14,11 +14,14 @@ const EditPurchase = () => {
   const [paymentImage, setPaymentImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [currentImageUrl, setCurrentImageUrl] = useState('');
-
-  // These states will be populated from the existing purchase data
   const [productName, setProductName] = useState('');
-  const [productSize, setProductSize] = useState('');
+  const [productSize, setProductSize] = useState('L');
   const [productPrice, setProductPrice] = useState(0);
+  const [productImage, setProductImage] = useState('');
+  const [errors, setErrors] = useState({});
+  const [stockError, setStockError] = useState('');
+  const [maxQuantity, setMaxQuantity] = useState(null);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     const fetchPurchase = async () => {
@@ -36,6 +39,19 @@ const EditPurchase = () => {
         setProductPrice(purchase.productPrice);
         setTotalPrice(purchase.totalPrice);
         setCurrentImageUrl(purchase.paymentSlipUrl);
+        
+        // Fetch product image
+        try {
+          const productResponse = await axios.get(`http://localhost:5555/products?name=${purchase.productName}`);
+          if (productResponse.data.length > 0 && productResponse.data[0].image) {
+            setProductImage(`http://localhost:5555${productResponse.data[0].image}`);
+          } else {
+            setImageError(true);
+          }
+        } catch (productError) {
+          console.error('Error fetching product image:', productError);
+          setImageError(true);
+        }
       } catch (error) {
         console.error('Error fetching purchase:', error);
       } finally {
@@ -54,8 +70,27 @@ const EditPurchase = () => {
     setPaymentImage(e.target.files[0]);
   };
 
+  const validateForm = () => {
+    let formErrors = {};
+
+    if (!customerName) formErrors.customerName = 'Customer name is required';
+    if (!email) {
+      formErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      formErrors.email = 'Email is invalid';
+    }
+    if (!phone) formErrors.phone = 'Phone number is required';
+    if (!address) formErrors.address = 'Delivery address is required';
+    if (!quantity || quantity <= 0) formErrors.quantity = 'Quantity must be a positive number';
+
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0;
+  };
+
   const handleUpdatePurchase = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     const formData = new FormData();
     formData.append('customerName', customerName);
     formData.append('email', email);
@@ -69,9 +104,13 @@ const EditPurchase = () => {
 
     if (paymentImage) {
       formData.append('paymentImage', paymentImage);
+    } else {
+      formData.append('paymentSlipUrl', currentImageUrl);
     }
 
     setLoading(true);
+    setStockError('');
+
     try {
       await axios.put(`http://localhost:5555/purchaseList/${id}`, formData, {
         headers: {
@@ -82,127 +121,183 @@ const EditPurchase = () => {
       navigate('/purchaseList');
     } catch (error) {
       setLoading(false);
-      console.error('Error updating purchase:', error);
+      if (error.response && error.response.status === 400) {
+        if (error.response.data.message === 'Not enough stock available') {
+          setMaxQuantity(error.response.data.availableQuantity);
+          setStockError(`Not enough stock available. Maximum quantity available: ${error.response.data.availableQuantity}`);
+        } else {
+          setStockError(error.response.data.message || 'An error occurred while processing your request.');
+        }
+      } else {
+        console.error('Error updating purchase:', error);
+      }
     }
   };
 
-  if (loading) return <div>Loading...</div>;
+  const SizeButton = ({ size }) => (
+    <button
+      type="button"
+      className={`px-4 py-2 mr-2 rounded-full transition-all duration-300 ${productSize === size ? 'bg-blue-500 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+      onClick={() => setProductSize(size)}
+    >
+      {size}
+    </button>
+  );
+
+  if (loading) return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  );
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">Edit Purchase</h1>
+    <div className="p-6 bg-gradient-to-br from-blue-50 to-gray-100 min-h-screen">
+      <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">Edit Purchase</h1>
 
-      <div className="flex space-x-6">
-        <div className="w-1/3">
-          {currentImageUrl ? (
-            <img
-              src={`http://localhost:5555${currentImageUrl}`}
-              alt="Current Payment Slip"
-              className="w-full object-cover rounded-md mb-4"
-            />
-          ) : (
-            <div className="w-full h-60 bg-gray-200 rounded-md flex items-center justify-center mb-4">
-              No Image
+      <div className="flex flex-col md:flex-row md:space-x-6 max-w-6xl mx-auto">
+        <div className="w-full md:w-1/3 mb-6 md:mb-0">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            {productImage && !imageError ? (
+              <img
+                src={productImage}
+                alt={productName}
+                className="w-full h-64 object-cover rounded-md shadow-md"
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center shadow-inner">
+                <p className="text-gray-500">No Image Available</p>
+              </div>
+            )}
+            <div className="mt-4">
+              <p className="text-2xl font-semibold text-gray-800">{productName}</p>
+              <p className="text-xl font-bold text-blue-600 mt-2">LKR {productPrice.toFixed(2)}</p>
+              <div className="mt-4">
+                <p className="text-gray-600 mb-2 font-medium">Size:</p>
+                <div className="flex space-x-2">
+                  <SizeButton size="L" />
+                  <SizeButton size="M" />
+                  <SizeButton size="XL" />
+                </div>
+              </div>
             </div>
-          )}
-
-          <div className="mt-4">
-            <p className="text-gray-600 text-lg">Product: {productName}</p>
-            <p className="text-gray-500 text-lg">Size: {productSize}</p>
-            <p className="text-gray-500 text-lg">Unit Price: LKR {productPrice}</p>
           </div>
         </div>
 
-        <div className="w-2/3">
-          <form onSubmit={handleUpdatePurchase}>
-            <div className="mb-4">
-              <label className="block text-lg font-semibold text-gray-600">Your Name</label>
-              <input
-                type="text"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
-                placeholder="Enter your full name"
-                required
-              />
-            </div>
+        <div className="w-full md:w-2/3">
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <form onSubmit={handleUpdatePurchase} className="space-y-6">
+              <div>
+                <label className="block text-lg font-semibold text-gray-600 mb-2">Your Name</label>
+                <input
+                  type="text"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.customerName ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="Enter your full name"
+                />
+                {errors.customerName && <p className="text-red-500 text-sm mt-1">{errors.customerName}</p>}
+              </div>
 
-            <div className="mb-4">
-              <label className="block text-lg font-semibold text-gray-600">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
+              <div>
+                <label className="block text-lg font-semibold text-gray-600 mb-2">Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="Enter your email"
+                />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              </div>
 
-            <div className="mb-4">
-              <label className="block text-lg font-semibold text-gray-600">Phone</label>
-              <input
-                type="text"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
-                placeholder="Enter your phone number"
-                required
-              />
-            </div>
+              <div>
+                <label className="block text-lg font-semibold text-gray-600 mb-2">Phone</label>
+                <input
+                  type="text"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="Enter your phone number"
+                />
+                {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+              </div>
 
-            <div className="mb-4">
-              <label className="block text-lg font-semibold text-gray-600">Delivery Address</label>
-              <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
-                placeholder="Enter your delivery address"
-                required
-              />
-            </div>
+              <div>
+                <label className="block text-lg font-semibold text-gray-600 mb-2">Delivery Address</label>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.address ? 'border-red-500' : 'border-gray-300'}`}
+                  placeholder="Enter your delivery address"
+                />
+                {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
+              </div>
 
-            <div className="mb-4">
-              <label className="block text-lg font-semibold text-gray-600">Quantity</label>
-              <input
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md"
-                min="1"
-                required
-              />
-            </div>
+              <div>
+                <label className="block text-lg font-semibold text-gray-600 mb-2">Quantity</label>
+                <input
+                  type="number"
+                  value={quantity}
+                  onChange={(e) => {
+                    const newQuantity = parseInt(e.target.value);
+                    setQuantity(newQuantity);
+                    if (maxQuantity !== null && newQuantity > maxQuantity) {
+                      setStockError(`Maximum quantity available: ${maxQuantity}`);
+                    } else {
+                      setStockError('');
+                    }
+                  }}
+                  className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.quantity ? 'border-red-500' : 'border-gray-300'}`}
+                  min="1"
+                  max={maxQuantity || undefined}
+                />
+                {errors.quantity && <p className="text-red-500 text-sm mt-1">{errors.quantity}</p>}
+                {stockError && (
+                  <p className="text-red-500 mt-2 bg-red-100 border border-red-400 rounded p-2">
+                    {stockError}
+                  </p>
+                )}
+              </div>
 
-            <div className="mb-4">
-              <label className="block text-lg font-semibold text-gray-600">Total Price</label>
-              <input
-                type="text"
-                value={`LKR ${totalPrice}`}
-                className="w-full px-4 py-2 border rounded-md bg-gray-100"
-                disabled
-              />
-            </div>
+              <div>
+                <label className="block text-lg font-semibold text-gray-600 mb-2">Total Price</label>
+                <input
+                  type="text"
+                  value={`LKR ${totalPrice.toFixed(2)}`}
+                  className="w-full px-4 py-2 border rounded-md bg-gray-100 font-bold text-lg"
+                  disabled
+                />
+              </div>
 
-            <div className="mb-4">
-              <label className="block text-lg font-semibold text-gray-600">Update Payment Slip</label>
-              <input
-                type="file"
-                onChange={handleImageChange}
-                className="w-full text-gray-700 mt-2"
-              />
-            </div>
+              <div>
+                <label className="block text-lg font-semibold text-gray-600 mb-2">Update Payment Slip</label>
+                <input
+                  type="file"
+                  onChange={handleImageChange}
+                  className="w-full text-gray-700 mt-2 p-2 border rounded-md border-gray-300"
+                />
+                {currentImageUrl && (
+                  <img
+                    src={`http://localhost:5555${currentImageUrl}`}
+                    alt="Current Payment Slip"
+                    className="mt-2 max-w-xs rounded-md"
+                  />
+                )}
+              </div>
 
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className="bg-blue-500 text-white py-2 px-4 rounded-md w-1/3 hover:bg-blue-600"
-              >
-                Update Purchase
-              </button>
-            </div>
-          </form>
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white py-3 px-6 rounded-full w-full md:w-1/2 hover:bg-blue-600 transition-colors duration-300 text-lg font-semibold shadow-md"
+                  disabled={loading}
+                >
+                  {loading ? 'Processing...' : 'Update Purchase'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

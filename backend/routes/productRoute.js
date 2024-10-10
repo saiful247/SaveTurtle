@@ -28,11 +28,10 @@ router.post("/", upload.single('image'), async (request, response) => {
       !request.body.description ||
       !request.body.price ||
       !request.body.stockQuantity ||
-      !request.body.category ||
-      !request.body.size
+      !request.body.category
     ) {
       return response.status(400).send({
-        message: "Send all required fields: name, description, price, stockQuantity, category, size",
+        message: "Send all required fields: name, description, price, stockQuantity, category",
       });
     }
 
@@ -44,7 +43,6 @@ router.post("/", upload.single('image'), async (request, response) => {
       price: request.body.price,
       stockQuantity: request.body.stockQuantity,
       category: request.body.category,
-      size: request.body.size,
       imageUrl, // Add image URL to product if available
     };
 
@@ -90,11 +88,10 @@ router.put("/:id", upload.single('image'), async (request, response) => {
       !request.body.description ||
       !request.body.price ||
       !request.body.stockQuantity ||
-      !request.body.category ||
-      !request.body.size
+      !request.body.category
     ) {
       return response.status(400).send({
-        message: "Send all required fields: name, description, price, stockQuantity, category, size",
+        message: "Send all required fields: name, description, price, stockQuantity, category",
       });
     }
 

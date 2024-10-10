@@ -1,7 +1,9 @@
 // src/App.jsx
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Header from "./components/Header";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Header from './components/Header';
+
 import EventProgramPage from "./pages/Events/Event";
 import CreateEvents from "./pages/Events/CreateEvents";
 import ShowEvent from "./pages/Events/ShowEvent";

@@ -39,7 +39,6 @@ const ProductUser = () => {
         productName: product.name,
         productPrice: product.price,
         productCategory: product.category,
-        productSize: product.size,
         productImage: product.imageUrl
       }
     });
@@ -100,7 +99,6 @@ const ProductUser = () => {
                 <h2 className="text-xl font-bold mb-2 text-center text-gray-800">{product.name}</h2>
                 <p className="text-blue-600 font-semibold text-center mb-1">LKR {product.price}</p>
                 <p className="text-gray-600 text-center">{product.category}</p>
-                {/* <p className="text-gray-600 text-center">{product.size}</p> */}
                 <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-full hover:bg-blue-600 transition duration-300">
                   View Details
                 </button>
