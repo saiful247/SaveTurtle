@@ -8,9 +8,8 @@ const CreateProducts = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [stockQuantity, setStockQuantity] = useState('');
+  const [stockQuantity, setStockQuantity] = useState(1);
   const [category, setCategory] = useState('');
-  const [size, setSize] = useState('');
   const [image, setImage] = useState(null); // Add state for image file
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -40,9 +39,6 @@ const CreateProducts = () => {
     if (!category) {
       formErrors.category = 'Category is required';
     }
-    if (!size) {
-      formErrors.size = 'Size is required';
-    }
 
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
@@ -62,7 +58,6 @@ const CreateProducts = () => {
     formData.append('price', price);
     formData.append('stockQuantity', stockQuantity);
     formData.append('category', category);
-    formData.append('size', size);
 
     if (image) {
       formData.append('image', image); // Add the image file if it's selected
@@ -152,17 +147,6 @@ const CreateProducts = () => {
               ))}
             </select>
             {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
-          </div>
-          <div>
-            <label className="block text-lg font-semibold text-gray-700 mb-2">Size</label>
-            <input
-              type="text"
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-              className={`w-full px-4 py-2 border ${errors.size ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500`}
-              placeholder="Enter product size"
-            />
-            {errors.size && <p className="text-red-500 text-sm mt-1">{errors.size}</p>}
           </div>
           <div>
             <label className="block text-lg font-semibold text-gray-700 mb-2">Product Image</label>

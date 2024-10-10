@@ -10,7 +10,6 @@ const EditProduct = () => {
   const [price, setPrice] = useState('');
   const [stockQuantity, setStockQuantity] = useState('');
   const [category, setCategory] = useState('');
-  const [size, setSize] = useState('');
   const [image, setImage] = useState(null); // State for image file
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -29,7 +28,6 @@ const EditProduct = () => {
         setPrice(price);
         setStockQuantity(stockQuantity);
         setCategory(category);
-        setSize(size);
         setLoading(false);
       }).catch((error) => {
         setLoading(false);
@@ -60,9 +58,6 @@ const EditProduct = () => {
     if (!category) {
       formErrors.category = 'Category is required';
     }
-    if (!size) {
-      formErrors.size = 'Size is required';
-    }
 
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
@@ -82,7 +77,6 @@ const EditProduct = () => {
     formData.append('price', price);
     formData.append('stockQuantity', stockQuantity);
     formData.append('category', category);
-    formData.append('size', size);
 
     if (image) {
       formData.append('image', image);
@@ -107,9 +101,9 @@ const EditProduct = () => {
 
   return (
     <div className="min-h-screen bg-blue-100 p-8">
-      <BackButton />
+      {/* <BackButton /> */}
       <div className="max-w-xl mx-auto bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-4xl font-bold mb-6 text-center text-sky-500">Edit Product</h1>
+        <h1 className="text-4xl font-bold mb-6 text-center text-sky-500">Edit Product Details</h1>
         {loading && <Spinner />}
         <div className="space-y-6">
           <div>
@@ -171,17 +165,6 @@ const EditProduct = () => {
               ))}
             </select>
             {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
-          </div>
-          <div>
-            <label className="block text-lg font-semibold text-gray-700 mb-2">Size</label>
-            <input
-              type="text"
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-              className={`w-full px-4 py-2 border ${errors.size ? 'border-red-500' : 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500`}
-              placeholder="Enter product size"
-            />
-            {errors.size && <p className="text-red-500 text-sm mt-1">{errors.size}</p>}
           </div>
           <div>
             <label className="block text-lg font-semibold text-gray-700 mb-2">Product Image</label>
