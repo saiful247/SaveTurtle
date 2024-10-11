@@ -17,11 +17,9 @@ const EditPurchase = () => {
   const [productName, setProductName] = useState('');
   const [productSize, setProductSize] = useState('L');
   const [productPrice, setProductPrice] = useState(0);
-  const [productImage, setProductImage] = useState('');
   const [errors, setErrors] = useState({});
   const [stockError, setStockError] = useState('');
   const [maxQuantity, setMaxQuantity] = useState(null);
-  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     const fetchPurchase = async () => {
@@ -39,19 +37,6 @@ const EditPurchase = () => {
         setProductPrice(purchase.productPrice);
         setTotalPrice(purchase.totalPrice);
         setCurrentImageUrl(purchase.paymentSlipUrl);
-        
-        // Fetch product image
-        try {
-          const productResponse = await axios.get(`http://localhost:5555/products?name=${purchase.productName}`);
-          if (productResponse.data.length > 0 && productResponse.data[0].image) {
-            setProductImage(`http://localhost:5555${productResponse.data[0].image}`);
-          } else {
-            setImageError(true);
-          }
-        } catch (productError) {
-          console.error('Error fetching product image:', productError);
-          setImageError(true);
-        }
       } catch (error) {
         console.error('Error fetching purchase:', error);
       } finally {
@@ -157,18 +142,6 @@ const EditPurchase = () => {
       <div className="flex flex-col md:flex-row md:space-x-6 max-w-6xl mx-auto">
         <div className="w-full md:w-1/3 mb-6 md:mb-0">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            {productImage && !imageError ? (
-              <img
-                src={productImage}
-                alt={productName}
-                className="w-full h-64 object-cover rounded-md shadow-md"
-                onError={() => setImageError(true)}
-              />
-            ) : (
-              <div className="w-full h-64 bg-gray-200 rounded-md flex items-center justify-center shadow-inner">
-                <p className="text-gray-500">No Image Available</p>
-              </div>
-            )}
             <div className="mt-4">
               <p className="text-2xl font-semibold text-gray-800">{productName}</p>
               <p className="text-xl font-bold text-blue-600 mt-2">LKR {productPrice.toFixed(2)}</p>
