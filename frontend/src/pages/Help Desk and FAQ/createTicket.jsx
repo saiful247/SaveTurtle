@@ -96,7 +96,7 @@ const CreateTickets = () => {
 
       {loading ? <Spinner /> : null}
 
-      <div className="bg-white shadow-lg rounded-xl border border-gray-200 w-full max-w-5xl p-8 top-0 grid grid-cols-1 md:grid-cols-2 gap-6 z-10">
+      <div className="bg-white shadow-lg rounded-xl border border-gray-200 w-full max-w-5xl p-8 grid grid-cols-1 md:grid-cols-2 gap-6 z-10">
         <div>
           <h2 className="text-xl font-semibold text-primary mb-4">
             Ticket Information
@@ -212,12 +212,16 @@ const CreateTickets = () => {
             )}
           </div>
         </div>
-        <button
-          className="w-full py-3 mt-6 text-white bg-primary rounded-lg hover:bg-primary_light focus:outline-none focus:ring-2 focus:ring-primary_light transition duration-200"
-          onClick={handleTicketSubmission}
-        >
-          {loading ? "Saving..." : "Create"}
-        </button>
+
+        {/* Centered Submit Button */}
+        <div className="col-span-2 flex justify-center">
+          <button
+            className="w-7/12 py-3 text-white bg-primary rounded-lg hover:bg-primary_light focus:outline-none focus:ring-2 focus:ring-primary_light transition duration-200"
+            onClick={handleTicketSubmission}
+          >
+            {loading ? "Saving..." : "Create Ticket"}
+          </button>
+        </div>
       </div>
 
       {isSuccess && (
