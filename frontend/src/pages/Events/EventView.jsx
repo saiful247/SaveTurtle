@@ -192,54 +192,69 @@ const EventProgramPage = () => {
               {filteredEvents.map((eventP) => (
                 <div
                   key={eventP._id}
-                  onClick={() => handleClick(eventP)} // Add onClick handler to navigate with event data
-                  className={`p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 cursor-pointer ${
+                  className={`relative p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 ${
                     darkMode ? "bg-gray-700" : "bg-white"
                   }`}
                 >
-                  <h2
-                    className={`text-xl font-bold mb-2 ${
-                      darkMode ? "text-white" : "text-black"
-                    }`}
-                  >
-                    {eventP.eventName}
-                  </h2>
-                  <p
+                  {eventP.allocatedPersonCount === 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center text-red-600 font-bold text-4xl opacity-80">
+                      Sold Out
+                    </div>
+                  )}
+                  <div
                     className={`${
-                      darkMode ? "text-gray-300" : "text-gray-600"
+                      eventP.allocatedPersonCount === 0
+                        ? "pointer-events-none"
+                        : "cursor-pointer"
                     }`}
+                    onClick={() =>
+                      eventP.allocatedPersonCount > 0 && handleClick(eventP)
+                    }
                   >
-                    <strong>Venue:</strong> {eventP.vanue}
-                  </p>
-                  <p
-                    className={`${
-                      darkMode ? "text-gray-300" : "text-gray-600"
-                    }`}
-                  >
-                    <strong>Date:</strong> {eventP.date}
-                  </p>
-                  <p
-                    className={`${
-                      darkMode ? "text-gray-300" : "text-gray-600"
-                    }`}
-                  >
-                    <strong>Time:</strong> {eventP.time}
-                  </p>
-                  <p
-                    className={`${
-                      darkMode ? "text-gray-300" : "text-gray-600"
-                    }`}
-                  >
-                    <strong>Total Allocated Persons:</strong>{" "}
-                    {eventP.allocatedPersonCount}
-                  </p>
-                  <p
-                    className={`${
-                      darkMode ? "text-gray-300" : "text-gray-600"
-                    }`}
-                  >
-                    <strong>Price:</strong> {eventP.price}
-                  </p>
+                    <h2
+                      className={`text-xl font-bold mb-2 ${
+                        darkMode ? "text-white" : "text-black"
+                      }`}
+                    >
+                      {eventP.eventName}
+                    </h2>
+                    <p
+                      className={`${
+                        darkMode ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      <strong>Venue:</strong> {eventP.vanue}
+                    </p>
+                    <p
+                      className={`${
+                        darkMode ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      <strong>Date:</strong> {eventP.date}
+                    </p>
+                    <p
+                      className={`${
+                        darkMode ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      <strong>Time:</strong> {eventP.time}
+                    </p>
+                    <p
+                      className={`${
+                        darkMode ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      <strong>Total Allocated Persons:</strong>{" "}
+                      {eventP.allocatedPersonCount}
+                    </p>
+                    <p
+                      className={`${
+                        darkMode ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      <strong>Price:</strong> {eventP.price}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
