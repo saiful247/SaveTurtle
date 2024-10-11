@@ -1,5 +1,6 @@
 import express from "express";
 import { EventParticipant } from "../models/eventParticipentModel.js";
+import { EventProgram } from "../models/eventModel.js";
 import multer from "multer";
 import path from "path";
 
@@ -57,6 +58,23 @@ router.post("/", upload.single("paymentImage"), async (request, response) => {
       ticketPrice: request.body.ticketPrice,
       paymentImageUrl, // Add image URL to participant if available
     };
+
+    // Find the corresponding event and update allocatedPersonCount
+    const event = await EventProgram.findOne({
+      eventName: request.body.eventName,
+    });
+    if (!event) {
+      return response.status(404).send({ message: "Event not found" });
+    }
+
+    if (event.allocatedPersonCount < request.body.noOfPerson) {
+      return response
+        .status(400)
+        .send({ message: "Not enough available seats" });
+    }
+
+    event.allocatedPersonCount -= request.body.noOfPerson;
+    await event.save();
 
     const eventP = await EventParticipant.create(newEventParticipant);
     return response.status(201).send(eventP);
