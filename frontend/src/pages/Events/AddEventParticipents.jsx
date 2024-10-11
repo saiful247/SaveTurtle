@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import axios from "axios";
@@ -13,7 +13,8 @@ const CreateEventsParticipant = () => {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [noOfPerson, setNoPerson] = useState("");
+  const [noOfPerson, setNoPerson] = useState(1);
+  const [ticketPrice, setTicketPrice] = useState(state?.ticketPrice || 0);
   const [paymentImage, setPaymentImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -21,8 +22,13 @@ const CreateEventsParticipant = () => {
   // Pre-fill event data from state
   const eventName = state?.eventName || "";
   const eventDate = state?.eventDate || "";
-  const ticketPrice = state?.ticketPrice || "";
+  const baseTicketPrice = state?.ticketPrice || 0;
   const totalAllocatedPerson = state?.totalAllocatedPerson || 0; // Use 0 as default
+
+  useEffect(() => {
+    // Automatically update ticket price based on number of persons
+    setTicketPrice(baseTicketPrice * noOfPerson);
+  }, [noOfPerson, baseTicketPrice]);
 
   const handleImageChange = (e) => {
     setPaymentImage(e.target.files[0]);
@@ -255,7 +261,7 @@ const CreateEventsParticipant = () => {
                 type="number"
                 value={noOfPerson}
                 onChange={(e) => {
-                  setNoPerson(e.target.value);
+                  setNoPerson(Math.max(1, e.target.value)); // Ensure noOfPerson is at least 1
                   setErrors((prevErrors) => ({
                     ...prevErrors,
                     noOfPerson: "",
@@ -264,6 +270,7 @@ const CreateEventsParticipant = () => {
                 className={`w-full mt-1 p-2 border ${
                   errors.noOfPerson ? "border-red-500" : "border-gray-300"
                 } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                min="1"
               />
               {errors.noOfPerson && (
                 <p className="text-red-500">{errors.noOfPerson}</p>
@@ -314,7 +321,7 @@ const CreateEventsParticipant = () => {
                 type="text"
                 value={ticketPrice}
                 disabled
-                className="w-full mt-1 p-2 border border-gray-300 bg-gray-200 rounded-md"
+                className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
