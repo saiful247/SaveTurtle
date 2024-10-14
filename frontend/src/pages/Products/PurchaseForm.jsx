@@ -126,7 +126,7 @@ const CreatePurchase = () => {
 
   return (
     <div className="p-6 bg-gradient-to-br from-blue-50 to-gray-100 min-h-screen">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">Purchase Product</h1>
+      {/* <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">Purchase Product</h1> */}
 
       <div className="flex flex-col md:flex-row md:space-x-6 max-w-6xl mx-auto">
         <div className="w-full md:w-1/3 mb-6 md:mb-0">
