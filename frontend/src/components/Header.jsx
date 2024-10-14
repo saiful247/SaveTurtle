@@ -35,6 +35,9 @@ const Header = () => {
         <Link to="/returns/create" className="hover:text-gray-300">
           Return
         </Link>
+        <Link to="/game" className="hover:text-gray-300">
+          Puzzle
+        </Link>
         <Link to="/createtickets" className="hover:text-gray-300">
           Help
         </Link>
