@@ -219,7 +219,7 @@ const CreateTickets = () => {
             className="w-7/12 py-3 text-white bg-primary rounded-lg hover:bg-primary_light focus:outline-none focus:ring-2 focus:ring-primary_light transition duration-200"
             onClick={handleTicketSubmission}
           >
-            {loading ? "Saving..." : "Create"}
+            {loading ? "Saving..." : "Create Ticket"}
           </button>
         </div>
       </div>
