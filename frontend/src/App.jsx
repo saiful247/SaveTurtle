@@ -20,7 +20,11 @@ import AdminRegister from './pages/AdminRegister';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';  // Import the ProtectedRoute component
 
-
+import CreateReturns from './pages/Return Products/CreateReturn';
+import DeleteReturn from './pages/Return Products/DeleteReturn';
+import EditReturn from './pages/Return Products/EditReturn';
+import ReturnProduct from './pages/Return Products/ReturnProduct';
+import ShowReturn from './pages/Return Products/ShowReturn';
 const App = () => {
   return (
     <>
@@ -88,9 +92,35 @@ const App = () => {
           }/>
       </Routes>
 
+
       <Routes>
         <Route path='/' element={<Home />} />
       </Routes>
+     
+     <Routes>
+      <Route path='/returns' element={
+        <ProtectedRoute>
+          <ReturnProduct/>
+        </ProtectedRoute>
+      } />
+      <Route path='/returns/create' element={<CreateReturns/>} />
+      <Route path='/returns/details/:id' element={
+        <ProtectedRoute>
+          <ShowReturn/>
+        </ProtectedRoute>
+   
+      } />
+      <Route path='/returns/edit/:id' element={
+        <ProtectedRoute>
+          <EditReturn/>
+        </ProtectedRoute>
+      } />
+      <Route path='/returns/delete/:id' element={
+        <ProtectedRoute>
+          <DeleteReturn/>
+        </ProtectedRoute>
+      } />
+    </Routes>
       
       
       

@@ -12,6 +12,7 @@ const AdminDashboard = () => {
     { label: 'Reports', path: '/reports' },
     { label: 'Settings', path: '/settings' },
     { label: 'Analytics', path: '/analytics' },
+    { label: 'Returns', path: '/returns' },
   ];
 
   const handleButtonClick = (path) => {

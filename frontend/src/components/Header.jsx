@@ -13,7 +13,7 @@ const Header = () => {
           <Link to="/helpdesk" className="hover:text-gray-300">HelpDesk</Link>
           <Link to="/donation" className="hover:text-gray-300">Donation</Link>
           <Link to="/refund" className="hover:text-gray-300">Refund</Link>
-          <Link to="/return" className="hover:text-gray-300">Return</Link>
+          <Link to="/returns/create" className="hover:text-gray-300">Return</Link>
           <Link to="/premium" className="hover:text-gray-300">Premium Membership</Link>
         </div>
       </nav>
