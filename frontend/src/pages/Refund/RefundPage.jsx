@@ -66,6 +66,18 @@ const RefundPage = () => {
     // Example: axios.post(`/refunds/reject/${id}`)
   };
 
+//Email
+// Function to handle email sending
+const sendEmail = async (email, status) => {
+  try {
+    await axios.post('http://localhost:5555/sendRefundEmail', { email, status });
+    alert(`Email successfully sent for ${status}!`);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    alert('Failed to send email');
+  }
+};
+
   return (
     <div
       className='p-4 min-h-screen'
@@ -78,16 +90,14 @@ const RefundPage = () => {
     >
       <div className="flex justify-between items-center">
         <h1 className='text-3xl my-8 text-white'>Refund List</h1>
+        <Link to='/admin/dashboard'>
+          <button className='bg-gray-500 text-white px-4 py-2 rounded-md'>
+            Admin Dashboard
+          </button>
+        </Link>
         {/* <Link to='/refunds/create'>
           <MdOutlineAddBox className='text-sky-800 text-4xl' />
         </Link> */}
-        <Link to='/admin/dashboard'>
-          <button
-            className='bg-gray-500 text-white px-4 py-2 rounded-md'
-          >
-            Admin Dashboard
-          </button>
-          </Link>
       </div>
 
       {/* Search Input */}
@@ -104,7 +114,7 @@ const RefundPage = () => {
       {/* Report Generation Buttons */}
       <div className='flex gap-4 mb-4'>
         {/* PDF Report Button */}
-        <button onClick={generatePDF} className="bg-red-500 text-white p-2 rounded-md">
+        <button onClick={generatePDF} className="bg-blue-500 text-white p-2 rounded-md">
           Generate PDF Report
         </button>
 
@@ -132,6 +142,11 @@ const RefundPage = () => {
       ) : (
         <>
           <div className='relative'>
+          <div className="mt-4">
+              <p className="text-right font-bold text-white">
+                Total Refunds: {filteredRefunds.length}
+              </p>
+            </div>
             <table className='min-w-full table-auto border border-collapse border-gray-300 relative'>
               <thead className='bg-gray-100'>
                 <tr>
@@ -179,33 +194,29 @@ const RefundPage = () => {
                         </Link>
                       </div>
                     </td>
-                    <td className='px-4 py-2 border border-gray-300'>
-                      <div className='flex justify-center gap-x-2'>
-                        <button
-                          onClick={() => handleApprove(refund._id)}
-                          className='bg-green-500 text-white p-1 rounded-md'
-                        >
-                          Approve
-                        </button>
-                        <button
-                          onClick={() => handleReject(refund._id)}
-                          className='bg-red-500 text-white p-1 rounded-md'
-                        >
-                          Reject
-                        </button>
-                      </div>
-                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <div className="mt-4 flex justify-center gap-x-4">
+                      <button
+                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                        onClick={() => sendEmail(refund.email, 'approved')} // On Approve, send approval email
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                        onClick={() => sendEmail(refund.email, 'disapproved')} // On Disapprove, send disapproval email
+                      >
+                        Disapprove
+                      </button>
+                    </div>
+                  </td>
                   </tr>
                 ))}
               </tbody>
             </table>
 
             {/* Total Refund Queries */}
-            <div className="mt-4">
-              <p className="text-right font-bold text-white">
-                Total Refunds: {filteredRefunds.length}
-              </p>
-            </div>
+            
           </div>
         </>
       )}
