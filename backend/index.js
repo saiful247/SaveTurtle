@@ -18,6 +18,7 @@ import refundRoute from "./routes/refundRoutes.js";
 import ReturnRouter from "./routes/ReturnsRoute.js";
 
 import donationsRoute from "./routes/donationsRoute.js";
+import returnProductEmail from "./routes/returnProductEmail.js";
 
 const app = express();
 
@@ -85,6 +86,8 @@ app.use("/donations", donationsRoute);
 //login
 app.use("/admin", adminRoute);
 app.use("/admin/register", adminRoute);
+
+app.use("/returnProductsendEmail", returnProductEmail);
 
 mongoose
   .connect(mongoDBURL)
