@@ -14,7 +14,7 @@ const Header = () => {
         <Link to="/eventlanding" className="hover:text-gray-300">
           Events
         </Link>
-        <Link to="/" className="hover:text-gray-300">
+        <Link to="/saveMes/*" className="hover:text-gray-300">
           Rescue
         </Link>
         <Link

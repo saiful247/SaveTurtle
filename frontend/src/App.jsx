@@ -1,5 +1,4 @@
 // src/App.jsx
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Header from "./components/Header";
@@ -73,6 +72,8 @@ import EventLanding from "./pages/Events/EventLanding";
 import Footer from "./components/Footer";
 
 import TurtleGame from "./pages/Events/TurtleGame";
+
+import SaveMePage from "./pages/SaveMePage";
 
 const App = () => {
   return (
@@ -301,6 +302,8 @@ const App = () => {
           }
         />
       </Routes>
+
+      <Route path="/saveMes/*" element={<SaveMePage />} />
 
       <Routes>
         <Route path="/shop" element={<LandingPage />} />
