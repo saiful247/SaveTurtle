@@ -303,7 +303,9 @@ const App = () => {
         />
       </Routes>
 
-      <Route path="/saveMes/*" element={<SaveMePage />} />
+      <Routes>
+        <Route path="/saveMes/*" element={<SaveMePage />} />
+      </Routes>
 
       <Routes>
         <Route path="/shop" element={<LandingPage />} />

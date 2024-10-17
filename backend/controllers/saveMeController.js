@@ -1,15 +1,9 @@
 import { SaveMe } from "../models/saveMeModel.js";
-import twilio from "twilio";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 // Load environment variables
 dotenv.config();
-
-// Twilio credentials
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
 
 // Create a new SaveMe report
 export const addSaveMe = async (req, res) => {
@@ -26,18 +20,6 @@ export const addSaveMe = async (req, res) => {
 
   try {
     await saveMe.save();
-
-    // // Send SMS to the customer's phone number using Twilio
-    // const messageBody = `Hello ${saveMe.name}, your report has been successfully added. We will address your emergency level: ${saveMe.emergencyLevel}.`;
-
-    // // Format the number with the correct country code (assuming Sri Lanka: +94)
-    // const formattedNumber = `+94${saveMe.contact}`;
-
-    // await client.messages.create({
-    //   body: messageBody,
-    //   from: process.env.TWILIO_PHONE_NUMBER, // Twilio phone number in E.164 format
-    //   to: formattedNumber, // Customer's phone number in correct E.164 format
-    // });
 
     res.json({
       success: true,
