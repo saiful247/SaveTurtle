@@ -7,6 +7,7 @@ import eventParticipantRoute from "./routes/eventParticipentRoute.js";
 import { fileURLToPath } from "url";
 import path from "path";
 import bookingEmail from "./routes/bookingEmail.js";
+import refundEmail from "./routes/refundEmail.js";
 import adminRoute from "./routes/AdminRoute.js";
 import { Refund } from "./models/refundModel.js";
 import refundRoute from "./routes/refundRoutes.js"
@@ -41,6 +42,7 @@ app.use("/eventViews", eventRoute);
 app.use("/eventViews/eventParticipants", eventParticipantRoute);
 app.use("/eventBookingList", eventParticipantRoute);
 app.use("/sendEmail", bookingEmail);
+app.use("/sendRefundEmail", refundEmail);
 app.use("/refunds", refundRoute);
 app.use("/userRefunds", refundRoute);
 

@@ -28,6 +28,7 @@ import EditRefund from './pages/Refund/EditRefund'
 import DeleteRefund from './pages/Refund/DeleteRefund'
 import ShowRefund from './pages/Refund/ShowRefund'
 import UserRefunds from './pages/Refund/RefundUserPage'
+import RefundLandingPage from './pages/Refund/RefundLandingPage';
 
 
 import AdminLogin from './pages/AdminLogin';
@@ -107,6 +108,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
       </Routes>
       <Routes>
+      <Route path='/refundLanding' element={<RefundLandingPage/>}></Route>
         <Route path='/userRefunds' element={<UserRefunds/>}></Route>
       </Routes>
       <Routes>
