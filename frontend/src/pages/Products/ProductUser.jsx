@@ -33,16 +33,24 @@ const ProductUser = () => {
     return matchesSearch && matchesCategory;
   });
 
+  // Sort products to push sold out items to the end
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (a.stockQuantity === 0 && b.stockQuantity > 0) return 1;
+    if (a.stockQuantity > 0 && b.stockQuantity === 0) return -1;
+    return 0;
+  });
+
   const handleClick = (product) => {
-    navigate(`/productViews/purchaseForm`, {
-      state: {
-        productName: product.name,
-        productPrice: product.price,
-        productCategory: product.category,
-        productSize: product.size,
-        productImage: product.imageUrl
-      }
-    });
+    if (product.stockQuantity > 0) {
+      navigate(`/productViews/purchaseForm`, {
+        state: {
+          productName: product.name,
+          productPrice: product.price,
+          productCategory: product.category,
+          productImage: product.imageUrl
+        }
+      });
+    }
   };
 
   return (
@@ -77,13 +85,20 @@ const ProductUser = () => {
         <p className="text-red-500 text-center">{error}</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {filteredProducts.map((product) => (
+          {sortedProducts.map((product) => (
             <div
               key={product._id}
               onClick={() => handleClick(product)}
-              className="cursor-pointer transform transition duration-300 hover:scale-105"
+              className={`cursor-pointer transform transition duration-300 ${
+                product.stockQuantity === 0 ? 'opacity-50' : 'hover:scale-105'
+              }`}
             >
-              <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-2xl">
+              <div className="bg-white shadow-lg rounded-xl p-6 hover:shadow-2xl relative">
+                {product.stockQuantity === 0 && (
+                  <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center rounded-xl">
+                    <span className="text-white text-xl font-bold">Sold Out</span>
+                  </div>
+                )}
                 <div className="flex justify-center mb-4">
                   {product.imageUrl ? (
                     <img
@@ -100,9 +115,13 @@ const ProductUser = () => {
                 <h2 className="text-xl font-bold mb-2 text-center text-gray-800">{product.name}</h2>
                 <p className="text-blue-600 font-semibold text-center mb-1">LKR {product.price}</p>
                 <p className="text-gray-600 text-center">{product.category}</p>
-                {/* <p className="text-gray-600 text-center">{product.size}</p> */}
-                <button className="mt-4 w-full bg-blue-500 text-white py-2 rounded-full hover:bg-blue-600 transition duration-300">
-                  View Details
+                <button 
+                  className={`mt-4 w-full bg-blue-500 text-white py-2 rounded-full transition duration-300 ${
+                    product.stockQuantity === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'
+                  }`}
+                  disabled={product.stockQuantity === 0}
+                >
+                  {product.stockQuantity === 0 ? 'Sold Out' : 'View Details'}
                 </button>
               </div>
             </div>

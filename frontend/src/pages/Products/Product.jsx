@@ -56,7 +56,7 @@ const Product = () => {
   });
 
   // Function to truncate the description to 2 or 3 words
-  const truncateDescription = (description, limit = 20) => {
+  const truncateDescription = (description, limit = 30) => {
     if (description.length > limit) {
       return description.substring(0, limit) + '...';
     }
@@ -103,19 +103,28 @@ const Product = () => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-     <div className="flex justify-end items-center space-x-4 mb-6">
-  <h1 className="text-4xl font-bold text-gray-800 flex-grow">Products</h1>
-  <Link to="/products/create" className="bg-sky-600 hover:bg-sky-800 text-white font-bold py-2 px-4 rounded transition duration-300">
-    Add New Product
-  </Link>
-  <Link to='/admin/dashboard'>
-    <button
-      className='bg-gray-500 text-white px-4 py-2 rounded-md'
-    >
-      Admin Dashboard
-    </button>
-  </Link>
-</div>
+     <div className="flex justify-between items-center mb-6">
+        <h1 className="text-4xl font-bold text-gray-800">Products</h1>
+
+        {/* Button Group */}
+        <div className="space-x-4">  {/* Spacing between buttons */}
+          <Link to="/admin/dashboard">
+            <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+              Admin Dashboard
+            </button>
+          </Link>
+          <Link to="/purchaseList">
+            <button className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+              Purchase Management
+            </button>
+          </Link>
+          <Link to="/products/create">
+            <button className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+              Add New Product
+            </button>
+          </Link>
+        </div>
+      </div>
 
 
       {/* Search and Category Filter */}
@@ -167,7 +176,6 @@ const Product = () => {
                 <th className="py-4 px-6 text-left max-md:hidden">Price</th>
                 <th className="py-4 px-6 text-left max-md:hidden">Quantity</th>
                 <th className="py-4 px-6 text-left max-md:hidden">Category</th>
-                <th className="py-4 px-6 text-left max-md:hidden">Size</th>
                 <th className="py-4 px-6 text-center actions-column">Actions</th> {/* Add this class */}
               </tr>
             </thead>
@@ -191,7 +199,6 @@ const Product = () => {
                   <td className="py-4 px-6 max-md:hidden">{product.price}</td>
                   <td className="py-4 px-6 max-md:hidden">{product.stockQuantity}</td>
                   <td className="py-4 px-6 max-md:hidden">{product.category}</td>
-                  <td className="py-4 px-6 max-md:hidden">{product.size}</td>
                   <td className="py-4 px-6 text-center actions-column"> {/* Add this class */}
                     <div className="flex justify-center items-center space-x-4">
                       <Link to={`/products/details/${product._id}`} title="View Details">

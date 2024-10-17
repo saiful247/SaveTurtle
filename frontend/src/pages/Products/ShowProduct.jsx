@@ -3,8 +3,6 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import BackButton from '../../components/BackButton';
 import Spinner from '../../components/Spinner';
-import { Product } from '../../../../backend/models/productModel';
-
 
 const ShowProduct = () => {
   const [product, setProduct] = useState({});
@@ -52,10 +50,6 @@ const ShowProduct = () => {
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Category</span>
             <span>{product.category}</span>
-          </div>
-          <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Size</span>
-            <span>{product.size}</span>
           </div>
           <div className='my-4'>
             <span className='text-xl mr-4 text-gray-500'>Create Time</span>

@@ -23,10 +23,6 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    size: {
-        type: String,
-        required: true,
-    },
     imageUrl: {
       type: String, // Store the local path of the image
       required: true,

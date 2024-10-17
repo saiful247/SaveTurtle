@@ -1,5 +1,6 @@
 import express from "express";
 import { Purchase } from "../models/purchaseModel.js";
+import { Product } from "../models/productModel.js";
 import multer from "multer";
 import path from "path";
 
@@ -20,7 +21,7 @@ const upload = multer({ storage: storage });
 // Serve static files from the 'uploads' folder
 router.use('/uploads/purchasePayment/', express.static(path.join(path.resolve(), 'uploads/purchasePayment/')));
 
-// Route for saving a new purchase with an image
+// Route for saving a new purchase with an image and stock update
 router.post("/", upload.single('image'), async (request, response) => {
     try {
         if (
@@ -39,6 +40,21 @@ router.post("/", upload.single('image'), async (request, response) => {
             });
         }
 
+        const { productName, quantity } = request.body;
+
+        // Check if product exists and has enough stock
+        const product = await Product.findOne({ name: productName });
+        if (!product) {
+            return response.status(404).json({ message: "Product not found" });
+        }
+
+        if (product.stockQuantity < quantity) {
+            return response.status(400).json({ 
+                message: 'Not enough stock available',
+                availableQuantity: product.stockQuantity
+            });
+        }
+
         const paymentSlipUrl = request.file ? `/uploads/purchasePayment/${request.file.filename}` : null;
 
         // Automatically capture the current date as the purchaseDate
@@ -54,11 +70,17 @@ router.post("/", upload.single('image'), async (request, response) => {
             productSize: request.body.productSize,
             productPrice: request.body.productPrice,
             totalPrice: request.body.totalPrice,
+            approvalStatus: request.body.approvalStatus || null,
             paymentSlipUrl,
             purchaseDate,
         };
 
         const purchase = await Purchase.create(newPurchase);
+
+        // Update product stock
+        product.stockQuantity -= quantity;
+        await product.save();
+
         return response.status(201).send(purchase);
     } catch (error) {
         console.log(error.message);
@@ -161,6 +183,39 @@ router.delete("/:id", async (request, response) => {
         return response
             .status(200)
             .send({ message: "Purchase deleted successfully" });
+    } catch (error) {
+        console.log(error.message);
+        response.status(500).send({ message: error.message });
+    }
+});
+
+router.put("/updateApprovalStatus/:id", async (request, response) => {
+    try {
+        const { id } = request.params;
+        const { approvalStatus } = request.body;
+
+        if (!approvalStatus) {
+            return response.status(400).send({
+                message: "Approval status is required",
+            });
+        }
+
+        const result = await Purchase.findByIdAndUpdate(
+            id,
+            { approvalStatus },
+            { new: true }
+        );
+
+        if (!result) {
+            return response
+                .status(404)
+                .json({ message: "Purchase not found" });
+        }
+
+        return response.status(200).send({
+            message: "Approval status updated successfully",
+            purchase: result,
+        });
     } catch (error) {
         console.log(error.message);
         response.status(500).send({ message: error.message });
