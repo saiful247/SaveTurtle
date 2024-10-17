@@ -24,8 +24,9 @@ const CreateDonations = () => {
   // Validate contact number to ensure it's 10 digits
   const handleContactNoChange = (e) => {
     const value = e.target.value;
-    if (value.length <= 10) {
-      setContactNo(value);
+    setContactNo(value);
+    if (value.length === 10) {
+      setErrors((prevErrors) => ({ ...prevErrors, contactNo: '' }));
     }
   };
 
@@ -54,11 +55,11 @@ const CreateDonations = () => {
     formData.append('amount', amount);
     formData.append('dateOfPayment', dateOfPayment);
     formData.append('discription', discription);
-  
+
     if (paymentImage) {
       formData.append('paymentImage', paymentImage);
     }
-  
+
     setLoading(true);
     axios
       .post('http://localhost:5555/donations', formData, {
@@ -106,7 +107,7 @@ const CreateDonations = () => {
           Join us in our mission to protect sea turtles. Your donation helps support conservation efforts!
         </p>
       </div>
-      
+
       {/* Right Side: Donation Form */}
       <div className='w-full max-w-md flex-1 flex flex-col justify-center items-center p-8'>
         <h1 className='text-3xl text-center mb-6 text-teal-700'>Create Donation</h1>
@@ -116,7 +117,7 @@ const CreateDonations = () => {
           <p className='font-bold'>Important Notice:</p>
           <p>Please make your donation before filling out the form. This ensures a smooth processing of your contribution.</p>
         </div>
-        
+
         {/* Bank Details Section */}
         <div className='mb-4 p-4 border border-gray-300 rounded-lg bg-white'>
           <h2 className='text-xl font-bold mb-2'>Bank Details</h2>
@@ -132,7 +133,7 @@ const CreateDonations = () => {
             <p>{successMessage}</p>
           </div>
         )}
-        
+
         {/* Donation Form */}
         <div className='bg-white shadow-md rounded-lg px-8 py-6 w-full'>
           <div className='mb-4'>
@@ -141,7 +142,10 @@ const CreateDonations = () => {
               type='text'
               placeholder='Enter Donor Name'
               value={donorName}
-              onChange={(e) => setDonorName(e.target.value)}
+              onChange={(e) => {
+                setDonorName(e.target.value);
+                if (e.target.value) setErrors((prevErrors) => ({ ...prevErrors, donorName: '' }));
+              }}
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.donorName && 'border-red-500'}`}
             />
             {errors.donorName && <p className='text-red-500 text-xs italic'>{errors.donorName}</p>}
@@ -152,7 +156,10 @@ const CreateDonations = () => {
               type='email'
               placeholder='Enter Email'
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (e.target.value) setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+              }}
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email && 'border-red-500'}`}
             />
             {errors.email && <p className='text-red-500 text-xs italic'>{errors.email}</p>}
@@ -174,7 +181,10 @@ const CreateDonations = () => {
               type='number'
               placeholder='Enter Donation Amount'
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={(e) => {
+                setAmount(e.target.value);
+                if (e.target.value > 0) setErrors((prevErrors) => ({ ...prevErrors, amount: '' }));
+              }}
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.amount && 'border-red-500'}`}
             />
             {errors.amount && <p className='text-red-500 text-xs italic'>{errors.amount}</p>}
@@ -184,7 +194,10 @@ const CreateDonations = () => {
             <input
               type='date'
               value={dateOfPayment}
-              onChange={(e) => setDateOfPayment(e.target.value)}
+              onChange={(e) => {
+                setDateOfPayment(e.target.value);
+                if (e.target.value) setErrors((prevErrors) => ({ ...prevErrors, dateOfPayment: '' }));
+              }}
               className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.dateOfPayment && 'border-red-500'}`}
             />
             {errors.dateOfPayment && <p className='text-red-500 text-xs italic'>{errors.dateOfPayment}</p>}
