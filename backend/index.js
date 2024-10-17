@@ -16,11 +16,10 @@ import productRoute from "./routes/productRoute.js";
 import purchaseRoute from "./routes/purchaseRoute.js";
 import refundRoute from "./routes/refundRoutes.js";
 import ReturnRouter from "./routes/ReturnsRoute.js";
-
 import donationsRoute from "./routes/donationsRoute.js";
-
-import purchaseEmail from "./routes/purchaseEmail.js"
-import donationEmail from "./routes/donationEmail.js"
+import purchaseEmail from "./routes/purchaseEmail.js";
+import donationEmail from "./routes/donationEmail.js";
+import saveMeRouter from "./routes/saveMeRoutes.js";
 
 const app = express();
 
@@ -97,6 +96,9 @@ app.use("/productViews", productRoute);
 app.use("/productViews/purchaseForm", purchaseRoute);
 app.use("/purchaseList", purchaseRoute);
 
+//SaveMe Routes
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("api/saveMe", saveMeRouter);
 
 mongoose
   .connect(mongoDBURL)
