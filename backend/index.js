@@ -20,6 +20,7 @@ import ReturnRouter from "./routes/ReturnsRoute.js";
 import donationsRoute from "./routes/donationsRoute.js";
 
 import purchaseEmail from "./routes/purchaseEmail.js"
+import donationEmail from "./routes/donationEmail.js"
 
 const app = express();
 
@@ -84,6 +85,7 @@ app.use("/userRefunds", refundRoute);
 
 // donations Route
 app.use("/donations", donationsRoute);
+app.use("/sendDonationEmail", donationEmail);
 
 //login
 app.use("/admin", adminRoute);

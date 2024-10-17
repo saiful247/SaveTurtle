@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import Spinner from '../../components/Spinner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -86,9 +85,38 @@ const EditDonation = () => {
       });
   };
 
+  // Clear specific error when the field changes
+  const handleChange = (field, value) => {
+    if (errors[field]) {
+      setErrors((prevErrors) => ({ ...prevErrors, [field]: '' }));
+    }
+
+    switch (field) {
+      case 'donorName':
+        setDonorName(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+      case 'contactNo':
+        setContactNo(value);
+        break;
+      case 'amount':
+        setAmount(value);
+        break;
+      case 'dateOfPayment':
+        setDateOfPayment(value);
+        break;
+      case 'discription':
+        setDiscription(value);
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className='p-4'>
-      {/* <BackButton /> */}
       <h1 className='text-3xl my-4 text-teal-600'>Edit Donation</h1>
       {loading ? <Spinner /> : ''}
       <div className='flex flex-col border-2 border-teal-500 rounded-xl w-[600px] p-4 mx-auto bg-blue-50'>
@@ -97,7 +125,7 @@ const EditDonation = () => {
           <input
             type='text'
             value={donorName}
-            onChange={(e) => setDonorName(e.target.value)}
+            onChange={(e) => handleChange('donorName', e.target.value)}
             className='border-2 border-teal-400 px-4 py-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-teal-300'
           />
           {errors.donorName && <p className='text-red-500 text-sm'>{errors.donorName}</p>} {/* Error message */}
@@ -107,7 +135,7 @@ const EditDonation = () => {
           <input
             type='text'
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleChange('email', e.target.value)}
             className='border-2 border-teal-400 px-4 py-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-teal-300'
           />
           {errors.email && <p className='text-red-500 text-sm'>{errors.email}</p>} {/* Error message */}
@@ -117,7 +145,7 @@ const EditDonation = () => {
           <input
             type='number'
             value={contactNo}
-            onChange={(e) => setContactNo(e.target.value)}
+            onChange={(e) => handleChange('contactNo', e.target.value)}
             className='border-2 border-teal-400 px-4 py-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-teal-300'
           />
           {errors.contactNo && <p className='text-red-500 text-sm'>{errors.contactNo}</p>} {/* Error message */}
@@ -127,7 +155,7 @@ const EditDonation = () => {
           <input
             type='number'
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => handleChange('amount', e.target.value)}
             className='border-2 border-teal-400 px-4 py-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-teal-300'
           />
           {errors.amount && <p className='text-red-500 text-sm'>{errors.amount}</p>} {/* Error message */}
@@ -137,7 +165,7 @@ const EditDonation = () => {
           <input
             type='date'
             value={dateOfPayment}
-            onChange={(e) => setDateOfPayment(e.target.value)}
+            onChange={(e) => handleChange('dateOfPayment', e.target.value)}
             className='border-2 border-teal-400 px-4 py-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-teal-300'
           />
           {errors.dateOfPayment && <p className='text-red-500 text-sm'>{errors.dateOfPayment}</p>} {/* Error message */}
@@ -147,7 +175,7 @@ const EditDonation = () => {
           <input
             type='text'
             value={discription}
-            onChange={(e) => setDiscription(e.target.value)}
+            onChange={(e) => handleChange('discription', e.target.value)}
             className='border-2 border-teal-400 px-4 py-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-teal-300'
           />
           {errors.discription && <p className='text-red-500 text-sm'>{errors.discription}</p>} {/* Error message */}

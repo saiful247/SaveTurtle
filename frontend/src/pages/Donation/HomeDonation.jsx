@@ -11,8 +11,8 @@ const HomeDonation = () => {
   const [donations, setDonations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [fromDate, setFromDate] = useState(''); // From date state
-  const [toDate, setToDate] = useState('');     // To date state
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -47,12 +47,7 @@ const HomeDonation = () => {
     });
   }, [donations, searchQuery, fromDate, toDate]);
 
-  // Calculate Total Donors and Total Amount
   const totalDonors = useMemo(() => {
-    // If you want total donation entries:
-    // return donations.length;
-
-    // If you want unique donors:
     const uniqueDonors = new Set(donations.map(donation => donation.donorName));
     return uniqueDonors.size;
   }, [donations]);
@@ -87,6 +82,53 @@ const HomeDonation = () => {
     document.body.removeChild(link);
   };
 
+  const downloadAllPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('All Donations Report', 14, 20);
+
+    const headers = ['ID', 'Donor Name', 'Email', 'Contact No', 'Amount', 'Date of Payment', 'Description'];
+
+    const tableData = filteredDonations.map((donation) => [
+      donation._id,
+      donation.donorName,
+      donation.email,
+      donation.contactNo,
+      `LKR ${donation.amount.toFixed(2)}`,
+      donation.dateOfPayment
+        ? new Date(donation.dateOfPayment).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+        : 'N/A',
+      donation.discription,
+    ]);
+
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 30,
+      styles: { fontSize: 8 },
+      columnStyles: {
+        0: { cellWidth: 25 },
+        1: { cellWidth: 30 },
+        2: { cellWidth: 40 },
+        3: { cellWidth: 25 },
+        4: { cellWidth: 25 },
+        5: { cellWidth: 25 },
+        6: { cellWidth: 25 },
+      },
+    });
+
+    const totalY = doc.lastAutoTable.finalY + 10;
+    doc.setFontSize(12);
+    doc.text(`Total Amount: LKR ${totalAmount.toFixed(2)}`, 14, totalY);
+    doc.text(`Total Donors: ${totalDonors}`, 14, totalY + 7);
+
+    doc.save('all_donations_report.pdf');
+  };
+
   const downloadPDF = (donation) => {
     const doc = new jsPDF();
     doc.setFontSize(18);
@@ -115,27 +157,37 @@ const HomeDonation = () => {
     doc.save(`donation_${donation._id}.pdf`);
   };
 
+  const sendEmail = async (email, status, donationId) => {
+    try {
+      await axios.post("http://localhost:5555/sendDonationEmail", { email, status });
+
+      // Update the donations state to reflect the new approval status
+      setDonations(prevDonations =>
+        prevDonations.map(donation =>
+          donation._id === donationId
+            ? { ...donation, approvalStatus: status } // Assuming you have an `approvalStatus` field
+            : donation
+        )
+      );
+
+      alert(`Email successfully sent for ${status}!`);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      alert("Failed to send email");
+    }
+  };
+
   return (
     <div className="p-6 bg-blue-50">
-      {/* Header Section */}
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl text-teal-700">Donors List</h1>
-        <Link to="/donations/create">
-          {/* Uncomment and style the button as needed */}
-          {/* <button className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-200">
-            New Donor
-          </button> */}
-        </Link>
         <Link to='/admin/dashboard'>
-          <button
-            className='bg-gray-500 text-white px-4 py-2 rounded-md'
-          >
+          <button className='bg-gray-500 text-white px-4 py-2 rounded-md'>
             Admin Dashboard
           </button>
-          </Link>
+        </Link>
       </div>
 
-      {/* Totals Section */}
       <div className="mb-4 flex space-x-8">
         <div className="bg-teal-100 p-4 rounded-lg shadow">
           <h2 className="text-lg font-semibold">Total Donors</h2>
@@ -147,29 +199,31 @@ const HomeDonation = () => {
         </div>
       </div>
 
-      {/* Download Buttons */}
-      <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-end">
+      <div className="mb-4 flex flex-col md:flex-row items-start md:items-center justify-end gap-2">
         <button
           onClick={downloadCSV}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition duration-200 mr-2 mb-2 md:mb-0"
+          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
         >
           Download All Donations (CSV)
         </button>
-        {/* Add more buttons if needed */}
+        <button
+          onClick={downloadAllPDF}
+          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200"
+        >
+          Generate All Donations PDF
+        </button>
       </div>
 
-      {/* Search Input */}
       <div className="mb-4">
         <input
           type="text"
           placeholder="Search by donor name, email, contact, or amount..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="border rounded p-2 w-64"  // Adjusted width to 16rem (256px)
+          className="border rounded p-2 w-64"
         />
       </div>
 
-      {/* Date Range Filter */}
       <div className="mb-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <div>
           <label className="block mb-1">From Date</label>
@@ -191,7 +245,6 @@ const HomeDonation = () => {
         </div>
       </div>
 
-      {/* Table Section */}
       {loading ? (
         <Spinner />
       ) : (
@@ -207,6 +260,8 @@ const HomeDonation = () => {
                 <th className="border px-4 py-2">Date of Payment</th>
                 <th className="border px-4 py-2">Payment Image</th>
                 <th className="border px-4 py-2">Description</th>
+                <th className="border px-4 py-2">Approval Status</th>
+                <th className="border px-4 py-2">Approval</th>
                 <th className="border px-4 py-2">Edit</th>
                 <th className="border px-4 py-2">Delete</th>
                 <th className="border px-4 py-2">Download PDF</th>
@@ -224,10 +279,10 @@ const HomeDonation = () => {
                     <td className="border px-4 py-2 text-center">
                       {donation.dateOfPayment
                         ? new Date(donation.dateOfPayment).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })
                         : 'N/A'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -244,6 +299,25 @@ const HomeDonation = () => {
                       )}
                     </td>
                     <td className="border px-4 py-2 text-center">{donation.discription}</td>
+                    <td className="border px-4 py-2 text-center">
+                      {donation.approvalStatus ? donation.approvalStatus : 'Pending'} {/* Displaying approval status */}
+                    </td>
+                    <td className="border px-4 py-2 text-center">
+                      <div className="mt-4 flex justify-center gap-x-4">
+                        <button
+                          className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                          onClick={() => sendEmail(donation.email, "recieved", donation._id)} // Passing the donation ID
+                        >
+                          Approve
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                          onClick={() => sendEmail(donation.email, "not recieved", donation._id)} // Passing the donation ID
+                        >
+                          Disapprove
+                        </button>
+                      </div>
+                    </td>
                     <td className="border px-4 py-2 text-center">
                       <Link to={`/donations/edit/${donation._id}`}>
                         <AiOutlineEdit className="text-yellow-600 text-2xl cursor-pointer" />
@@ -263,7 +337,7 @@ const HomeDonation = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="11" className="text-center py-4">
+                  <td colSpan="12" className="text-center py-4">
                     No donations found.
                   </td>
                 </tr>
