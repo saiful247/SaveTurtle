@@ -135,7 +135,7 @@ const CreateDonations = () => {
         )}
 
         {/* Donation Form */}
-        <div className='bg-white shadow-md rounded-lg px-8 py-6 w-full'>
+        <div className='bg-white shadow-md rounded-lg px-8 py-6 w-full transition-transform duration-300 ease-in-out transform hover:scale-105'>
           <div className='mb-4'>
             <label className='block text-gray-700 text-sm font-bold mb-2'>Donor Name</label>
             <input
@@ -146,7 +146,7 @@ const CreateDonations = () => {
                 setDonorName(e.target.value);
                 if (e.target.value) setErrors((prevErrors) => ({ ...prevErrors, donorName: '' }));
               }}
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.donorName && 'border-red-500'}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.donorName && 'border-red-500'} transition-all duration-300 ease-in-out focus:border-teal-600`}
             />
             {errors.donorName && <p className='text-red-500 text-xs italic'>{errors.donorName}</p>}
           </div>
@@ -160,7 +160,7 @@ const CreateDonations = () => {
                 setEmail(e.target.value);
                 if (e.target.value) setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
               }}
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email && 'border-red-500'}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email && 'border-red-500'} transition-all duration-300 ease-in-out focus:border-teal-600`}
             />
             {errors.email && <p className='text-red-500 text-xs italic'>{errors.email}</p>}
           </div>
@@ -171,7 +171,7 @@ const CreateDonations = () => {
               placeholder='Enter Contact Number'
               value={contactNo}
               onChange={handleContactNoChange}
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.contactNo && 'border-red-500'}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.contactNo && 'border-red-500'} transition-all duration-300 ease-in-out focus:border-teal-600`}
             />
             {errors.contactNo && <p className='text-red-500 text-xs italic'>{errors.contactNo}</p>}
           </div>
@@ -185,7 +185,7 @@ const CreateDonations = () => {
                 setAmount(e.target.value);
                 if (e.target.value > 0) setErrors((prevErrors) => ({ ...prevErrors, amount: '' }));
               }}
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.amount && 'border-red-500'}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.amount && 'border-red-500'} transition-all duration-300 ease-in-out focus:border-teal-600`}
             />
             {errors.amount && <p className='text-red-500 text-xs italic'>{errors.amount}</p>}
           </div>
@@ -198,7 +198,7 @@ const CreateDonations = () => {
                 setDateOfPayment(e.target.value);
                 if (e.target.value) setErrors((prevErrors) => ({ ...prevErrors, dateOfPayment: '' }));
               }}
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.dateOfPayment && 'border-red-500'}`}
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.dateOfPayment && 'border-red-500'} transition-all duration-300 ease-in-out focus:border-teal-600`}
             />
             {errors.dateOfPayment && <p className='text-red-500 text-xs italic'>{errors.dateOfPayment}</p>}
           </div>
@@ -207,7 +207,7 @@ const CreateDonations = () => {
             <input
               type="file"
               onChange={handleImageChange}
-              className="mt-2 border-gray-300"
+              className="mt-2 border-gray-300 transition-transform duration-300 ease-in-out hover:scale-105"
             />
           </div>
           <div className='mb-4'>
@@ -216,7 +216,7 @@ const CreateDonations = () => {
               placeholder='Enter a description'
               value={discription}
               onChange={(e) => setDiscription(e.target.value)}
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out ${errors.description && 'border-red-500'}`}
             />
           </div>
           <div className='flex items-center justify-center'>
