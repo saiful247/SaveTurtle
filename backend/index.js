@@ -22,6 +22,7 @@ import donationEmail from "./routes/donationEmail.js";
 import saveMeRouter from "./routes/saveMeRoutes.js";
 import returnProductEmail from "./routes/returnProductEmail.js";
 
+import refundEmail from "./routes/refundEmail.js";
 
 const app = express();
 
@@ -83,6 +84,7 @@ app.use("/sendPurchaseEmail", purchaseEmail);
 // Refund Routes
 app.use("/refunds", refundRoute);
 app.use("/userRefunds", refundRoute);
+app.use("/sendRefundEmail", refundEmail);
 
 // donations Route
 app.use("/donations", donationsRoute);

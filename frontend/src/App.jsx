@@ -54,6 +54,7 @@ import EditRefund from "./pages/Refund/EditRefund";
 import DeleteRefund from "./pages/Refund/DeleteRefund";
 import ShowRefund from "./pages/Refund/ShowRefund";
 import UserRefunds from "./pages/Refund/RefundUserPage";
+import RefundLandingPage from './pages/Refund/RefundLandingPage';
 
 import HomeDonation from "./pages/Donation/HomeDonation";
 import CreateDonations from "./pages/Donation/CreateDonations";
@@ -347,49 +348,38 @@ const App = () => {
 
       {/* Azmath */}
       <Routes>
-        <Route path="/userRefunds" element={<UserRefunds />}></Route>
+        <Route path='/' element={<Home />} />
       </Routes>
       <Routes>
-        <Route
-          path="/refunds"
-          element={
-            <ProtectedRoute>
-              <RefundPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/refunds/create"
-          element={
-            <ProtectedRoute>
-              <CreateRefund />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/refunds/details/:id"
-          element={
-            <ProtectedRoute>
-              <ShowRefund />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/refunds/edit/:id"
-          element={
-            <ProtectedRoute>
-              <EditRefund />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/refunds/delete/:id"
-          element={
-            <ProtectedRoute>
-              <DeleteRefund />
-            </ProtectedRoute>
-          }
-        />
+      <Route path='/refundLanding' element={<RefundLandingPage/>}></Route>
+        <Route path='/userRefunds' element={<UserRefunds/>}></Route>
+      </Routes>
+      <Routes>
+        <Route path='/refunds'element={
+          <ProtectedRoute>
+            <RefundPage/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/refunds/create'element={
+          <ProtectedRoute>
+            <CreateRefund/>
+          </ProtectedRoute>
+        }/>
+         <Route path='/refunds/details/:id'element={
+          <ProtectedRoute>
+            <ShowRefund/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/refunds/edit/:id'element={
+          <ProtectedRoute>
+            <EditRefund/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/refunds/delete/:id'element={
+          <ProtectedRoute>
+            <DeleteRefund/>
+          </ProtectedRoute>
+        }/>
       </Routes>
 
       {/* Donation */}

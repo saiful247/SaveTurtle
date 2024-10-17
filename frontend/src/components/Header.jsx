@@ -29,7 +29,7 @@ const Header = () => {
         <Link to="/donations/herosection" className="hover:text-gray-300">
           Donation
         </Link>
-        <Link to="/userRefunds" className="hover:text-gray-300">
+        <Link to="/refundLanding" className="hover:text-gray-300">
           Refund
         </Link>
         <Link to="/returns/create" className="hover:text-gray-300">
