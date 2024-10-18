@@ -10,8 +10,6 @@ import bookingEmail from "./routes/bookingEmail.js";
 import adminRoute from "./routes/AdminRoute.js";
 import faqRouter from "./routes/faqRoutes.js";
 import ticketRouter from "./routes/ticketRoutes.js";
-import membershipsRoute from "./routes/membershipsRoute.js";
-import subscriptionRoute from "./routes/subscriptionRoute.js";
 import productRoute from "./routes/productRoute.js";
 import purchaseRoute from "./routes/purchaseRoute.js";
 import refundRoute from "./routes/refundRoutes.js";
@@ -21,6 +19,9 @@ import purchaseEmail from "./routes/purchaseEmail.js";
 import donationEmail from "./routes/donationEmail.js";
 import saveMeRouter from "./routes/saveMeRoutes.js";
 import returnProductEmail from "./routes/returnProductEmail.js";
+import MembershipRouter from "./routes/membershipsRoute.js";
+import SubscriptionRouter from "./routes/subscriptionRoute.js";
+import subEmailRouter from "./routes/subscriptionEmail.js";
 
 import refundEmail from "./routes/refundEmail.js";
 
@@ -70,8 +71,6 @@ app.use("/eventBookingList", eventParticipantRoute);
 app.use("/sendEmail", bookingEmail);
 app.use("/faq", faqRouter);
 app.use("/tickets", ticketRouter);
-app.use("/memberships", membershipsRoute);
-app.use("/subscriptions", subscriptionRoute);
 app.use("/returns", ReturnRouter);
 
 // Product Routes
@@ -105,6 +104,11 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("api/saveMe", saveMeRouter);
 
 app.use("/returnProductsendEmail", returnProductEmail);
+
+//Membership route
+app.use("/memberships", MembershipRouter);
+app.use("/subscriptions", SubscriptionRouter);
+app.use("sendSubEmail", subEmailRouter);
 
 mongoose
   .connect(mongoDBURL)
