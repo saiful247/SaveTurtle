@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Spinner from '../../components/Spinner';
-import { GiTurtle } from 'react-icons/gi';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Spinner from "../../components/Spinner";
+import { GiTurtle } from "react-icons/gi";
 
 const ShowMembershipPack = () => {
   const { id } = useParams(); // Get the ID from the URL
@@ -33,11 +33,15 @@ const ShowMembershipPack = () => {
 
   return (
     <div className="p-6 bg-green-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-center text-green-800 mb-8">Membership Package Details</h1>
+      <h1 className="text-4xl font-bold text-center text-green-800 mb-8">
+        Membership Package Details
+      </h1>
       <div className="border-2 border-sky-400 rounded-lg shadow-lg p-6 mx-auto w-full max-w-md bg-white">
         <div className="flex items-center justify-center mb-4">
           <GiTurtle className="text-5xl text-green-700 mr-2" />
-          <h2 className="text-2xl font-semibold">Support Our Conservation Efforts!</h2>
+          <h2 className="text-2xl font-semibold">
+            Support Our Conservation Efforts!
+          </h2>
         </div>
         <div className="mb-4">
           <p className="text-lg">
