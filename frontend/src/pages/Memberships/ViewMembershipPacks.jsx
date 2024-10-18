@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Spinner from '../../components/Spinner';
-import { BsInfoCircle } from 'react-icons/bs';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { MdOutlineDelete } from 'react-icons/md';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import Spinner from "../../components/Spinner";
+import { BsInfoCircle } from "react-icons/bs";
+import { AiOutlineEdit } from "react-icons/ai";
+import { MdOutlineDelete } from "react-icons/md";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const ViewMembershipPacks = () => {
   const [memberships, setMemberships] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(''); // New state for search term
+  const [searchTerm, setSearchTerm] = useState(""); // New state for search term
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get('http://localhost:5555/memberships') // Adjusted API endpoint
+      .get("http://localhost:5555/memberships") // Adjusted API endpoint
       .then((response) => {
         setMemberships(response.data.data); // Ensuring correct response data structure
         setLoading(false);
@@ -29,12 +29,13 @@ const ViewMembershipPacks = () => {
 
   const generatePDF = () => {
     const doc = new jsPDF();
-    doc.text('Membership Packages Report', 14, 16);
-    
-    const tableColumn = ['Name', 'Price', 'Duration (Months)', 'Features'];
+    doc.text("Membership Packages Report", 14, 16);
+
+    const tableColumn = ["Name", "Price", "Duration (Months)", "Features"];
     const tableRows = [];
 
-    memberships.forEach((membership) => {
+    // Use filteredMemberships instead of memberships
+    filteredMemberships.forEach((membership) => {
       const membershipData = [
         membership.name,
         `Rs ${membership.price}`,
@@ -50,7 +51,7 @@ const ViewMembershipPacks = () => {
       startY: 20,
     });
 
-    doc.save('membership-packages-report.pdf');
+    doc.save("filtered-membership-packages-report.pdf");
   };
 
   // Filter memberships based on search term
