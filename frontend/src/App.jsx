@@ -34,6 +34,7 @@ import SubscribePage from "./pages/Memberships/SubscribingPage";
 import ViewAvailablePacks from "./pages/Memberships/ViewAvailablePacks";
 import ViewSubscription from "./pages/Memberships/ViewSubscription";
 import ViewSubscriptions from "./pages/Memberships/ViewAllSubscriptions";
+import ViewPaymentSlip from "./pages/Memberships/ViewPaymentSlip";
 
 import Product from "./pages/Products/Product";
 import CreateProducts from "./pages/Products/CreateProducts";
@@ -180,6 +181,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
       </Routes>
 
+      {/* Hariri */}
       <Routes>
         <Route path="/createtickets" element={<CreateTickets />} />
         <Route
@@ -202,6 +204,8 @@ const App = () => {
           }
         />
       </Routes>
+
+      {/* Shermon */}
       <Routes>
         <Route
           path="/membership/packagecreate"
@@ -255,6 +259,10 @@ const App = () => {
         <Route
           path="/ViewAvailablePacks/viewpacks"
           element={<ViewAvailablePacks />}
+        />
+        <Route
+          path="subscriptions/:id/payment-slip"
+          element={<ViewPaymentSlip />}
         />
         <Route path="/subscribe/:id" element={<SubscribePage />} />
         <Route path="/subscriptions/:id" element={<ViewSubscription />} />
