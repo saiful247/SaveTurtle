@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import jsPDF from 'jspdf';
-import Spinner from '../../components/Spinner';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
-import {MdOutlineDelete } from 'react-icons/md';
+import { MdOutlineDelete } from 'react-icons/md';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const ReturnProduct = () => {
   const [returns, setReturns] = useState([]);
@@ -13,64 +13,65 @@ const ReturnProduct = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
- 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    setLoading(true);
-    axios.get('http://localhost:5555/returns')
-      .then((response) => {
+    const fetchReturns = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get('http://localhost:5555/returns');
         setReturns(response.data.data);
+      } catch (error) {
+        console.error('Error fetching returns:', error);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+      }
+    };
+    fetchReturns();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this return?")) {
-      axios
-        .delete(`http://localhost:5555/returns/${id}`)
-        .then(() => {
-          alert('Return deleted successfully!');
-          setReturns(returns.filter(returnProduct => returnProduct._id !== id));
-        })
-        .catch((error) => {
-          console.error('There was an error deleting the return!', error);
-        });
+      try {
+        await axios.delete(`http://localhost:5555/returns/${id}`);
+        alert('Return deleted successfully!');
+        setReturns((prevReturns) => prevReturns.filter(returnProduct => returnProduct._id !== id));
+      } catch (error) {
+        console.error('Error deleting the return:', error);
+      }
     }
   };
 
-  const handleApprove = (id) => {
+  const handleApprove = async (id) => {
     if (window.confirm("Are you sure you want to approve this return?")) {
-      axios
-        .put(`http://localhost:5555/returns/${id}/approve`)
-        .then(() => {
-          alert('Return approved successfully!');
-          setReturns(returns.map(returnProduct =>
+      try {
+        await axios.put(`http://localhost:5555/returns/${id}/approve`);
+        alert('Return approved successfully!');
+        setReturns((prevReturns) => 
+          prevReturns.map(returnProduct =>
             returnProduct._id === id ? { ...returnProduct, status: 'Approved' } : returnProduct
-          ));
-        })
-        .catch((error) => {
-          console.error('There was an error approving the return!', error);
-        });
+          )
+        );
+      } catch (error) {
+        console.error('Error approving the return:', error);
+      }
     }
   };
 
-  const handleReject = (id) => {
-    if (window.confirm("Are you sure you want to reject this return?")) {
-      axios
-        .put(`http://localhost:5555/returns/${id}/reject`)
-        .then(() => {
-          alert('Return rejected successfully!');
-          setReturns(returns.map(returnProduct =>
-            returnProduct._id === id ? { ...returnProduct, status: 'Rejected' } : returnProduct
-          ));
-        })
-        .catch((error) => {
-          console.error('There was an error rejecting the return!', error);
-        });
+  const handleDisapprove = async (id) => {
+    if (window.confirm("Are you sure you want to disapprove this return?")) {
+      try {
+        await axios.put(`http://localhost:5555/returns/${id}/disapprove`);
+        alert('Return disapproved successfully!');
+        setReturns((prevReturns) => 
+          prevReturns.map(returnProduct =>
+            returnProduct._id === id ? { ...returnProduct, status: 'Disapproved' } : returnProduct
+          )
+        );
+      } catch (error) {
+        console.error('Error disapproving the return:', error);
+      }
     }
   };
 
@@ -91,70 +92,75 @@ const ReturnProduct = () => {
     return matchesSearchTerm && matchesDateRange;
   });
 
+  const totalItems = filteredReturns.length;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredReturns.slice(indexOfFirstItem, indexOfLastItem);
+
+  const calculateTotalRefundAmount = () => {
+    return filteredReturns.reduce((total, returnProduct) => {
+      return total + (parseFloat(returnProduct.refundAmount) || 0);
+    }, 0).toFixed(2);
+  };
 
   const downloadPDF = () => {
     const doc = new jsPDF();
-  
-    // Add title
-    doc.setFontSize(20);
-    doc.text('Return Products List', 20, 20);
-  
-    // Add a header for the table
-    doc.setFontSize(12);
-    const headers = ['No.', 'Product ID', 'Order ID', 'Reason', 'Refund Amount', 'Return Date', 'Email', 'Status'];
-  
-    // Prepare data for the PDF
-    const data = filteredReturns.map((returnProduct, index) => [
-      index + 1,
-      returnProduct.productId,
-      returnProduct.orderId,
-      returnProduct.reason,
-      returnProduct.refundAmount,
-      new Date(returnProduct.returnDate).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }), // Format the date here
-      returnProduct.email,
-      returnProduct.status,
-    ]);
-  
-    const colWidths = [10, 30, 30, 50, 30, 30, 50, 30];
-    const startY = 40; // starting Y position for the table
-    const rowHeight = 10; // height of each row
-  
-    // Add headers
-    headers.forEach((header, index) => {
-      doc.text(header, 20 + colWidths.slice(0, index).reduce((a, b) => a + b, 0), startY); // Positioning
+
+    // Title and settings
+    doc.setFontSize(18);
+    doc.text("Return Products List", 14, 22);
+    
+    // AutoTable data
+    const tableColumn = ["Product ID", "Order ID", "Reason", "Refund Amount", "Return Date", "Email", "Status"];
+    const tableRows = [];
+
+    filteredReturns.forEach(returnProduct => {
+      const returnDate = new Date(returnProduct.returnDate).toLocaleDateString();
+      const returnData = [
+        returnProduct.productId,
+        returnProduct.orderId,
+        returnProduct.reason,
+        returnProduct.refundAmount,
+        returnDate,
+        returnProduct.email,
+        returnProduct.status,
+      ];
+      tableRows.push(returnData);
     });
-  
-    // Add data rows
-    data.forEach((row) => {
-      const currentRowY = startY + (data.indexOf(row) + 1) * rowHeight; // Calculate current row Y position
-      row.forEach((cell, index) => {
-        doc.text(String(cell), 20 + colWidths.slice(0, index).reduce((a, b) => a + b, 0), currentRowY); // Positioning
-      });
+
+    // AutoTable for table generation
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 30
     });
-  
+
+    // Total refund amount
+    doc.text(`Total Refund Amount: $${calculateTotalRefundAmount()}`, 14, doc.autoTable.previous.finalY + 10);
+
     // Save the PDF
     doc.save('return_products_list.pdf');
   };
-  
 
+  // Function to handle email sending
+const sendEmail = async (email, status) => {
+  try {
+    await axios.post('http://localhost:5555/returnProductsendEmail', { email, status });
+    alert(`Email successfully sent for ${status}!`);
+  } catch (error) {
+    console.error('Error sending email:', error);
+    alert('Failed to send email');
+  }
+};
   return (
     <div className='p-6 bg-gray-50 min-h-screen'>
       <div className="flex justify-between items-center mb-6">
         <h1 className='text-4xl font-semibold'>Return Products List</h1>
-      </div>
-
-
-      <div className="flex justify-end mb-4">
         <button
           onClick={downloadPDF}
-          className='  bg-red-600 text-white rounded px-4 py-2 hover:bg-red-700 transition duration-200'
-
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
-          PDF GENERATE
+          Download PDF
         </button>
       </div>
 
@@ -171,49 +177,41 @@ const ReturnProduct = () => {
           type="date"
           className="border rounded p-2 mr-2"
           value={fromDate}
-          onChange={(e) => setFromDate(e.target.value.replace(/[a-zA-Z]/g, ''))} // Clean unwanted letters
+          onChange={(e) => setFromDate(e.target.value)}
         />
         <input
           type="date"
           className="border rounded p-2"
           value={toDate}
-          onChange={(e) => setToDate(e.target.value.replace(/[a-zA-Z]/g, ''))} // Clean unwanted letters
+          onChange={(e) => setToDate(e.target.value)}
         />
       </div>
 
       {loading ? (
-        <Spinner />
+        <p>Loading...</p>
       ) : (
-        <div className='overflow-x-auto'>
-          <table className='min-w-full bg-white border border-gray-200 rounded-lg shadow-lg'>
-            <thead className='bg-gray-100'>
-              <tr>
-                <th className='border px-4 py-2'>No.</th>
+        <div className="overflow-x-auto">
+          <table className='min-w-full border-collapse border border-gray-300'>
+            <thead>
+              <tr className='bg-gray-200'>
                 <th className='border px-4 py-2'>Product ID</th>
                 <th className='border px-4 py-2'>Order ID</th>
-                <th className='border px-4 py-2 hidden md:table-cell'>Reason</th>
-                <th className='border px-4 py-2 hidden md:table-cell'>Refund Amount</th>
-                <th className='border px-4 py-2 hidden md:table-cell'>Return Date</th>
+                <th className='border px-4 py-2'>Reason</th>
+                <th className='border px-4 py-2'>Refund Amount</th>
+                <th className='border px-4 py-2'>Return Date</th>
                 <th className='border px-4 py-2'>Email</th>
-                <th className='border px-4 py-2'>Operations</th>
+                <th className='border px-4 py-2'>Actions</th>
                 <th className='border px-4 py-2'>Status</th>
               </tr>
             </thead>
             <tbody>
-              {filteredReturns.map((returnProduct, index) => (
-                <tr key={returnProduct._id} className='text-center hover:bg-gray-50 transition'>
-                  <td className='border px-4 py-2'>{index + 1}</td>
+              {currentItems.map((returnProduct) => (
+                <tr key={returnProduct._id}>
                   <td className='border px-4 py-2'>{returnProduct.productId}</td>
                   <td className='border px-4 py-2'>{returnProduct.orderId}</td>
-                  <td className='border px-4 py-2 hidden md:table-cell'>{returnProduct.reason}</td>
-                  <td className='border px-4 py-2 hidden md:table-cell'>{returnProduct.refundAmount}</td>
-                  <td className='border px-4 py-2 hidden md:table-cell'>
-                    {new Date(returnProduct.returnDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                    })}
-                  </td>
+                  <td className='border px-4 py-2'>{returnProduct.reason}</td>
+                  <td className='border px-4 py-2'>{returnProduct.refundAmount}</td>
+                  <td className='border px-4 py-2'>{new Date(returnProduct.returnDate).toLocaleDateString()}</td>
                   <td className='border px-4 py-2'>{returnProduct.email}</td>
                   <td className='border px-4 py-2'>
                     <div className='flex justify-center gap-4'>
@@ -228,34 +226,45 @@ const ReturnProduct = () => {
                       </button>
                     </div>
                   </td>
-                  <td className='border px-4 py-2'>
-                    <div className='flex flex-col items-center'>
-                      {returnProduct.status === 'Approved' ? (
-                        <span className='text-green-600'>Approved</span>
-                      ) : returnProduct.status === 'Rejected' ? (
-                        <span className='text-red-600'>Rejected</span>
-                      ) : (
-                        <div className='flex gap-2 mt-1'>
-                          <button
-                            onClick={() => handleApprove(returnProduct._id)}
-                            className='bg-blue-600 text-white rounded px-4 py-2 hover:bg-green-700 transition duration-200'
-                          >
-                            Approve
-                          </button>
-                          <button
-                            onClick={() => handleReject(returnProduct._id)}
-                            className='bg-orange-600 text-white rounded px-4 py-2 hover:bg-orange-700 transition duration-200'
-                          >
-                            Reject
-                          </button>
-                        </div>
-                      )}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <div className="mt-4 flex justify-center gap-x-4">
+                      <button
+                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                        onClick={() => sendEmail(returnProduct.email, 'approved')} // On Approve, send approval email
+                      >
+                        Approve
+                      </button>
+                      <button
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                        onClick={() => sendEmail(returnProduct.email, 'disapproved')} // On Disapprove, send disapproval email
+                      >
+                        Disapprove
+                      </button>
                     </div>
                   </td>
+
                 </tr>
               ))}
             </tbody>
           </table>
+
+          <div className='mt-4 flex justify-between'>
+            <button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+            >
+              Previous
+            </button>
+            <p>Page {currentPage} of {Math.ceil(totalItems / itemsPerPage)}</p>
+            <button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={indexOfLastItem >= totalItems}
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
     </div>

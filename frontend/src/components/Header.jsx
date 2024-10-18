@@ -14,7 +14,7 @@ const Header = () => {
         <Link to="/eventlanding" className="hover:text-gray-300">
           Events
         </Link>
-        <Link to="/" className="hover:text-gray-300">
+        <Link to="/saveMes/create" className="hover:text-gray-300">
           Rescue
         </Link>
         <Link
@@ -29,11 +29,14 @@ const Header = () => {
         <Link to="/donations/herosection" className="hover:text-gray-300">
           Donation
         </Link>
-        <Link to="/userRefunds" className="hover:text-gray-300">
+        <Link to="/refundLanding" className="hover:text-gray-300">
           Refund
         </Link>
         <Link to="/returns/create" className="hover:text-gray-300">
           Return
+        </Link>
+        <Link to="/game" className="hover:text-gray-300">
+          Puzzle
         </Link>
         <Link to="/createtickets" className="hover:text-gray-300">
           Help

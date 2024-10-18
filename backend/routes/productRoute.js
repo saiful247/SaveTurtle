@@ -44,6 +44,7 @@ router.post("/", upload.single('image'), async (request, response) => {
       stockQuantity: request.body.stockQuantity,
       category: request.body.category,
       imageUrl, // Add image URL to product if available
+      isSoldOut: request.body.stockQuantity <= 0, // Add isSoldOut field
     };
 
     const product = await Product.create(newProduct);
@@ -57,7 +58,7 @@ router.post("/", upload.single('image'), async (request, response) => {
 // Route for getting all products from the DB
 router.get("/", async (request, response) => {
   try {
-    const products = await Product.find({});
+    const products = await Product.find({}).sort({ stockQuantity: -1 }); // Sort by stockQuantity in descending order
     return response.status(200).json({
       count: products.length,
       data: products,
@@ -101,6 +102,7 @@ router.put("/:id", upload.single('image'), async (request, response) => {
     const updatedProduct = {
       ...request.body,
       imageUrl, // Update the image URL if a new image is uploaded
+      isSoldOut: request.body.stockQuantity <= 0, // Update isSoldOut status
     };
 
     const result = await Product.findByIdAndUpdate(id, updatedProduct, { new: true });
