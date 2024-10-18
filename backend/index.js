@@ -108,7 +108,7 @@ app.use("/returnProductsendEmail", returnProductEmail);
 //Membership route
 app.use("/memberships", MembershipRouter);
 app.use("/subscriptions", SubscriptionRouter);
-app.use("sendSubEmail", subEmailRouter);
+app.use("/sendSubEmail", subEmailRouter);
 
 mongoose
   .connect(mongoDBURL)

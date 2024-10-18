@@ -31,7 +31,7 @@ const ViewAvailablePacks = () => {
 
   return (
     <div className="bg-green-50 min-h-screen py-10">
-      <h1 className="text-5xl text-center font-bold text-green-800 mb-10">
+      <h1 className="text-5xl text-center font-bold text-primary mb-10">
         Turtle Conservation Membership Packages
       </h1>
 
@@ -66,7 +66,7 @@ const ViewAvailablePacks = () => {
               <p className="text-green-600 mt-2">{membership.features}</p>
               <button
                 onClick={() => handleSubscribe(membership._id)}
-                className="bg-green-600 text-white px-4 py-2 rounded-md mt-4 hover:bg-green-700 transition-all"
+                className="bg-primary text-white px-4 py-2 rounded-md mt-4 hover:bg-primary_light transition-all"
               >
                 Subscribe
               </button>
