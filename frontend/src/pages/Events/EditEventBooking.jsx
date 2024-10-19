@@ -12,6 +12,7 @@ const EditEventBooking = () => {
     email: "",
     eventName: "",
     eventDate: "",
+    noOfPerson: "",
     ticketPrice: "",
     paymentImage: null, // New field for the image
   });
@@ -35,6 +36,7 @@ const EditEventBooking = () => {
           email: data.email,
           eventName: data.eventName,
           eventDate: data.eventDate,
+          noOfPerson: data.noOfPerson,
           ticketPrice: data.ticketPrice,
           paymentImage: null, // Keep the formData clean for file uploads
         });
@@ -98,6 +100,12 @@ const EditEventBooking = () => {
       newErrors.eventDate = "Event date is required";
     }
 
+    if (!formData.noOfPerson) {
+      newErrors.noOfPerson = "Number of persons is required";
+    } else if (formData.noOfPerson <= 0) {
+      newErrors.noOfPerson = "Number of persons must be greater than zero";
+    }
+
     // Validate ticket price (cannot be negative)
     if (!formData.ticketPrice) {
       newErrors.ticketPrice = "Ticket price is required";
@@ -106,9 +114,18 @@ const EditEventBooking = () => {
     }
 
     // Validate payment image (if a new file is uploaded)
-    const allowedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-    if (formData.paymentImage && !allowedFileTypes.includes(formData.paymentImage.type)) {
-      newErrors.paymentImage = "Allowed image types are jpg, jpeg, png, and webp";
+    const allowedFileTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/webp",
+    ];
+    if (
+      formData.paymentImage &&
+      !allowedFileTypes.includes(formData.paymentImage.type)
+    ) {
+      newErrors.paymentImage =
+        "Allowed image types are jpg, jpeg, png, and webp";
     }
 
     setErrors(newErrors);
@@ -158,8 +175,14 @@ const EditEventBooking = () => {
   return (
     <div className="min-h-screen bg-blue-100 flex justify-center items-center py-10">
       <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg my-10">
-        <h1 className="text-2xl font-bold mb-6 text-center">Edit Event Booking</h1>
-        <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Edit Event Booking
+        </h1>
+        <form
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+          className="space-y-4"
+        >
           <div>
             <label className="block text-gray-700">Participant Name</label>
             <input
@@ -236,7 +259,9 @@ const EditEventBooking = () => {
                 errors.eventName ? "border-red-500" : "border-gray-300"
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
-            {errors.eventName && <p className="text-red-500">{errors.eventName}</p>}
+            {errors.eventName && (
+              <p className="text-red-500">{errors.eventName}</p>
+            )}
           </div>
           <div>
             <label className="block text-gray-700">Event Date</label>
@@ -250,7 +275,25 @@ const EditEventBooking = () => {
                 errors.eventDate ? "border-red-500" : "border-gray-300"
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
-            {errors.eventDate && <p className="text-red-500">{errors.eventDate}</p>}
+            {errors.eventDate && (
+              <p className="text-red-500">{errors.eventDate}</p>
+            )}
+          </div>
+          <div>
+            <label className="block text-gray-700">Number Of Persons</label>
+            <input
+              type="number"
+              name="noOfPerson"
+              value={formData.noOfPerson}
+              onChange={handleInputChange}
+              required
+              className={`w-full mt-1 p-2 border ${
+                errors.noOfPerson ? "border-red-500" : "border-gray-300"
+              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            />
+            {errors.noOfPerson && (
+              <p className="text-red-500">{errors.noOfPerson}</p>
+            )}
           </div>
           <div>
             <label className="block text-gray-700">Ticket Price</label>
@@ -271,7 +314,9 @@ const EditEventBooking = () => {
 
           {currentImage && (
             <div>
-              <label className="block text-gray-700">Current Payment Image</label>
+              <label className="block text-gray-700">
+                Current Payment Image
+              </label>
               <img
                 src={`http://localhost:5555${currentImage}`}
                 alt="Payment"
@@ -281,7 +326,9 @@ const EditEventBooking = () => {
           )}
 
           <div>
-            <label className="block text-gray-700">Upload New Payment Image</label>
+            <label className="block text-gray-700">
+              Upload New Payment Image
+            </label>
             <input
               type="file"
               name="paymentImage"

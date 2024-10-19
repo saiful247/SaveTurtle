@@ -144,7 +144,7 @@ const EventProgramPage = () => {
         </div>
 
         <div
-          className={`bg-[#FBEDEA] p-4 rounded-lg shadow-md ${
+          className={`bg-[#beedc1] p-4 rounded-lg shadow-md ${
             darkMode ? "bg-gray-800" : "bg-white"
           }`}
         >
@@ -198,7 +198,7 @@ const EventProgramPage = () => {
                 >
                   {eventP.allocatedPersonCount === 0 && (
                     <div className="absolute inset-0 flex items-center justify-center text-red-600 font-bold text-4xl opacity-80">
-                      Sold Out
+                      SOLD OUT
                     </div>
                   )}
                   <div
