@@ -1,8 +1,13 @@
 import React, { useEffect, useRef } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { motion, useAnimation, useInView } from "framer-motion";
 
-const BoxReveal = ({ children, width = "fit-content", boxColor = "#5046e6", duration = 0.5 }) => {
+const BoxReveal = ({
+  children,
+  width = "fit-content",
+  boxColor = "#5046e6",
+  duration = 0.5,
+}) => {
   const mainControls = useAnimation();
   const slideControls = useAnimation();
   const ref = useRef(null);
@@ -48,9 +53,9 @@ const BoxReveal = ({ children, width = "fit-content", boxColor = "#5046e6", dura
 
 BoxReveal.propTypes = {
   children: PropTypes.node.isRequired,
-  width: PropTypes.oneOf(['fit-content', '100%']),
+  width: PropTypes.oneOf(["fit-content", "100%"]),
   boxColor: PropTypes.string,
-  duration: PropTypes.number
+  duration: PropTypes.number,
 };
 
 export default BoxReveal;

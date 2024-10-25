@@ -142,7 +142,7 @@ const EventProgramPage = () => {
             <DarkModeToggle />
           </div>
         </div>
-
+        {/* cl3d */}
         <div
           className={`bg-[#beedc1] p-4 rounded-lg shadow-md ${
             darkMode ? "bg-gray-800" : "bg-white"
